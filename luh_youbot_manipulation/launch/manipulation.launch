@@ -1,105 +1,23 @@
 <?xml version="1.0"?>
 <launch>
-<!-- Start nodes on YouBot -->
 	<arg name="youBotHasBase" default="true"/>
 	<arg name="youBotHasArm" default="true"/>
 	
-	<param name="youBotHasBase"	type="bool"		value="$(arg youBotHasBase)"/>
-	<param name="youBotHasArm"      type="bool"		value="$(arg youBotHasArm)"/>
-
-	<!-- Default name values --> 
-	<param name="youBotBaseName" type="str" value="youbot-base"/>
-
-        <group if="$(arg youBotHasArm)">
-                <group if="$(arg youBotHasBase)">
-	                <param name="youBotArmName1" type="str" value="youbot-manipulator"/>
-                </group>
-                <group unless="$(arg youBotHasBase)">
-	                <param name="youBotArmName1" type="str" value="youbot-manipulator-single"/>
-                </group>
-        </group>
-	
-	<!-- start youbot driver -->
-	<group ns="youbot_oodl_driver">
-		<param name="controller_enabled" type="bool"  	value="true"/>
-		<param name="maxLinearVel"       type="double" 	value="0.7"/>
-		<param name="maxAngularVel"      type="double" 	value="0.7"/>
-		<param name="CTRL_P"             type="double" 	value="0.1"/>
-		<param name="CTRL_I"		 type="double" 	value="1.7"/>
-		<param name="CTRL_D"		 type="double" 	value="0.1"/>
-		<param name="moving_average"     type="double" 	value="0.3"/>
-                <param name="disable_ramp"       type="bool"     value="true"/>
-
-		<!-- NEUER PID-REGLER -->
-
-		<!-- Probieren: p=1.14,i=7.1,d=0,n=0-->
-
-		<param name="C_P_x" type="double" value="0.67"/>
-		<param name="C_P_y" type="double" value="0.66"/>
-		<param name="C_P_z" type="double" value="5.67"/>
-
-		<param name="C_I_x" type="double" value="0.0"/>
-		<param name="C_I_y" type="double" value="0.0"/>
-		<param name="C_I_z" type="double" value="0.0"/>
-
-		<param name="C_D_x" type="double" value="2.0"/>
-		<param name="C_D_y" type="double" value="1.5"/>
-		<param name="C_D_z" type="double" value="1.0"/>
-
-		<param name="C_N_x" type="double" value="0.5"/>
-		<param name="C_N_y" type="double" value="0.5"/>
-		<param name="C_N_z" type="double" value="0.5"/>
-
-		<param name="C_iSatUpper_x" type="double" value="0.7"/>
-		<param name="C_iSatUpper_y" type="double" value="0.7"/>
-		<param name="C_iSatUpper_z" type="double" value="0.7"/>
-
-		<param name="C_iSatLower_x" type="double" value="-0.7"/>
-		<param name="C_iSatLower_y" type="double" value="-0.7"/>
-		<param name="C_iSatLower_z" type="double" value="-0.7"/>
-
-		<param name="C_dSatUpper_x" type="double" value="0.7"/>
-		<param name="C_dSatUpper_y" type="double" value="0.7"/>
-		<param name="C_dSatUpper_z" type="double" value="0.7"/>
-
-		<param name="C_dSatLower_x" type="double" value="-0.7"/>
-		<param name="C_dSatLower_y" type="double" value="-0.7"/>
-		<param name="C_dSatLower_z" type="double" value="-0.7"/>
-	
-		<!-- ENDE -->
-
-	</group>
+        <!-- LOAD DEFAULT DRIVER PARAMETERS -->
+        <include file="$(find luh_youbot_interface)/launch/load_default_parameters.launch">
+                <arg name="youBotHasArm" value="$(arg youBotHasArm)"/>
+                <arg name="youBotHasBase" value="$(arg youBotHasBase)"/>
+        </include>
 
 	<!-- LOAD DEFAULT MANIPULATION PARAMETERS -->
 	<include file="$(find luh_youbot_manipulation)/launch/load_default_parameters.launch" />
-	
-	<!-- LAUNCH DRIVER NODE -->
-	<node name="manipulation_node" pkg="luh_youbot_manipulation" type="manipulation_node" output="screen" />
 
-	<group if="$(arg youBotHasBase)" >
-		<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_base_state_publisher" output="screen">
-			<remap from="joint_states" to="base/joint_states"/>
-		</node>
-		<group if="$(arg youBotHasArm)" >
-			<param name="robot_description" command="$(find xacro)/xacro.py '$(find youbot_description)/robots/youbot_RC.urdf.xacro'"/>
-		</group>
-		<group unless="$(arg youBotHasArm)" >
-			<param name="robot_description" command="$(find xacro)/xacro.py '$(find youbot_description)/robots/youbot_base.urdf.xacro'"/>
-		</group>
-	</group>
-	
-	<group if="$(arg youBotHasArm)" >
-		<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_arm_state_publisher" output="screen">
-			<remap from="joint_states" to="arm_1/joint_states"/>
-		</node>
-		<group if="$(arg youBotHasBase)" >
-			<param name="robot_description" command="$(find xacro)/xacro.py '$(find youbot_description)/robots/youbot_RC.urdf.xacro'"/>
-		</group>
-		<group unless="$(arg youBotHasBase)" >
-			<param name="robot_description" command="$(find xacro)/xacro.py '$(find youbot_description)/robots/youbot_arm.urdf.xacro'"/>
-		</group>
-	</group>
-	
-	<!-- launch youbot_ft -->
-	<node pkg="youbot_tf" type="tf_odom" name="tf"/> 
+        <!-- LAUNCH STATE PUBLISHER -->
+        <include file="$(find luh_youbot_manipulation)/launch/youbot_state_publisher.launch">
+                <arg name="youBotHasArm" value="$(arg youBotHasArm)"/>
+                <arg name="youBotHasBase" value="$(arg youBotHasBase)"/>
+        </include>
+
+       	<!-- LAUNCH DRIVER NODE -->
+	<node name="manipulation_node" pkg="luh_youbot_manipulation" type="manipulation_node" output="screen" />
 </launch>
