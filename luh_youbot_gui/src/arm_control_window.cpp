@@ -676,6 +676,8 @@ void ArmControlWindow::onButtonGoClicked(bool checked)
         return;
     }
 
+    button_gravity_comp_->setChecked(false);
+
     if(button_velocity_->isChecked())
     {
         velocity_is_activated_ = checked;
@@ -1184,10 +1186,16 @@ bool ArmControlWindow::showSafetyDialog()
 
 }
 
-//########## ON BUTTON ZERO TORQUE PRESSED #############################################################################
+//########## ON BUTTON GRAVITY COMPENSATION PRESSED ####################################################################
 void ArmControlWindow::onButtonGravityCompensationClicked(bool is_checked)
 {
     Q_EMIT compensateGravityRequested(is_checked);
+
+    render_area_->model()->setVirtualJointstate(current_jointstate_, current_gripper_state_);
+    updateJointstateTable(current_jointstate_, true);
+
+    Q_EMIT clearModel();
+
 }
 
 //########## ON BUTTON GRAVITY COMPENSATION RELEASED ###################################################################
