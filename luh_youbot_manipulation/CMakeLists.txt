@@ -102,10 +102,8 @@ target_link_libraries(manipulation_node modules)
 ## GIVE SUDO RIGHTS TO NODE TO ACCESS ETHERNET INTERFACE
 set(EXECUTABLE_PATH "${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_BIN_DESTINATION}")
 
-IF(USE_SETCAP)
 add_custom_command(TARGET manipulation_node POST_BUILD
     #COMMAND sudo setcap cap_net_raw+ep manipulation_node
     COMMAND gksudo setcap cap_net_raw+ep manipulation_node
     WORKING_DIRECTORY ${EXECUTABLE_PATH}
-)    
-endif(USE_SETCAP)
+)
