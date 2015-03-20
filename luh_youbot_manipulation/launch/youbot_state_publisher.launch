@@ -26,7 +26,5 @@
 			<param name="robot_description" command="$(find xacro)/xacro.py '$(find youbot_description)/robots/youbot_arm.urdf.xacro'"/>
 		</group>
 	</group>
-	
-	<!-- launch youbot_ft -->
-	<node pkg="youbot_tf" type="tf_odom" name="tf"/> 
+ 
 </launch>
