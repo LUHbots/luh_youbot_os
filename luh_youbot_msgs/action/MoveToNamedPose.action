@@ -1,0 +1,14 @@
+# INTERPOLATION MODE:
+#  - 0: JOINTSPACE
+#  - 1: CYLINDRIC
+#  - 2: CARTESIAN
+# include luh_youbot_msgs/interpolation_mode.h to use the enum
+
+# goal
+string pose_name
+int32 interpolation_mode
+---
+# result
+---
+# feedback
+float32 percent_done

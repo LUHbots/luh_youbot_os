@@ -1,0 +1,3 @@
+gripper_min: 0.00
+gripper_max: 0.06
+gripper_offset: 0.015

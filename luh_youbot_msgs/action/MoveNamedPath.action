@@ -1,0 +1,7 @@
+# goal
+luh_youbot_msgs/NamedPath path
+---
+# result
+---
+# feedback
+float32 percent_done

@@ -1,0 +1,8 @@
+# goal
+float32 force
+float32 displacement
+---
+# result
+string result
+---
+# feedback

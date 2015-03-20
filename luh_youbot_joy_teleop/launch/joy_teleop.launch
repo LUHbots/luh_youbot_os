@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="assign-buttons" default="false"/>
+        <arg name="youBotHasArm" default="true"/>
+
+	<!-- BUTTON CONFIG FILE -->
+	<param name="luh_youbot_joy_teleop/key_config_dir" value="$(find luh_youbot_joy_teleop)/cfg" />
+	<param name="luh_youbot_joy_teleop/key_config_file" value="FlashFire.yaml" />	
+
+	<!-- PARAMETERS -->
+	<param name="luh_youbot_joy_teleop/gripper_velocity" value="0.02" />
+	<param name="luh_youbot_joy_teleop/gripper_min_pos" value="0.0" />
+	<param name="luh_youbot_joy_teleop/gripper_max_pos" value="0.02299" />
+	<param name="luh_youbot_joy_teleop/arm_velocity_q1" value="0.4" />
+	<param name="luh_youbot_joy_teleop/arm_velocity_x" value="0.04" />
+	<param name="luh_youbot_joy_teleop/arm_velocity_y" value="0.04" />
+	<param name="luh_youbot_joy_teleop/arm_velocity_z" value="0.04" />
+	<param name="luh_youbot_joy_teleop/arm_velocity_theta" value="0.15" />
+	<param name="luh_youbot_joy_teleop/arm_velocity_q5" value="0.4" />
+	<param name="luh_youbot_joy_teleop/base_velocity_x" value="0.4" />
+	<param name="luh_youbot_joy_teleop/base_velocity_y" value="0.4" />
+	<param name="luh_youbot_joy_teleop/base_velocity_theta" value="0.4" />
+        <param name="luh_youbot_joy_teleop/youbot_has_arm" value="$(arg youBotHasArm)" />
+        <param name="luh_youbot_joy_teleop/button_pose_1" value="SEARCH_CENTER" />
+        <param name="luh_youbot_joy_teleop/button_pose_2" value="GRIP_CENTER" />
+
+	<!-- WITH BUTTON ASSIGNMENT -->
+	<group if="$(arg assign-buttons)">
+		<node name="youbot_joy_teleop" pkg="luh_youbot_joy_teleop" type="youbot_teleop" output="screen" args="--assign-buttons" />
+		<node name="joy_node" pkg="joy" type="joy_node"/>
+	</group>
+
+	<!-- WITHOUT BUTTON ASSIGNMENT -->
+	<group unless="$(arg assign-buttons)">	
+		<node name="youbot_joy_teleop" pkg="luh_youbot_joy_teleop" type="youbot_teleop" output="screen">
+                        <!--remap from="/youbot_base/velocity" to="base_velocity"/-->
+                </node>
+		<node name="joy_node" pkg="joy" type="joy_node" output="screen"/>
+	</group>
+
+</launch>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <name>youbot_tf</name>
+  <version>0.0.0</version>
+  <description>youbot_tf</description>
+  <author>Benjamin Munske</author>
+  <maintainer email="info@luhbots.de">LUHbots</maintainer>
+  <license>BSD</license>
+  <url>http://imes.uni-hannover.de</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>robot_state_publisher</build_depend>
+  <build_depend>trajectory_msgs</build_depend>
+
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>trajectory_msgs</run_depend>
+</package>
+
+

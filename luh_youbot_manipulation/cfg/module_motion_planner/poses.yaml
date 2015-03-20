@@ -1,0 +1,343 @@
+---
+ARM_UP:
+  - arm_joint_1: 202
+  - arm_joint_2: 65
+  - arm_joint_3: -146
+  - arm_joint_4: 102.5
+  - arm_joint_5: 172
+---
+ARM_UP_180:
+  - arm_joint_1: 22.00000000000001
+  - arm_joint_2: 65
+  - arm_joint_3: -146
+  - arm_joint_4: 102.5
+  - arm_joint_5: 172
+---
+CARGO_1:
+  - arm_joint_1: 41.8
+  - arm_joint_2: 74.3
+  - arm_joint_3: -56.09999999999999
+  - arm_joint_4: 181.3
+  - arm_joint_5: 169
+---
+CARGO_1_ABOVE:
+  - arm_joint_1: 41.8
+  - arm_joint_2: 46
+  - arm_joint_3: -56.2
+  - arm_joint_4: 181.3
+  - arm_joint_5: 169
+---
+CARGO_1_OVERHEAD:
+  - arm_joint_1: 223.6
+  - arm_joint_2: 33.1
+  - arm_joint_3: -202.6
+  - arm_joint_4: 18.4
+  - arm_joint_5: 172
+---
+CARGO_1_OVERHEAD_ABOVE:
+  - arm_joint_1: 223.6
+  - arm_joint_2: 52.6
+  - arm_joint_3: -202.6
+  - arm_joint_4: 18.4
+  - arm_joint_5: 172
+---
+CARGO_1_PLACE:
+  - arm_joint_1: 41.8
+  - arm_joint_2: 71.2
+  - arm_joint_3: -56.2
+  - arm_joint_4: 183.3
+  - arm_joint_5: 169
+---
+CARGO_1_PLACE_OVERHEAD:
+  - arm_joint_1: 223.7
+  - arm_joint_2: 30.9
+  - arm_joint_3: -195.8
+  - arm_joint_4: 12.1
+  - arm_joint_5: 172
+---
+CARGO_2:
+  - arm_joint_1: 22.99999999999999
+  - arm_joint_2: 74.3
+  - arm_joint_3: -56.09999999999999
+  - arm_joint_4: 181.3
+  - arm_joint_5: 169
+---
+CARGO_2_ABOVE:
+  - arm_joint_1: 22.99999999999999
+  - arm_joint_2: 46
+  - arm_joint_3: -56.2
+  - arm_joint_4: 181.3
+  - arm_joint_5: 169
+---
+CARGO_2_OVERHEAD:
+  - arm_joint_1: 203
+  - arm_joint_2: 33.1
+  - arm_joint_3: -202.6
+  - arm_joint_4: 18.4
+  - arm_joint_5: 172
+---
+CARGO_2_OVERHEAD_ABOVE:
+  - arm_joint_1: 203
+  - arm_joint_2: 52.6
+  - arm_joint_3: -202.6
+  - arm_joint_4: 18.4
+  - arm_joint_5: 172
+---
+CARGO_2_PLACE:
+  - arm_joint_1: 22.99999999999999
+  - arm_joint_2: 71.2
+  - arm_joint_3: -56.2
+  - arm_joint_4: 183.3
+  - arm_joint_5: 169
+---
+CARGO_2_PLACE_OVERHEAD:
+  - arm_joint_1: 203
+  - arm_joint_2: 30.9
+  - arm_joint_3: -195.8
+  - arm_joint_4: 12.1
+  - arm_joint_5: 172
+---
+CARGO_3:
+  - arm_joint_1: 2.499999999999997
+  - arm_joint_2: 74.3
+  - arm_joint_3: -56.09999999999999
+  - arm_joint_4: 181.3
+  - arm_joint_5: 169
+---
+CARGO_3_ABOVE:
+  - arm_joint_1: 2.499999999999997
+  - arm_joint_2: 46
+  - arm_joint_3: -56.2
+  - arm_joint_4: 181.3
+  - arm_joint_5: 169
+---
+CARGO_3_OVERHEAD:
+  - arm_joint_1: 182
+  - arm_joint_2: 33.1
+  - arm_joint_3: -202.6
+  - arm_joint_4: 18.4
+  - arm_joint_5: 172
+---
+CARGO_3_OVERHEAD_ABOVE:
+  - arm_joint_1: 182
+  - arm_joint_2: 52.6
+  - arm_joint_3: -202.6
+  - arm_joint_4: 18.4
+  - arm_joint_5: 172
+---
+CARGO_3_PLACE:
+  - arm_joint_1: 2.499999999999997
+  - arm_joint_2: 71.2
+  - arm_joint_3: -56.2
+  - arm_joint_4: 183.3
+  - arm_joint_5: 169
+---
+CARGO_3_PLACE_OVERHEAD:
+  - arm_joint_1: 182
+  - arm_joint_2: 30.9
+  - arm_joint_3: -195.8
+  - arm_joint_4: 12.1
+  - arm_joint_5: 172
+---
+DUMP_1:
+  - arm_joint_1: 165.6
+  - arm_joint_2: 108.7
+  - arm_joint_3: -79.59999999999999
+  - arm_joint_4: 168.8
+  - arm_joint_5: 128
+---
+DUMP_1_ABOVE:
+  - arm_joint_1: 165.6
+  - arm_joint_2: 103.9
+  - arm_joint_3: -96.90000000000001
+  - arm_joint_4: 190.9
+  - arm_joint_5: 128
+---
+DUMP_2:
+  - arm_joint_1: 187
+  - arm_joint_2: 96.40000000000001
+  - arm_joint_3: -57.3
+  - arm_joint_4: 162
+  - arm_joint_5: 151.9
+---
+DUMP_2_ABOVE:
+  - arm_joint_1: 187
+  - arm_joint_2: 87.40000000000001
+  - arm_joint_3: -70.09999999999999
+  - arm_joint_4: 184.1
+  - arm_joint_5: 151.9
+---
+DUMP_3:
+  - arm_joint_1: 212.4
+  - arm_joint_2: 96.00000000000001
+  - arm_joint_3: -56.2
+  - arm_joint_4: 162.8
+  - arm_joint_5: 176.1
+---
+DUMP_3_ABOVE:
+  - arm_joint_1: 212.4
+  - arm_joint_2: 88.2
+  - arm_joint_3: -70.90000000000001
+  - arm_joint_4: 185.2
+  - arm_joint_5: 176.1
+---
+DUMP_4:
+  - arm_joint_1: 237.2
+  - arm_joint_2: 111
+  - arm_joint_3: -81.40000000000002
+  - arm_joint_4: 174.1
+  - arm_joint_5: 201
+---
+DUMP_4_ABOVE:
+  - arm_joint_1: 237.2
+  - arm_joint_2: 105.6
+  - arm_joint_3: -97.59999999999999
+  - arm_joint_4: 195.4
+  - arm_joint_5: 201
+---
+GRIP_CENTER:
+  - arm_joint_1: 202
+  - arm_joint_2: 99.3
+  - arm_joint_3: -64.40000000000001
+  - arm_joint_4: 169.6
+  - arm_joint_5: 171.3
+---
+GRIP_CENTER_ABOVE:
+  - arm_joint_1: 202
+  - arm_joint_2: 93
+  - arm_joint_3: -76.59999999999999
+  - arm_joint_4: 187.9
+  - arm_joint_5: 171.3
+---
+GRIP_LEFT:
+  - arm_joint_1: 172
+  - arm_joint_2: 99.3
+  - arm_joint_3: -64.40000000000001
+  - arm_joint_4: 169.6
+  - arm_joint_5: 171.3
+---
+GRIP_LEFT_ABOVE:
+  - arm_joint_1: 172
+  - arm_joint_2: 93
+  - arm_joint_3: -76.59999999999999
+  - arm_joint_4: 187.9
+  - arm_joint_5: 171.2
+---
+GRIP_RIGHT:
+  - arm_joint_1: 232
+  - arm_joint_2: 99.3
+  - arm_joint_3: -64.40000000000001
+  - arm_joint_4: 169.6
+  - arm_joint_5: 171.3
+---
+GRIP_RIGHT_ABOVE:
+  - arm_joint_1: 232
+  - arm_joint_2: 93
+  - arm_joint_3: -76.59999999999999
+  - arm_joint_4: 187.9
+  - arm_joint_5: 171.2
+---
+HOME:
+  - arm_joint_1: 2.000192307692304
+  - arm_joint_2: 2.000192307692304
+  - arm_joint_3: -1.999800000000001
+  - arm_joint_4: 2.499718309859155
+  - arm_joint_5: 9
+---
+MOVEMENT_DEMO_LEFT:
+  - arm_joint_1: 115.7580700297004
+  - arm_joint_2: 38.63653189816672
+  - arm_joint_3: -49.00427869097383
+  - arm_joint_4: 159.4002159374902
+  - arm_joint_5: 171.3000000772855
+---
+MOVEMENT_DEMO_UP:
+  - arm_joint_1: 199.005
+  - arm_joint_2: 43.10134615384615
+  - arm_joint_3: -44.14950000000001
+  - arm_joint_4: 95.4481690140845
+  - arm_joint_5: 171.996338028169
+---
+SEARCH_CENTER:
+  - arm_joint_1: 202
+  - arm_joint_2: 15.9
+  - arm_joint_3: -43
+  - arm_joint_4: 190
+  - arm_joint_5: 169
+---
+SEARCH_CLOSE:
+  - arm_joint_1: 202
+  - arm_joint_2: 28.4
+  - arm_joint_3: -40.2
+  - arm_joint_4: 194
+  - arm_joint_5: 169
+---
+SEARCH_LEFT:
+  - arm_joint_1: 172
+  - arm_joint_2: 15.9
+  - arm_joint_3: -43
+  - arm_joint_4: 190
+  - arm_joint_5: 169
+---
+SEARCH_PPT:
+  - arm_joint_1: 202
+  - arm_joint_2: 35.3
+  - arm_joint_3: -60.1
+  - arm_joint_4: 194
+  - arm_joint_5: 169
+---
+SEARCH_PPT_LEFT:
+  - arm_joint_1: 172
+  - arm_joint_2: 35.3
+  - arm_joint_3: -60.1
+  - arm_joint_4: 194
+  - arm_joint_5: 169
+---
+SEARCH_PPT_RIGHT:
+  - arm_joint_1: 232
+  - arm_joint_2: 35.3
+  - arm_joint_3: -60.1
+  - arm_joint_4: 194
+  - arm_joint_5: 169
+---
+SEARCH_RIGHT:
+  - arm_joint_1: 232
+  - arm_joint_2: 15.9
+  - arm_joint_3: -43
+  - arm_joint_4: 190
+  - arm_joint_5: 169
+---
+TRANSPORT:
+  - arm_joint_1: 202
+  - arm_joint_2: 4.999999999999995
+  - arm_joint_3: -85
+  - arm_joint_4: 195
+  - arm_joint_5: 172
+---
+TRANSPORT_180:
+  - arm_joint_1: 22.00000000000001
+  - arm_joint_2: 4.999999999999995
+  - arm_joint_3: -85
+  - arm_joint_4: 195
+  - arm_joint_5: 172
+---
+TRANSPORT_L150:
+  - arm_joint_1: 52
+  - arm_joint_2: 4.999999999999995
+  - arm_joint_3: -85
+  - arm_joint_4: 195
+  - arm_joint_5: 172
+---
+TRANSPORT_L30:
+  - arm_joint_1: 172
+  - arm_joint_2: 4.999999999999995
+  - arm_joint_3: -85
+  - arm_joint_4: 195
+  - arm_joint_5: 172
+---
+TRANSPORT_R30:
+  - arm_joint_1: 232
+  - arm_joint_2: 4.999999999999995
+  - arm_joint_3: -85
+  - arm_joint_4: 195
+  - arm_joint_5: 172

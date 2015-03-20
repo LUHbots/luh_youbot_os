@@ -1,0 +1,80 @@
+/* *****************************************************************
+ *
+ * luh_youbot_poses
+ *
+ * Copyright (c) 2014,
+ * Institute of Mechatronic Systems,
+ * Leibniz Universitaet Hannover.
+ * (BSD License)
+ * All rights reserved.
+ *
+ * http://www.imes.uni-hannover.de
+ *
+ * This software is distributed WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE.
+ *
+ * For further information see http://www.linfo.org/bsdlicense.html
+ *
+ ******************************************************************/
+
+#include "luh_youbot_poses/youbot_poses.h"
+
+youbot_poses::PoseMap youbot_poses::read(std::string filename)
+{
+    youbot_poses::PoseMap pose_map;
+
+    // if path is relative: use default directory
+    if(filename[0] != '/')
+    {
+        std::string path = ros::package::getPath("luh_youbot_poses");
+        path.append("/poses/");
+        path.append(filename);
+        filename = path;
+    }
+
+    std::vector<YAML::Node> nodes;
+    try
+    {
+         nodes = YAML::LoadAllFromFile(filename);
+    }
+    catch(YAML::BadFile &ex)
+    {
+        ROS_ERROR("%s", ex.what());
+        ROS_ERROR("Failed to load poses from file %s", filename.c_str());
+        return pose_map;
+    }
+
+    for(uint i=0; i<nodes.size();i++)
+    {
+        std::string name = nodes[i].begin()->first.as<std::string>();
+        luh_youbot_kinematics::JointPosition pose;
+        YAML::Node joint_poses = nodes[i].begin()->second;
+
+        for(YAML::const_iterator it=joint_poses.begin();it!=joint_poses.end();++it)
+        {
+            YAML::const_iterator map_it = it->begin();
+            std::string joint_name = map_it->first.as<std::string>();
+            double joint_value = map_it->second.as<double>();
+            joint_value *= M_PI/180.0;
+
+            if(!joint_name.compare("arm_joint_1"))
+                pose.setQ1(joint_value);
+            else if(!joint_name.compare("arm_joint_2"))
+                pose.setQ2(joint_value);
+            else if(!joint_name.compare("arm_joint_3"))
+                pose.setQ3(joint_value);
+            else if(!joint_name.compare("arm_joint_4"))
+                pose.setQ4(joint_value);
+            else if(!joint_name.compare("arm_joint_5"))
+                pose.setQ5(joint_value);
+        }
+
+        pose.addOffset();
+        pose_map[name] = pose;
+    }
+
+    return pose_map;
+}
+
+

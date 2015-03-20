@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/icon.png</file>
+        <file>images/jointspace_klein.png</file>
+        <file>images/kartesisch_base_klein.png</file>
+        <file>images/zylinderkoordinaten_klein.png</file>
+        <file>images/go_button_icon.png</file>
+        <file>images/vel_button_icon.png</file>
+        <file>images/pos_button_icon.png</file>
+        <file>images/gravity_icon.png</file>
+    </qresource>
+</RCC>

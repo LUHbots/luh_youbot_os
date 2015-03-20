@@ -1,0 +1,3 @@
+boost-all:
+  ubuntu: libboost-all-dev
+

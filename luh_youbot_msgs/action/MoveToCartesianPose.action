@@ -1,0 +1,8 @@
+# goal
+CartesianVector pose
+bool pose_is_relative
+---
+#result
+---
+#feedback
+float32 percent_done

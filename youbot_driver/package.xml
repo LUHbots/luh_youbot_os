@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package>
+  <name>youbot_driver</name>
+  <description>
+     Drivers for the KUKA youBot robot
+  </description>  
+  <author>Jan Paulus/jan.paulus@h-brs.de</author>
+  <version>0.0.0</version>
+  
+  <!-- catkinized by Simon Aden (Leibniz Unitverstät Hannover)-->
+  <maintainer email="simon.aden@mailbox.org">Simon Aden</maintainer>
+
+  <license>gnu-lgpl-v2.1 modified-bsd</license>
+
+  <!-- original url of rosbuild version -->
+  <url>https://github.com/youbot/youbot_driver</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  
+  <!--rosdep name="boost-all" /-->
+  
+  <export>
+     <!--cpp cflags="-I${prefix}/ -I${prefix}/soem/src" lflags="-L${prefix}/lib/ -lYouBotDriver -lsoem" /-->
+  </export>
+</package>
+
+

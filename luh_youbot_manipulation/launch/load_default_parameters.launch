@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- LOAD MODULE PARAMETERS -->
+	<rosparam file="$(find luh_youbot_manipulation)/cfg/module_interpolation/params.yaml" command="load" ns="module_interpolation" />
+	<rosparam file="$(find luh_youbot_manipulation)/cfg/module_motion_planner/params.yaml" command="load" ns="module_motion_planner" />
+	<rosparam file="$(find luh_youbot_manipulation)/cfg/module_gripper/params.yaml" command="load" ns="module_gripper"/>
+	<rosparam file="$(find luh_youbot_manipulation)/cfg/module_base_controller/params.yaml" command="load" ns="module_base_controller"/>
+	<rosparam file="$(find luh_youbot_manipulation)/cfg/torque_controller/params.yaml" command="load" ns="torque_controller"/>
+	<rosparam file="$(find luh_youbot_manipulation)/cfg/module_joint_trajectory/params.yaml" command="load" ns="module_joint_trajectory"/>
+	<rosparam file="$(find luh_youbot_manipulation)/cfg/module_direct_control/params.yaml" command="load" ns="module_direct_control"/>
+        <rosparam file="$(find luh_youbot_manipulation)/cfg/module_gravity_compensation/params.yaml" command="load" ns="module_gravity_compensation"/>
+
+	<!-- POSES FILE -->
+	<param name="luh_youbot_manipulation/poses_file" value="poses.yaml" />
+
+        <!-- FREQUENCIES -->
+        <param name="luh_youbot_manipulation/arm_controller_frequency" value="200.0" />
+        <param name="luh_youbot_manipulation/base_controller_frequency" value="50.0" />
+
+</launch>

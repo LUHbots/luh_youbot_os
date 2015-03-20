@@ -1,0 +1,44 @@
+youbot_oodl_driver:
+   controller_enabled: false
+   maxLinearVel: 0.7
+   maxAngularVel: 0.7
+   CTRL_P: 0.1
+   CTRL_I: 1.7
+   CTRL_D: 0.1
+   moving_average: 0.3
+   disable_ramp: true
+
+   C_P_x: 0.67
+   C_P_y: 0.66
+   C_P_z: 5.67
+
+   C_I_x: 0.0
+   C_I_y: 0.0
+   C_I_z: 0.0
+
+   C_D_x: 2.0
+   C_D_y: 1.5
+   C_D_z: 1.0
+
+   C_N_x: 0.5
+   C_N_y: 0.5
+   C_N_z: 0.5
+
+   C_iSatUpper_x: 0.7
+   C_iSatUpper_y: 0.7
+   C_iSatUpper_z: 0.7
+
+   C_iSatLower_x: -0.7
+   C_iSatLower_y: -0.7
+   C_iSatLower_z: -0.7
+
+   C_dSatUpper_x: 0.7
+   C_dSatUpper_y: 0.7
+   C_dSatUpper_z: 0.7
+
+   C_dSatLower_x: -0.7
+   C_dSatLower_y: -0.7
+   C_dSatLower_z: -0.7
+
+   max_effort: [10.0, 13.0, 7.0, 3.0, 0.6]
+   max_effort_max_duration: 0.5

@@ -1,0 +1,24 @@
+# files
+poses_file: cfg/module_motion_planner/poses.yaml
+neighbors_file: cfg/module_motion_planner/neighbors.yaml
+
+# influence factors for weights in the graph
+euclidean_influence_factor: 1.0
+constant_influence: 0.1
+q1_weight: 1.0
+q2_weight: 1.0
+q3_weight: 1.0
+q4_weight: 1.0
+q5_weight: 0.0
+
+
+# velocity control
+velocity_factor: 1.0
+
+# command mode = {POSITION, VELOCITY, TORQUE}
+command_mode: POSITION
+
+goal_tolerance: 0.0 #degrees
+tolerance_check_percentage: 0.9 
+finepos_pos_tolerance: 0.3 #degrees
+finepos_vel_tolerance: 0.1 #degrees per second

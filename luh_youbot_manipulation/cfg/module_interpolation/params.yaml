@@ -1,0 +1,37 @@
+# PID controller
+controller_pid/kp: [10.00,  10.00,  10.00,  10.00,  10.00]
+controller_pid/ki: [1.0,  1.0,  1.0,  1.0,  1.0]
+controller_pid/kd: [1.00,  1.00,  1.00,  1.00,  1.00]
+controller_pid/i_max: [1.0, 1.0, 1.0, 1.0, 1.0]
+controller_pid/i_min: [-0.1,-1.0,-1.0,-1.0,-1.0]
+
+# time out when no commands arrive
+timeout_threshold: 1.0
+
+# command mode = {POSITION, VELOCITY, TORQUE}
+command_mode: POSITION
+
+# max velocities
+max_vel_q1: 2.5
+max_vel_q2: 2.5
+max_vel_q3: 2.5
+max_vel_q4: 2.5
+max_vel_q5: 1.2
+max_vel_r: 0.2
+max_vel_x: 0.2
+max_vel_y: 0.2
+max_vel_z: 0.2
+max_vel_theta: 1.5
+
+
+# max accelerations
+max_acc_q1: 1.9
+max_acc_q2: 1.9
+max_acc_q3: 1.9
+max_acc_q4: 1.9
+max_acc_q5: 1.9
+max_acc_r: 0.4
+max_acc_x: 0.4
+max_acc_y: 0.4
+max_acc_z: 0.4
+max_acc_theta: 1.0

@@ -1,0 +1,10 @@
+# goal
+float32 left
+float32 right
+float32 front
+float32 back
+---
+# result
+geometry_msgs/Pose2D moved_distance
+---
+# feedback

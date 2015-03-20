@@ -1,0 +1,14 @@
+# goal
+string frame_id
+float32 x_goal
+float32 y_goal
+float32 x_pos_tolerance
+float32 y_pos_tolerance
+float32 x_vel_tolerance
+float32 y_vel_tolerance
+---
+# result
+geometry_msgs/Pose2D moved_distance
+geometry_msgs/PoseStamped last_pose
+---
+# feedback

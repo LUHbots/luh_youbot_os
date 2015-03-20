@@ -1,0 +1,31 @@
+max_velocity_x: 0.4 # meters/second
+max_velocity_y: 0.4 # meters/second
+max_velocity_theta: 0.4 # radians/second
+
+velocity_p_factor_x: 2 
+velocity_p_factor_y: 2
+velocity_p_factor_theta: 0.7
+
+velocity_i_factor_x: 0.3
+velocity_i_factor_y: 0.3
+velocity_i_factor_theta: 0.3
+
+velocity_d_factor_x: 0.0
+velocity_d_factor_y: 0.0
+velocity_d_factor_theta: 0.0
+
+position_tolerance_x: 0.01 # meters
+position_tolerance_y: 0.01 # meters
+position_tolerance_theta: 5 # degrees
+
+velocity_command_timeout: 1.0 #seconds
+
+memory_size: 5
+
+#alignment
+align_stop_timeout: 1.0 # stop after x seconds with no signal
+align_fail_timeout: 3.0 # return failed after x seconds with no signal
+
+#watchdog
+#min_dist_x: 0.02
+#min_dist_y: 0.185

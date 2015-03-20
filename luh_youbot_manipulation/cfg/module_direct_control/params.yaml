@@ -1,0 +1,2 @@
+joint_position_tolerance: 0.3 #degrees
+joint_velocity_tolerance: 0.1 #degrees per second

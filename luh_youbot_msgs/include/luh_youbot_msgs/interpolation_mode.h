@@ -1,0 +1,14 @@
+#ifndef LUH_YOUBOT_MSGS_INTERPOLATION_MODE_H
+#define LUH_YOUBOT_MSGS_INTERPOLATION_MODE_H
+
+namespace luh_youbot_msgs
+{
+enum InterpolationMode
+{
+    JOINTSPACE,
+    CYLINDRIC,
+    CARTESIAN
+};
+}
+
+#endif //LUH_YOUBOT_MSGS_INTERPOLATION_MODE_H
