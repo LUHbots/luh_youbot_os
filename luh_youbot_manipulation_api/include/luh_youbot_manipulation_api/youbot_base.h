@@ -32,14 +32,8 @@
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
-#include <luh_youbot_msgs/MoveToCartesianPoseAction.h>
-#include <luh_youbot_msgs/MoveToCylindricPoseAction.h>
-#include <luh_youbot_msgs/MoveToJointPoseAction.h>
-#include <luh_youbot_msgs/MoveToNamedPoseAction.h>
-#include <luh_youbot_msgs/SetGripperAction.h>
-#include <luh_youbot_msgs/GripObjectAction.h>
+#include <luh_youbot_msgs/ApproachBaseAction.h>
 #include <luh_youbot_msgs/MoveBaseAction.h>
-#include <luh_youbot_kinematics/arm_kinematics.h>
 
 namespace manipulation_api
 {
@@ -52,6 +46,7 @@ struct Pose2D
 };
 
 typedef actionlib::SimpleActionClient<luh_youbot_msgs::MoveBaseAction> MoveBaseClient;
+typedef actionlib::SimpleActionClient<luh_youbot_msgs::ApproachBaseAction> ApproachClient;
 
 /**
  * @brief This is a wrapper class for all action clients that control the youBot base.
@@ -156,17 +151,30 @@ public:
      */
     Pose2D getCurrentPose();
 
+    /**
+     * @brief Lets the base approach an obstacle to a given distance.
+     * @details The approach action is based on distance information published by luh_laser_watchdog.
+     * Distances with a value of zero will be ignored. Negative values are interpreted as the opposite direction.
+     * Example: If the closest obstacle behind the youbot is 0.4 m away, approach(-0.1, 0) will let the youbot
+     * drive 0.3 m backward so that the resulting distance to the back is 0.1 m. Since the second value is zero
+     * the youbot will not move sidewards.
+     * @param front Desired distance to the front.
+     * @param right Desired distance to the right.
+     */
+    void approach(double front, double right);
+
 protected:
     enum ActiveClient
     {
         MOVE_BASE,
-        APPROACH // TODO
+        APPROACH
 
     } active_client_;
 
     ros::NodeHandle *node_;
 
     MoveBaseClient *move_base_client_;
+    ApproachClient *approach_client_;
 
     ros::ServiceClient get_pose_client_;
 
@@ -176,6 +184,9 @@ protected:
 
     void onMoveBaseActionDone(const actionlib::SimpleClientGoalState& state,
                               const luh_youbot_msgs::MoveBaseResultConstPtr& result);
+
+    void onApproachActionDone(const actionlib::SimpleClientGoalState& state,
+                              const luh_youbot_msgs::ApproachBaseResultConstPtr& result);
 
 };
 
