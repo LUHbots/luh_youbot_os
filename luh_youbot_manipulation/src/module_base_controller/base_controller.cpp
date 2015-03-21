@@ -272,7 +272,7 @@ void ModuleBaseController::updateAlignMode()
 
 }
 
-//########## UPDATE ALIGN MODE #########################################################################################
+//########## UPDATE APPROACH MODE ######################################################################################
 void ModuleBaseController::updateApproachMode()
 {
     double diff_x_t, diff_y_t, diff_theta;
@@ -768,6 +768,12 @@ void ModuleBaseController::approachCallback()
         move_base_server_->setAborted();
         return;
     }
+
+    // eliminate conflicting goals
+    if(approach_goal_.back > 0 && approach_goal_.front > 0)
+        approach_goal_.back = 0;
+    if(approach_goal_.right > 0 && approach_goal_.left > 0)
+        approach_goal_.left = 0;
 
     ROS_INFO("Moving base...");
 
