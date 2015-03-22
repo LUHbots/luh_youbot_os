@@ -403,7 +403,12 @@ void ModuleBaseController::emergencyStop()
 void ModuleBaseController::preemptCallback()
 {
     boost::mutex::scoped_lock lock(base_mutex_);
+    preempt();
+}
 
+//###################### CALLBACK: PREEMPT #############################################################################
+void ModuleBaseController::preempt()
+{
     velocity_command_.linear.x = 0;
     velocity_command_.linear.y = 0;
     velocity_command_.angular.z = 0;
@@ -442,7 +447,7 @@ void ModuleBaseController::velocityCallback(const geometry_msgs::Twist::ConstPtr
 
     if(mode_ == POSITION || mode_ == ALIGN || mode_ == APPROACH)
     {
-        preemptCallback();
+        preempt();
     }
 
     velocity_command_ = *velocity_msg;
@@ -470,7 +475,7 @@ void ModuleBaseController::moveBaseCallback()
 
     if(mode_ == POSITION || mode_ == ALIGN || mode_ == APPROACH)
     {
-        preemptCallback();
+        preempt();
     }
 
     goal_pose_ = *(move_base_server_->acceptNewGoal());
@@ -514,7 +519,7 @@ void ModuleBaseController::alignBaseCallback()
 
     if(mode_ == POSITION || mode_ == ALIGN || mode_ == APPROACH)
     {
-        preemptCallback();
+        preempt();
     }
 
     align_goal_ = *(align_base_server_->acceptNewGoal());
@@ -764,10 +769,11 @@ void ModuleBaseController::approachCallback()
     boost::mutex::scoped_lock lock(base_mutex_);
 
     ROS_INFO("==== Module Base Controller ====");
+    ROS_INFO("Approach goal received.");
 
     if(mode_ == POSITION || mode_ == ALIGN || mode_ == APPROACH)
     {
-        preemptCallback();
+        preempt();
     }
 
     approach_goal_ = *(approach_server_->acceptNewGoal());
@@ -791,7 +797,7 @@ void ModuleBaseController::approachCallback()
     if(approach_goal_.right > 0 && approach_goal_.left > 0)
         approach_goal_.left = 0;
 
-    ROS_INFO("Moving base...");
+    ROS_INFO("Approaching...");
 
     geometry_msgs::Pose2D base_pose = youbot_->base()->getPose();
     current_pose_.x = base_pose.x;

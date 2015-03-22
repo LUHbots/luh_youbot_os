@@ -136,7 +136,7 @@ void ModuleDirectControl::activate()
 //########## DEACTIVATE ################################################################################################
 void ModuleDirectControl::deactivate()
 {
-    preemptCallback();
+    preempt();
     active_ = false;
 }
 
@@ -171,7 +171,13 @@ void ModuleDirectControl::emergencyStop()
 void ModuleDirectControl::preemptCallback()
 {
     boost::mutex::scoped_lock lock(arm_mutex_);
+    preempt();
 
+}
+
+//###################### PREEMPT #######################################################################################
+void ModuleDirectControl::preempt()
+{
     bool preempted = false;
 
     if(cartesian_pose_server_->isActive())
