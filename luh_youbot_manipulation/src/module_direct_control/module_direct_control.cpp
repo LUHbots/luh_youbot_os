@@ -170,6 +170,8 @@ void ModuleDirectControl::emergencyStop()
 //###################### CALLBACK: PREEMPT #############################################################################
 void ModuleDirectControl::preemptCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     bool preempted = false;
 
     if(cartesian_pose_server_->isActive())
@@ -204,6 +206,8 @@ void ModuleDirectControl::preemptCallback()
 //###################### CALLBACK: CARTESIAN POSITION ##################################################################
 void ModuleDirectControl::cartesianPoseCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     ROS_INFO("==== Module Direct Control ====");
 
     if(!active_ || arm_is_busy_)
@@ -256,6 +260,8 @@ void ModuleDirectControl::cartesianPoseCallback()
 //###################### CALLBACK: CYLINDRIC POSITION ##################################################################
 void ModuleDirectControl::cylindricPoseCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     ROS_INFO("==== Module Direct Control ====");
 
     if(!active_ || arm_is_busy_)
@@ -299,6 +305,8 @@ void ModuleDirectControl::cylindricPoseCallback()
 //###################### CALLBACK: JOINT POSITION ######################################################################
 void ModuleDirectControl::jointPoseCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     ROS_INFO("==== Module Direct Control ====");
 
     if(!active_ || arm_is_busy_)
@@ -337,6 +345,8 @@ void ModuleDirectControl::jointPoseCallback()
 //###################### CALLBACK: NAMED POSITION ######################################################################
 void ModuleDirectControl::namedPoseCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     ROS_INFO("==== Module Direct Control ====");
 
     if(!active_ || arm_is_busy_)
@@ -375,6 +385,8 @@ void ModuleDirectControl::namedPoseCallback()
 //###################### RELAX SERVICE CALLBACK ########################################################################
 bool ModuleDirectControl::relaxCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(arm_is_busy_)
         return false;
 
@@ -386,6 +398,8 @@ bool ModuleDirectControl::relaxCallback(std_srvs::Empty::Request &req, std_srvs:
 //###################### STIFFEN SERVICE CALLBACK ######################################################################
 bool ModuleDirectControl::stiffenCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(arm_is_busy_)
         return false;
 

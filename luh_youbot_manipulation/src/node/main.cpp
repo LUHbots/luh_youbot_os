@@ -29,7 +29,10 @@ int main(int argc, char** argv)
     ManipulationNode node(node_handle);
 
     ROS_INFO("Manipulation Node is spinning...");
-    ros::spin();
+    ros::AsyncSpinner spinner(4);
+    spinner.start();
+
+    ros::waitForShutdown();
 
     return 0;
 }

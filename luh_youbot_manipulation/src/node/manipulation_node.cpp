@@ -133,11 +133,16 @@ ManipulationNode::~ManipulationNode()
 //########################## CALLBACK: ARM TIMER #######################################################################
 void ManipulationNode::armTimerCallback(const ros::TimerEvent &evt)
 {
+    boost::mutex::scoped_lock armlock(ManipulationModule::arm_mutex_);
+    boost::mutex::scoped_lock gripperlock(ManipulationModule::gripper_mutex_);
+
     if(!youbot_->arm()->isInitialised())
         return;
 
     // === READ ARM SENSORS ===
+    ethercat_mutex_.lock();
     youbot_->arm()->readState();
+    ethercat_mutex_.unlock();
 
     // === UPDATE MODULES ===
     for(uint i=0; i<arm_modules_.size(); i++)
@@ -150,8 +155,15 @@ void ManipulationNode::armTimerCallback(const ros::TimerEvent &evt)
         stopArm();
 
     // === WRITE ARM COMMANDS ===
-    else if(!youbot_->arm()->writeCommands())
-        stopArm();
+    else
+    {
+        ethercat_mutex_.lock();
+        bool error = !youbot_->arm()->writeCommands();
+        ethercat_mutex_.unlock();
+
+        if(error)
+            stopArm();
+    }
 
     // == PUBLISH JOINT STATE MESSAGES ===
     youbot_->arm()->publishMessages();
@@ -160,11 +172,15 @@ void ManipulationNode::armTimerCallback(const ros::TimerEvent &evt)
 //########################## CALLBACK: BASE TIMER ######################################################################
 void ManipulationNode::baseTimerCallback(const ros::TimerEvent &evt)
 {
+    boost::mutex::scoped_lock lock(ManipulationModule::base_mutex_);
+
     if(!youbot_->base()->isInitialised())
         return;
 
     // === READ BASE SENSORS ===
+    ethercat_mutex_.lock();
     youbot_->base()->readState();
+    ethercat_mutex_.unlock();
 
     // === UPDATE MODULES ===
     for(uint i=0; i<base_modules_.size(); i++)
@@ -176,7 +192,11 @@ void ManipulationNode::baseTimerCallback(const ros::TimerEvent &evt)
     youbot_->base()->updateController();
 
     // === WRITE BASE COMMANDS ===
-    if(!youbot_->base()->writeCommands())
+    ethercat_mutex_.lock();
+    bool error = !youbot_->base()->writeCommands();
+    ethercat_mutex_.unlock();
+
+    if(error)
         stopBase();
 
     // == PUBLISH BASE MESSAGES ===
@@ -187,6 +207,8 @@ void ManipulationNode::baseTimerCallback(const ros::TimerEvent &evt)
 bool ManipulationNode::getPoseCallback(luh_youbot_msgs::GetArmPose::Request &req,
                                   luh_youbot_msgs::GetArmPose::Response &res)
 {
+    boost::mutex::scoped_lock lock(ManipulationModule::arm_mutex_);
+
     JointPosition current_position = youbot_->arm()->getJointPosition();
 
     res.joint_pose.q1 = current_position.q1();
@@ -245,6 +267,8 @@ void ManipulationNode::stopBase()
 //########################## CALLBACK: EMERGENCY STOP ARM ##############################################################
 bool ManipulationNode::stopArmCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
 {
+    boost::mutex::scoped_lock lock(ManipulationModule::arm_mutex_);
+
     stopArm();
     return true;
 }
@@ -252,6 +276,8 @@ bool ManipulationNode::stopArmCallback(std_srvs::Empty::Request &req, std_srvs::
 //########################## CALLBACK: EMERGENCY STOP BASE #############################################################
 bool ManipulationNode::stopBaseCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
 {
+    boost::mutex::scoped_lock lock(ManipulationModule::base_mutex_);
+
     stopBase();
     return true;
 }
@@ -259,6 +285,9 @@ bool ManipulationNode::stopBaseCallback(std_srvs::Empty::Request &req, std_srvs:
 //########################## CALLBACK: EMERGENCY STOP BOT ##############################################################
 bool ManipulationNode::stopBotCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
 {
+    boost::mutex::scoped_lock armlock(ManipulationModule::arm_mutex_);
+    boost::mutex::scoped_lock baselock(ManipulationModule::base_mutex_);
+
     stopArm();
     stopBase();
 

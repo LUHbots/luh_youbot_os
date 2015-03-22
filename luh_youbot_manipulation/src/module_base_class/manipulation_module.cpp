@@ -46,6 +46,9 @@ double ManipulationModule::base_update_frequency_;
 tf::TransformListener* ManipulationModule::tf_listener_;
 YoubotInterface* ManipulationModule::youbot_;
 youbot_poses::PoseMap ManipulationModule::predefined_poses_;
+boost::mutex ManipulationModule::arm_mutex_;
+boost::mutex ManipulationModule::base_mutex_;
+boost::mutex ManipulationModule::gripper_mutex_;
 
 //######################### CONSTRUCTOR ################################################################################
 ManipulationModule::ManipulationModule()

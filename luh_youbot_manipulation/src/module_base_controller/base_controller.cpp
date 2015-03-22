@@ -402,6 +402,8 @@ void ModuleBaseController::emergencyStop()
 //###################### CALLBACK: PREEMPTION ##########################################################################
 void ModuleBaseController::preemptCallback()
 {
+    boost::mutex::scoped_lock lock(base_mutex_);
+
     velocity_command_.linear.x = 0;
     velocity_command_.linear.y = 0;
     velocity_command_.angular.z = 0;
@@ -436,6 +438,8 @@ void ModuleBaseController::preemptCallback()
 //###################### CALLBACK: VELOCITY ############################################################################
 void ModuleBaseController::velocityCallback(const geometry_msgs::Twist::ConstPtr &velocity_msg)
 {
+    boost::mutex::scoped_lock lock(base_mutex_);
+
     if(mode_ == POSITION || mode_ == ALIGN || mode_ == APPROACH)
     {
         preemptCallback();
@@ -460,6 +464,8 @@ void ModuleBaseController::velocityCallback(const geometry_msgs::Twist::ConstPtr
 //###################### CALLBACK: MOVE BASE ###########################################################################
 void ModuleBaseController::moveBaseCallback()
 {    
+    boost::mutex::scoped_lock lock(base_mutex_);
+
     ROS_INFO("==== Module Base Controller ====");
 
     if(mode_ == POSITION || mode_ == ALIGN || mode_ == APPROACH)
@@ -502,6 +508,8 @@ void ModuleBaseController::moveBaseCallback()
 //###################### CALLBACK: ALIGN BASE ##########################################################################
 void ModuleBaseController::alignBaseCallback()
 {
+    boost::mutex::scoped_lock lock(base_mutex_);
+
     ROS_INFO("==== Module Base Controller ====");
 
     if(mode_ == POSITION || mode_ == ALIGN || mode_ == APPROACH)
@@ -588,6 +596,8 @@ void ModuleBaseController::alignBaseCallback()
 //###################### CALLBACK: POSE ################################################################################
 void ModuleBaseController::poseCallback(const geometry_msgs::PoseStamped::ConstPtr &pose_msg)
 {
+    boost::mutex::scoped_lock lock(base_mutex_);
+
     if(mode_ != ALIGN)
         return;
 
@@ -732,7 +742,9 @@ void ModuleBaseController::poseCallback(const geometry_msgs::PoseStamped::ConstP
 //###################### CALLBACK: STOP ################################################################################
 bool ModuleBaseController::stopCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
 {
-    preemptCallback();
+    boost::mutex::scoped_lock lock(base_mutex_);
+
+    emergencyStop();
 
     return true;
 }
@@ -740,6 +752,8 @@ bool ModuleBaseController::stopCallback(std_srvs::Empty::Request &req, std_srvs:
 //###################### CALLBACK: LASER WATCHDOG ######################################################################
 void ModuleBaseController::laserCallback(const luh_laser_watchdog::Distances::ConstPtr &distances)
 {
+    boost::mutex::scoped_lock lock(base_mutex_);
+
     distances_ = *distances;
 }
 
@@ -747,6 +761,8 @@ void ModuleBaseController::laserCallback(const luh_laser_watchdog::Distances::Co
 //###################### CALLBACK: APPROACH ACTION #####################################################################
 void ModuleBaseController::approachCallback()
 {
+    boost::mutex::scoped_lock lock(base_mutex_);
+
     ROS_INFO("==== Module Base Controller ====");
 
     if(mode_ == POSITION || mode_ == ALIGN || mode_ == APPROACH)
@@ -795,6 +811,8 @@ void ModuleBaseController::approachCallback()
 bool ModuleBaseController::getPoseCallback(luh_youbot_msgs::GetBasePose::Request &req,
                                            luh_youbot_msgs::GetBasePose::Response &res)
 {
+    boost::mutex::scoped_lock lock(base_mutex_);
+
     geometry_msgs::Pose2D base_pose = youbot_->base()->getPose();
 
     res.x = base_pose.x;

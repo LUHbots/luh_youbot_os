@@ -32,6 +32,7 @@
 #include "tf/transform_listener.h"
 #include "luh_youbot_interface/youbot_interface.h"
 #include <luh_youbot_poses/youbot_poses.h>
+#include <boost/thread/mutex.hpp>
 
 class ManipulationModule
 {
@@ -66,6 +67,10 @@ public:
     static void setArmIsBusy(bool arm_is_busy);
     static void setBaseIsBusy(bool base_is_busy);
     static void setGripperIsBusy(bool gripper_is_busy);
+
+    static boost::mutex arm_mutex_;
+    static boost::mutex base_mutex_;
+    static boost::mutex gripper_mutex_;
 
 protected:
 

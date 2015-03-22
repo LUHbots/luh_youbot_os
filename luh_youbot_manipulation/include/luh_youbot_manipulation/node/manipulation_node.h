@@ -51,6 +51,8 @@ protected:
     std::vector<ManipulationModule*> arm_modules_;
     std::vector<ManipulationModule*> base_modules_;
 
+    boost::mutex ethercat_mutex_;
+
     double arm_frequency_;
     double base_frequency_;
 
