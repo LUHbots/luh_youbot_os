@@ -73,6 +73,8 @@ protected:
     bool relaxCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
     bool stiffenCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
 
+    void preempt();
+
     bool active_;
     bool has_command_;
     luh_youbot_kinematics::JointPosition position_command_;

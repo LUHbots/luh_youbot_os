@@ -126,6 +126,7 @@ protected:
     void deactivate();
     void update();
     void emergencyStop();
+    void preempt();
 
     void updateVelocityMode();
     void updatePositionMode();

@@ -169,6 +169,8 @@ void ModuleGripper::emergencyStop()
 //########## CALLBACK: GRIP OBJECT #####################################################################################
 void ModuleGripper::gripObjectCallback()
 {
+    boost::mutex::scoped_lock lock(gripper_mutex_);
+
     ROS_INFO("==== Module Gripper ====");
 
     std::string name = grip_object_server_->acceptNewGoal()->object_name;
@@ -206,6 +208,8 @@ void ModuleGripper::gripObjectCallback()
 //########## CALLBACK: SET GRIPPER (ACTION) ############################################################################
 void ModuleGripper::setGripperCallback()
 {
+    boost::mutex::scoped_lock lock(gripper_mutex_);
+
     ROS_INFO("==== Module Gripper ====");
 
     double new_goal_width = set_gripper_server_->acceptNewGoal()->gripper_width;
@@ -242,6 +246,8 @@ void ModuleGripper::setGripperCallback()
 //########## CALLBACK: SET GRIPPER (SUBSCRIBER) ########################################################################
 void ModuleGripper::gripperMsgCallback(const std_msgs::Float32::ConstPtr &msg)
 {
+    boost::mutex::scoped_lock lock(gripper_mutex_);
+
     if(msg->data > max_gripper_width_ || msg->data < min_gripper_width_)
     {
         ROS_ERROR("Requested gripper width of %f is out of range.", msg->data);

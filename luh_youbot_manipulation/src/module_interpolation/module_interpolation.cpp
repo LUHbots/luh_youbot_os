@@ -252,6 +252,8 @@ void ModuleInterpolation::deactivate()
 bool ModuleInterpolation::setCartesianVelocityCallback(luh_youbot_msgs::SetCartesianVelocity::Request &req,
                                   luh_youbot_msgs::SetCartesianVelocity::Response &res)
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     ykin::CartesianVelocity vel;
     vel.setX(req.max_velocity.x);
     vel.setY(req.max_velocity.y);
@@ -268,6 +270,8 @@ bool ModuleInterpolation::setCartesianVelocityCallback(luh_youbot_msgs::SetCarte
 bool ModuleInterpolation::setCylindricVelocityCallback(luh_youbot_msgs::SetCylindricVelocity::Request &req,
                                   luh_youbot_msgs::SetCylindricVelocity::Response &res)
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     ykin::CylindricVelocity vel;
     vel.setQ1(req.max_velocity.q1);
     vel.setR(req.max_velocity.r);
@@ -284,6 +288,8 @@ bool ModuleInterpolation::setCylindricVelocityCallback(luh_youbot_msgs::SetCylin
 bool ModuleInterpolation::setJointVelocityCallback(luh_youbot_msgs::SetJointVelocity::Request &req,
                               luh_youbot_msgs::SetJointVelocity::Response &res)
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     ykin::JointVelocity vel;
     vel.setQ1(req.max_velocity.q1);
     vel.setQ2(req.max_velocity.q2);
@@ -310,6 +316,8 @@ bool ModuleInterpolation::setJointVelocityCallback(luh_youbot_msgs::SetJointVelo
 //###################### CALLBACK: PREEMPT #############################################################################
 void ModuleInterpolation::preemptCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     ROS_WARN("MI: Preemption callback.");
     //    preempted_ = true;
 
@@ -464,6 +472,8 @@ bool ModuleInterpolation::checkStatePosition()
 //###################### CALLBACK: CARTESIAN VELOCITY ##################################################################
 void ModuleInterpolation::cartVelocityCallback(const luh_youbot_msgs::CartesianVector::ConstPtr &msg)
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(!checkStateVelocity())
         return;
 
@@ -492,6 +502,8 @@ void ModuleInterpolation::cartVelocityCallback(const luh_youbot_msgs::CartesianV
 //###################### CALLBACK: JOINT VELOCITY ######################################################################
 void ModuleInterpolation::jntVelocityCallback(const luh_youbot_msgs::JointVector::ConstPtr &msg)
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(!checkStateVelocity())
         return;
 
@@ -516,6 +528,8 @@ void ModuleInterpolation::jntVelocityCallback(const luh_youbot_msgs::JointVector
 //###################### CALLBACK: CYLINDRICAL VELOCITY ################################################################
 void ModuleInterpolation::cylVelocityCallback(const luh_youbot_msgs::CylindricVector::ConstPtr &msg)
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(!checkStateVelocity())
         return;
 
@@ -595,6 +609,8 @@ void ModuleInterpolation::setVelocityCommand(const ykin::GenericVector& velocity
 //###################### CALLBACK: CARTESIAN POSITION ##################################################################
 void ModuleInterpolation::cartesianPoseCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(!checkStatePosition())
     {
         ROS_WARN("MI: Can't accept action goals.");
@@ -629,6 +645,8 @@ void ModuleInterpolation::cartesianPoseCallback()
 //###################### CALLBACK: CYLINDRIC POSITION ##################################################################
 void ModuleInterpolation::cylindricPoseCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(!checkStatePosition())
     {
         ROS_WARN("MI: Can't accept action goals.");
@@ -657,6 +675,8 @@ void ModuleInterpolation::cylindricPoseCallback()
 //###################### CALLBACK: JOINT POSITION ######################################################################
 void ModuleInterpolation::jointPoseCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(!checkStatePosition())
     {
         ROS_WARN("MI: Can't accept action goals.");
@@ -685,6 +705,8 @@ void ModuleInterpolation::jointPoseCallback()
 //###################### CALLBACK: NAMED POSITION ######################################################################
 void ModuleInterpolation::namedPoseCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(!checkStatePosition())
     {
         ROS_WARN("MI: Can't accept action goals.");

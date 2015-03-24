@@ -27,6 +27,8 @@ using namespace luh_youbot_kinematics;
 bool ModuleMotionPlanner::predefPoseCallback(luh_youbot_msgs::ToPredefinedPose::Request &req,
                                              luh_youbot_msgs::ToPredefinedPose::Response &res)
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(!isReady())
         return false;
 
@@ -64,6 +66,8 @@ bool ModuleMotionPlanner::predefPoseCallback(luh_youbot_msgs::ToPredefinedPose::
 bool ModuleMotionPlanner::listPosesCallback(luh_youbot_msgs::ListPoses::Request &req,
                                             luh_youbot_msgs::ListPoses::Response &res)
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     std::map<std::string, bool> listed;
     std::stringstream ss;
 
@@ -94,6 +98,8 @@ bool ModuleMotionPlanner::listPosesCallback(luh_youbot_msgs::ListPoses::Request 
 //############### CALLBACK: JOINT POSE #################################################################################
 void ModuleMotionPlanner::jointPoseCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     // === GET GOAL ===
     boost::shared_ptr<const luh_youbot_msgs::MoveToJointPoseGoal> goal = joint_pose_server_->acceptNewGoal();
 
@@ -137,6 +143,8 @@ void ModuleMotionPlanner::jointPoseCallback()
 //############### CALLBACK: CARTESIAN POSE #############################################################################
 void ModuleMotionPlanner::cartesianPoseCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     // === GET GOAL ===
     boost::shared_ptr<const luh_youbot_msgs::MoveToCartesianPoseGoal> goal = cartesian_pose_server_->acceptNewGoal();
 
@@ -187,6 +195,8 @@ void ModuleMotionPlanner::cartesianPoseCallback()
 //############### CALLBACK: CYLINDRIC POSE #############################################################################
 void ModuleMotionPlanner::cylindricPoseCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     // === GET GOAL ===
     boost::shared_ptr<const luh_youbot_msgs::MoveToCylindricPoseGoal> goal = cylindric_pose_server_->acceptNewGoal();
 
@@ -249,6 +259,8 @@ void ModuleMotionPlanner::cylindricPoseCallback()
 //############### CALLBACK: NAMED POSE #################################################################################
 void ModuleMotionPlanner::namedPoseCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     // === GET GOAL ===
     boost::shared_ptr<const luh_youbot_msgs::MoveToNamedPoseGoal> goal = named_pose_server_->acceptNewGoal();
 
@@ -293,6 +305,8 @@ void ModuleMotionPlanner::namedPoseCallback()
 //############### CALLBACK: JOINT PATH ###########################################################################
 void ModuleMotionPlanner::jointPathCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     // === GET GOAL ===
     boost::shared_ptr<const luh_youbot_msgs::MoveJointPathGoal> goal = joint_path_server_->acceptNewGoal();
 
@@ -337,6 +351,8 @@ void ModuleMotionPlanner::jointPathCallback()
 //############### CALLBACK: CARTESIAN PATH #######################################################################
 void ModuleMotionPlanner::cartesianPathCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     // === GET GOAL ===
     boost::shared_ptr<const luh_youbot_msgs::MoveCartesianPathGoal> goal
             = cartesian_path_server_->acceptNewGoal();
@@ -390,6 +406,8 @@ void ModuleMotionPlanner::cartesianPathCallback()
 //############### CALLBACK: CYLINDRIC PATH #######################################################################
 void ModuleMotionPlanner::cylindricPathCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     // === GET GOAL ===
     boost::shared_ptr<const luh_youbot_msgs::MoveCylindricPathGoal> goal
             = cylindric_path_server_->acceptNewGoal();
@@ -438,6 +456,8 @@ void ModuleMotionPlanner::cylindricPathCallback()
 //############### CALLBACK: NAMED PATH ###########################################################################
 void ModuleMotionPlanner::namedPathCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     // === GET GOAL ===
     boost::shared_ptr<const luh_youbot_msgs::MoveNamedPathGoal> goal = named_path_server_->acceptNewGoal();
 
@@ -559,6 +579,8 @@ void ModuleMotionPlanner::endPredefinedPoseService(bool success)
 //############### PREEMPT CALLBACK #####################################################################################
 void ModuleMotionPlanner::preemptCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     ROS_WARN("MMP: Movement aborted.");
 
     if(joint_path_server_->isActive())

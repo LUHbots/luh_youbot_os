@@ -217,6 +217,8 @@ void ModuleJointTrajectory::emergencyStop()
 //########## EXECUTE CALLBACK ##########################################################################################
 void ModuleJointTrajectory::goalCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     ROS_INFO("==== Module Joint Trajectory ====");
     boost::shared_ptr<const control_msgs::FollowJointTrajectoryGoal> goal = server_->acceptNewGoal();
 

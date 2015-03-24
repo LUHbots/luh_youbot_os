@@ -160,6 +160,8 @@ void ModuleGravityCompensation::emergencyStop()
 //########## COMPENSATE CALLBACK #######################################################################################
 bool ModuleGravityCompensation::compensateCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(!arm_is_busy_)
         do_compensation_ = true;
 
@@ -169,6 +171,8 @@ bool ModuleGravityCompensation::compensateCallback(std_srvs::Empty::Request &req
 //########## DEACTIVATE CALLBACK #######################################################################################
 bool ModuleGravityCompensation::deactivateCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     do_compensation_ = false;
     youbot_->arm()->setJointVelocities(JointVelocity());
     return true;
@@ -178,6 +182,8 @@ bool ModuleGravityCompensation::deactivateCallback(std_srvs::Empty::Request &req
 bool ModuleGravityCompensation::getLoadCallback(luh_youbot_msgs::GetLoad::Request &req,
                                                 luh_youbot_msgs::GetLoad::Response &res)
 {    
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(position_buffer_.empty())
     {
         ROS_ERROR("MGC: Cannot calculate load, buffer is empty.");
@@ -221,6 +227,8 @@ bool ModuleGravityCompensation::getLoadCallback(luh_youbot_msgs::GetLoad::Reques
 //########## FORCE FIT CALLBACK ########################################################################################
 void ModuleGravityCompensation::forceFitCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(!is_active_ || arm_is_busy_)
     {
         ROS_WARN("MGC: Can't accept action goals.");
@@ -242,6 +250,8 @@ void ModuleGravityCompensation::forceFitCallback()
 //########## PREEMPT CALLBACK ##########################################################################################
 void ModuleGravityCompensation::preemptCallback()
 {
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
     if(force_fit_server_->isActive())
     {
         force_fit_server_->setPreempted();
