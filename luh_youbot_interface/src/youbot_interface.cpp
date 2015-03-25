@@ -105,7 +105,7 @@ YoubotInterface::YoubotInterface(ros::NodeHandle &node)
 }
 
 //########## INITIALISE ################################################################################################
-void YoubotInterface::initialise()
+void YoubotInterface::initialise(bool use_standard_gripper)
 {
     if(config_.has_base)
     {
@@ -115,7 +115,7 @@ void YoubotInterface::initialise()
 
     for(uint i=0; i<arms_.size(); i++)
     {
-        arms_[i]->initialise();
+        arms_[i]->initialise(use_standard_gripper);
         ROS_ASSERT(arms_[i]->isInitialised());
     }
 }

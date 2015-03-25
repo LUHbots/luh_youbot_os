@@ -71,7 +71,7 @@ class YoubotInterface
 {
 public:
     YoubotInterface(ros::NodeHandle &node);
-    void initialise();
+    void initialise(bool use_standard_gripper=true);
     void readState();
     void writeCommands();
     void publishMessages();

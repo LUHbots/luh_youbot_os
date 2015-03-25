@@ -69,6 +69,10 @@ src/module_base_controller/base_controller.cpp
 include/luh_youbot_manipulation/module_base_controller/base_controller.h
 
 # gripper module
+src/module_external_gripper/external_gripper.cpp
+include/luh_youbot_manipulation/module_external_gripper/external_gripper.h
+
+# external gripper module
 src/module_gripper/gripper.cpp
 include/luh_youbot_manipulation/module_gripper/gripper.h
 

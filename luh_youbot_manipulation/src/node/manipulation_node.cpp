@@ -27,6 +27,7 @@
 #include "luh_youbot_manipulation/module_direct_control/module_direct_control.h"
 #include "luh_youbot_manipulation/module_joint_trajectory/module_joint_trajectory.h"
 #include "luh_youbot_manipulation/module_gravity_compensation/module_gravity_compensation.h"
+#include "luh_youbot_manipulation/module_external_gripper/external_gripper.h"
 
 using namespace luh_youbot_kinematics;
 
@@ -37,10 +38,16 @@ ManipulationNode::ManipulationNode(ros::NodeHandle &node):
     // === PARAMETERS ===
     node_->param("luh_youbot_manipulation/arm_controller_frequency", arm_frequency_, 200.0);
     node_->param("luh_youbot_manipulation/base_controller_frequency", base_frequency_, 50.0);
+    node_->param("luh_youbotmanipulation/use_standard_gripper", use_standard_gripper_, true);
+
+    if(use_standard_gripper_)
+        ROS_INFO("Using standard gripper.");
+    else
+        ROS_INFO("Using external gripper.");
 
     // === YOUBOT INTERFACE ===
     youbot_ = new YoubotInterface(node);
-    youbot_->initialise();
+    youbot_->initialise(use_standard_gripper_);
 
     // === TIMER ===
     arm_timer_ = node_->createTimer(ros::Duration(1.0/arm_frequency_),
@@ -70,11 +77,16 @@ ManipulationNode::ManipulationNode(ros::NodeHandle &node):
     if(youbot_->hasArms())
     {
         arm_modules_.push_back(new ModuleInterpolation());
-        arm_modules_.push_back(new ModuleMotionPlanner());
-        arm_modules_.push_back(new ModuleGripper());
+        arm_modules_.push_back(new ModuleMotionPlanner());        
         arm_modules_.push_back(new ModuleDirectControl());
         arm_modules_.push_back(new ModuleJointTrajectory());
         arm_modules_.push_back(new ModuleGravityCompensation());
+
+        if(use_standard_gripper_)
+            arm_modules_.push_back(new ModuleGripper());
+        else
+            arm_modules_.push_back(new ModuleExternalGripper());
+
         // other modules can be added here
 
         for(uint i=0; i<arm_modules_.size(); i++)

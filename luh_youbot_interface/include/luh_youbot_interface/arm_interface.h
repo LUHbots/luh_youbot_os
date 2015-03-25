@@ -73,7 +73,7 @@ class YoubotArmInterface
 {
 public:
     YoubotArmInterface(std::string name, YoubotConfiguration &config);
-    void initialise();
+    void initialise(bool use_standard_gripper=true);
     void readState();
     bool writeCommands();
     void stop();
@@ -137,6 +137,8 @@ protected:
     luh_youbot_kinematics::JointVector max_effort_;
     double max_effort_max_duration_;
     std::vector<ros::Time> effort_watchdog_time_;
+
+    bool use_standard_gripper_;
 
     bool switchOffArmMotorsCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
     bool switchOnArmMotorsCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
