@@ -19,6 +19,9 @@
                 <arg name="youBotHasBase" value="$(arg youBotHasBase)"/>
         </include>
 
+        <!-- USE VREP SIMULATION -->
+        <param name="luh_youbot_manipulation/use_vrep_simulation" value="true"/>
+
        	<!-- LAUNCH DRIVER NODE -->
 	<node name="manipulation_node" pkg="luh_youbot_manipulation" type="manipulation_node" output="screen" />
 </launch>

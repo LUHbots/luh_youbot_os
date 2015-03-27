@@ -60,41 +60,25 @@
  *
  ******************************************************************************/
 
-#ifndef LUH_YOUBOT_INTERFACE_H
-#define LUH_YOUBOT_INTERFACE_H
+#ifndef LUH_YOUBOT_VREP_INTERFACE_H
+#define LUH_YOUBOT_VREP_INTERFACE_H
 
-#include "luh_youbot_interface/arm_interface.h"
-#include "luh_youbot_interface/base_interface.h"
+#include "luh_youbot_vrep_interface/arm_interface.h"
+#include "luh_youbot_vrep_interface/base_interface.h"
 #include <ros/package.h>
+#include <luh_youbot_interface/youbot_interface.h>
 
-class YoubotInterface
+class YoubotVrepInterface : public YoubotInterface
 {
 public:
-    YoubotInterface(ros::NodeHandle &node);
-    ~YoubotInterface();
+    YoubotVrepInterface(ros::NodeHandle &node);
+    ~YoubotVrepInterface();
     virtual void initialise();
     virtual void readState();
     virtual void writeCommands();
     virtual void publishMessages();
     virtual void update();
     virtual void stop();
-    YoubotArmInterface* arm(int index=0);
-    YoubotBaseInterface* base();
-    int numArms(){return arms_.size();}
-
-    bool hasArms(){return arms_.size() > 0;}
-    bool hasBase(){return config_.has_base;}
-
-protected:
-
-    YoubotConfiguration config_;
-
-    YoubotBaseInterface *base_;
-    std::vector<YoubotArmInterface*> arms_;
-
-
-
-
 };
 
 

@@ -58,6 +58,8 @@ protected:
 
     YoubotInterface *youbot_;
 
+    bool use_vrep_simulation_;
+
     void stopBase();
     void stopArm();
 

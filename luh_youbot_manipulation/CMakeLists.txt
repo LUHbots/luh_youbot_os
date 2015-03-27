@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf_conversions
   cmake_modules
   control_msgs
+  luh_youbot_vrep_interface
 )
 find_package(orocos_kdl REQUIRED)
 

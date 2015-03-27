@@ -60,11 +60,9 @@
  *
  ******************************************************************************/
 
-#ifndef LUH_YOUBOT_BASE_INTERFACE_H
-#define LUH_YOUBOT_BASE_INTERFACE_H
+#ifndef LUH_YOUBOT_VREP_BASE_INTERFACE_H
+#define LUH_YOUBOT_VREP_BASE_INTERFACE_H
 
-#include "luh_youbot_interface/common.h"
-#include "youbot/YouBotBase.hpp"
 #include <sensor_msgs/JointState.h>
 #include <nav_msgs/Odometry.h>
 #include <std_srvs/Empty.h>
@@ -73,12 +71,14 @@
 #include <tf/tf.h>
 #include <tf/transform_broadcaster.h>
 #include <geometry_msgs/Pose2D.h>
+#include <luh_youbot_interface/base_interface.h>
+#include <sensor_msgs/LaserScan.h>
 
-class YoubotBaseInterface
+class YoubotBaseVrepInterface : public YoubotBaseInterface
 {
 public:
-    YoubotBaseInterface(std::string name, YoubotConfiguration &config);
-    ~YoubotBaseInterface();
+    YoubotBaseVrepInterface(std::string name, YoubotConfiguration &config);
+    ~YoubotBaseVrepInterface();
     virtual void initialise();
     virtual void readState();
     virtual void updateController();
@@ -86,76 +86,19 @@ public:
     virtual void stop();
     virtual void publishMessages();
 
-    void setVelocity(double v_x, double v_y, double v_theta);
-    void setVelocity(const geometry_msgs::Twist &velocity);
-    geometry_msgs::Pose2D getPose();
-
-    virtual bool isInitialised(){return base_ != NULL;}
+    virtual bool isInitialised(){return is_initialised_;}
 
 protected:
 
-    struct BaseState
-    {
-        double position, velocity, current, torque;
-    };
+    ros::Publisher pub_cmdvel_;
+    ros::Subscriber sub_odom_pose_;
+    ros::Subscriber sub_odom_twist_;
+    std::vector<ros::Subscriber> sub_base_joint_states_;
 
-    std::vector<BaseState> joint_states_;
+    bool is_initialised_;
 
-    ros::Publisher joint_state_publisher_;
-    ros::Publisher odometry_publisher_;
-
-    ros::ServiceServer switch_off_server_;
-    ros::ServiceServer switch_on_server_;
-
-    tf::TransformBroadcaster odom_broadcaster_;
-
-    std::string name_;
-    YoubotConfiguration *config_;
-
-    youbot::YouBotBase *base_;
-
-    nav_msgs::Odometry odom_msg_;
-    geometry_msgs::TransformStamped odom_tf_;
-    geometry_msgs::Twist velocity_command_;
-    geometry_msgs::Twist controller_command_;
-    geometry_msgs::Twist last_controller_command_;
-
-    sensor_msgs::JointState joint_state_msg_;
-    geometry_msgs::Pose2D current_pose_;
-
-    ros::Time current_sample_time_;
-    ros::Time last_sample_time_;
-    double delta_t_;
-
-    double max_linear_vel_;
-    double max_angular_vel_;
-
-    bool motors_are_off_;
-
-    struct ControllerParameters
-    {
-        double error_alt[3];
-        double ctrl_sum[3];		///< sum of I value of the PI-controller
-        double moving_average;
-
-        double C_P[3];
-        double C_I[3];
-        double C_D[3];
-        double C_N[3];
-
-        double iSatUpper[3];
-        double iSatLower[3];
-        double dSatUpper[3];
-        double dSatLower[3];
-
-        double C_IM[3];
-        double C_DM[3];
-
-        bool is_enabled;
-    }controller_;
-
-    bool switchOffBaseMotorsCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
-    bool switchOnBaseMotorsCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
-
+    void odomTwistCallback(const geometry_msgs::TwistStamped&);
+    void odomPoseCallback(const geometry_msgs::PoseStamped&);
+    void jointStateCallback(const sensor_msgs::JointState&);
 };
 #endif // LUH_YOUBOT_BASE_INTERFACE_H

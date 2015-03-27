@@ -27,6 +27,7 @@
 #include "luh_youbot_manipulation/module_direct_control/module_direct_control.h"
 #include "luh_youbot_manipulation/module_joint_trajectory/module_joint_trajectory.h"
 #include "luh_youbot_manipulation/module_gravity_compensation/module_gravity_compensation.h"
+#include <luh_youbot_vrep_interface/youbot_interface.h>
 
 using namespace luh_youbot_kinematics;
 
@@ -37,9 +38,17 @@ ManipulationNode::ManipulationNode(ros::NodeHandle &node):
     // === PARAMETERS ===
     node_->param("luh_youbot_manipulation/arm_controller_frequency", arm_frequency_, 200.0);
     node_->param("luh_youbot_manipulation/base_controller_frequency", base_frequency_, 50.0);
+    node_->param("luh_youbot_manipulation/use_vrep_simulation", use_vrep_simulation_, false);
 
     // === YOUBOT INTERFACE ===
-    youbot_ = new YoubotInterface(node);
+    if(use_vrep_simulation_)
+    {
+        ROS_WARN("Running in VREP simulation mode.");
+        youbot_ = new YoubotVrepInterface(node);
+    }
+    else
+        youbot_ = new YoubotInterface(node);
+
     youbot_->initialise();
 
     // === TIMER ===
