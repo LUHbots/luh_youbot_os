@@ -26,8 +26,9 @@
 #include "actionlib/server/simple_action_server.h"
 #include "luh_youbot_msgs/GripObjectAction.h"
 #include <luh_youbot_msgs/SetGripperAction.h>
-#include <std_msgs/Float32.h>
+#include <control_msgs/GripperCommand.h>
 #include <sensor_msgs/JointState.h>
+#include <std_msgs/Float32.h>
 
 class ModuleExternalGripper : public ManipulationModule
 {
@@ -48,9 +49,6 @@ protected:
     }control_mode_;
 
     bool activated_;
-//    bool gripping_object_;
-//    bool first_call_;
-//    bool publish_only_once_;
 
     double grip_force_;
     double current_position_;
@@ -66,17 +64,13 @@ protected:
     SetGripperServer* set_gripper_server_;
     ros::Subscriber gripper_pos_cmd_subscriber_;
     ros::Subscriber gripper_state_subscriber_;
-    ros::Publisher pos_cmd_publisher_;
-    ros::Publisher frc_cmd_publisher_;
+    ros::Publisher gripper_command_publisher_;
 
 //    double goal_width_;
     double min_gripper_width_;
     double max_gripper_width_;
 
-    std_msgs::Float32 pos_cmd_;
-    std_msgs::Float32 frc_cmd_;
-
-    bool opening_gripper_;
+    control_msgs::GripperCommand gripper_command_;
 
     void init();
     void activate();

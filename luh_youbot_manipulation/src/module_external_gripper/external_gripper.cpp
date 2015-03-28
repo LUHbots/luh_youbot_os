@@ -30,7 +30,6 @@
 #include <boost/units/systems/si/plane_angle.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/units/systems/si.hpp>
-#include <std_msgs/Float32.h>
 
 //########## CONSTRUCTOR ###############################################################################################
 ModuleExternalGripper::ModuleExternalGripper(): ManipulationModule(),
@@ -71,12 +70,13 @@ void ModuleExternalGripper::init()
     set_gripper_server_->start();
 
     // === SUBSCRIBER ===
-    gripper_pos_cmd_subscriber_ = node_->subscribe("arm_1/gripper_command", 1, &ModuleExternalGripper::gripperMsgCallback, this);
-    gripper_state_subscriber_ = node_->subscribe("gripper/joint_states", 1, &ModuleExternalGripper::jointstateCallback, this);
+    gripper_pos_cmd_subscriber_ = node_->subscribe(
+                "arm_1/gripper_command", 1, &ModuleExternalGripper::gripperMsgCallback, this);
+    gripper_state_subscriber_ = node_->subscribe(
+                "gripper/joint_states", 1, &ModuleExternalGripper::jointstateCallback, this);
 
     // === PUBLISHER ===
-    pos_cmd_publisher_ = node_->advertise<std_msgs::Float32>("gripper/position_command", 1);
-    frc_cmd_publisher_ = node_->advertise<std_msgs::Float32>("gripper/force_command", 1);
+    gripper_command_publisher_ = node_->advertise<std_msgs::Float32>("gripper/gripper_command", 1);
 
     ROS_INFO("Gripper Module initialised.");
 }
@@ -87,28 +87,30 @@ void ModuleExternalGripper::update()
     if(!activated_ || control_mode_ == NONE)
         return;
 
-    if(control_mode_ == POSITION)
+    bool goal_reached = false;
+
+    if(fabs(current_position_ - gripper_command_.position) < position_tolerance_)
     {
-        if(fabs(current_position_ - pos_cmd_.data) < position_tolerance_)
-        {
-            if(opening_gripper_)
-                grip_object_server_->setSucceeded();
-            else
-                set_gripper_server_->setSucceeded();
-            control_mode_ = NONE;
-            gripper_is_busy_ = false;
-            ROS_INFO("Gripper position reached.");
-        }
+        control_mode_ = NONE;
+        gripper_is_busy_ = false;
+        ROS_INFO("Gripper position reached.");
+        goal_reached = true;
     }
-    else if(control_mode_ == FORCE)
+
+    if(fabs(current_force_) - force_tolerance_ > gripper_command_.max_effort)
     {
-        if(fabs(current_force_ - frc_cmd_.data) < force_tolerance_)
-        {
+        control_mode_ = NONE;
+        gripper_is_busy_ = false;
+        ROS_INFO("Gripper force applied.");
+        goal_reached = true;
+    }
+
+    if(goal_reached)
+    {
+        if(grip_object_server_->isActive())
             grip_object_server_->setSucceeded();
-            control_mode_ = NONE;
-            gripper_is_busy_ = false;
-            ROS_INFO("Gripper force applied.");
-        }
+        else if(set_gripper_server_->isActive())
+            set_gripper_server_->setSucceeded();
     }
 }
 
@@ -151,18 +153,17 @@ void ModuleExternalGripper::gripObjectCallback()
     if(name.compare("OPEN") == 0)
     {
         control_mode_ = POSITION;
-        pos_cmd_.data = max_gripper_width_;
-        pos_cmd_publisher_.publish(pos_cmd_);
-        opening_gripper_ = true;
+        gripper_command_.position = max_gripper_width_;
+        gripper_command_.max_effort = grip_force_;
     }
     else
     {
         control_mode_ = FORCE;
-        frc_cmd_.data = grip_force_;
-        frc_cmd_publisher_.publish(frc_cmd_);
-        opening_gripper_ = false;
+        gripper_command_.position = min_gripper_width_;
+        gripper_command_.max_effort = grip_force_;
     }
 
+    gripper_command_publisher_.publish(gripper_command_);
     gripper_is_busy_ = true;
 
     ROS_INFO("Gripper command received.");
@@ -188,8 +189,9 @@ void ModuleExternalGripper::setGripperCallback()
 
     gripper_is_busy_ = true;
     control_mode_ = POSITION;
-    pos_cmd_.data = new_goal_width;
-    pos_cmd_publisher_.publish(pos_cmd_);
+    gripper_command_.max_effort = grip_force_;
+    gripper_command_.position = new_goal_width;
+    gripper_command_publisher_.publish(gripper_command_);
 
     ROS_INFO("Gripper command received.");
 }
@@ -205,8 +207,9 @@ void ModuleExternalGripper::gripperMsgCallback(const std_msgs::Float32::ConstPtr
         return;
     }
 
-    pos_cmd_.data = msg->data;
-    pos_cmd_publisher_.publish(pos_cmd_);
+    gripper_command_.position = msg->data;
+    gripper_command_.max_effort = grip_force_;
+    gripper_command_publisher_.publish(gripper_command_);
 }
 
 //########## CALLBACK: JOINT STATE #####################################################################################
