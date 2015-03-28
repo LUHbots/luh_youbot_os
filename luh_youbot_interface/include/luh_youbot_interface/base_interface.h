@@ -78,18 +78,19 @@ class YoubotBaseInterface
 {
 public:
     YoubotBaseInterface(std::string name, YoubotConfiguration &config);
-    void initialise();
-    void readState();
-    void updateController();
-    bool writeCommands();
-    void stop();
-    void publishMessages();
+    ~YoubotBaseInterface();
+    virtual void initialise();
+    virtual void readState();
+    virtual void updateController();
+    virtual bool writeCommands();
+    virtual void stop();
+    virtual void publishMessages();
 
     void setVelocity(double v_x, double v_y, double v_theta);
     void setVelocity(const geometry_msgs::Twist &velocity);
     geometry_msgs::Pose2D getPose();
 
-    bool isInitialised(){return base_ != NULL;}
+    virtual bool isInitialised(){return base_ != NULL;}
 
 protected:
 

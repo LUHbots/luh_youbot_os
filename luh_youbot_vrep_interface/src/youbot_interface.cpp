@@ -60,27 +60,23 @@
  *
  ******************************************************************************/
 
-#include "luh_youbot_interface/youbot_interface.h"
+#include "luh_youbot_vrep_interface/youbot_interface.h"
 
 //########## CONSTRUCTOR ###############################################################################################
-YoubotInterface::YoubotInterface(ros::NodeHandle &node):
-    base_(NULL)
+YoubotVrepInterface::YoubotVrepInterface(ros::NodeHandle &node):
+    YoubotInterface(node)
 {
-    config_.node_handle = &node;
-    config_.num_arms = 0;
 
 }
 
 //########## DESTRUCTOR ################################################################################################
-YoubotInterface::~YoubotInterface()
+YoubotVrepInterface::~YoubotVrepInterface()
 {
-    for(uint i=0; i<arms_.size(); i++)
-        delete arms_[i];
 
-    delete base_;
 }
+
 //########## INITIALISE ################################################################################################
-void YoubotInterface::initialise(bool use_standard_gripper)
+void YoubotVrepInterface::initialise(bool use_standard_gripper)
 {
     // === GET PARAMETERS ===
     config_.node_handle->param("youBotHasBase", config_.has_base, true);
@@ -102,7 +98,7 @@ void YoubotInterface::initialise(bool use_standard_gripper)
             std::string arm_name;
             config_.node_handle->getParam(ss.str(), arm_name);
 
-            arms_.push_back(new YoubotArmInterface(arm_name, config_));
+            arms_.push_back(new YoubotArmVrepInterface(arm_name, config_));
 
             ss.str("");
             ss << "youBotArmName" <<  (++i);
@@ -114,7 +110,7 @@ void YoubotInterface::initialise(bool use_standard_gripper)
     {
         std::string base_name;
         config_.node_handle->param<std::string>("youBotBaseName", base_name, "youbot-base");
-        base_ = new YoubotBaseInterface(base_name, config_);
+        base_ = new YoubotBaseVrepInterface(base_name, config_);
     }
 
     if(config_.has_base)
@@ -131,7 +127,7 @@ void YoubotInterface::initialise(bool use_standard_gripper)
 }
 
 //########## READ STATE ################################################################################################
-void YoubotInterface::readState()
+void YoubotVrepInterface::readState()
 {
     // read base sensors
     if(config_.has_base)
@@ -145,7 +141,7 @@ void YoubotInterface::readState()
 }
 
 //########## WRITE COMMANDS ############################################################################################
-void YoubotInterface::writeCommands()
+void YoubotVrepInterface::writeCommands()
 {
     // set base commands
     if(config_.has_base)
@@ -159,7 +155,7 @@ void YoubotInterface::writeCommands()
 }
 
 //########## PUBLISH MESSAGES ##########################################################################################
-void YoubotInterface::publishMessages()
+void YoubotVrepInterface::publishMessages()
 {
     if(config_.has_base)
         base_->publishMessages();
@@ -172,13 +168,13 @@ void YoubotInterface::publishMessages()
 }
 
 //########## UPDATE ####################################################################################################
-void YoubotInterface::update()
+void YoubotVrepInterface::update()
 {
     base_->updateController();
 }
 
 //########## STOP ######################################################################################################
-void YoubotInterface::stop()
+void YoubotVrepInterface::stop()
 {
     if(config_.has_base)
         base_->stop();
@@ -193,21 +189,4 @@ void YoubotInterface::stop()
     arms_.clear();
     config_.has_base = false;
     config_.num_arms = 0;
-
-    youbot::EthercatMaster::destroy();
-}
-
-//########## ARM #######################################################################################################
-YoubotArmInterface* YoubotInterface::arm(int index)
-{
-    if(index < arms_.size())
-        return arms_[index];
-    else
-        return NULL;
-}
-
-//########## BASE ######################################################################################################
-YoubotBaseInterface* YoubotInterface::base()
-{
-    return base_;
 }

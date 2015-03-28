@@ -66,7 +66,20 @@
 YoubotBaseInterface::YoubotBaseInterface(string name, YoubotConfiguration &config):
     name_(name),
     config_(&config),
-    motors_are_off_(false)
+    motors_are_off_(false),
+    base_(NULL)
+{
+
+}
+
+//########## DESTRUCTOR ################################################################################################
+YoubotBaseInterface::~YoubotBaseInterface()
+{
+    delete base_;
+}
+
+//########## INITIALISE ################################################################################################
+void YoubotBaseInterface::initialise()
 {
     // === PARAMETERS ===
     config_->node_handle->param("youbot_oodl_driver/controller_enabled", controller_.is_enabled, false);
@@ -116,11 +129,7 @@ YoubotBaseInterface::YoubotBaseInterface(string name, YoubotConfiguration &confi
     controller_.C_DM[0] = 0.0;
     controller_.C_DM[1] = 0.0;
     controller_.C_DM[2] = 0.0;
-}
 
-//########## INITIALISE ################################################################################################
-void YoubotBaseInterface::initialise()
-{
     // === INIT BASE ===
     try
     {

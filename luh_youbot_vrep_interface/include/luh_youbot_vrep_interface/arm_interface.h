@@ -60,47 +60,42 @@
  *
  ******************************************************************************/
 
-#ifndef LUH_YOUBOT_INTERFACE_H
-#define LUH_YOUBOT_INTERFACE_H
+#ifndef LUH_YOUBOT_VREP_ARM_INTERFACE_H
+#define LUH_YOUBOT_VREP_ARM_INTERFACE_H
 
-#include "luh_youbot_interface/arm_interface.h"
-#include "luh_youbot_interface/base_interface.h"
-#include <ros/package.h>
+#include <sensor_msgs/JointState.h>
+#include <std_srvs/Empty.h>
+#include <luh_youbot_kinematics/arm_kinematics.h>
+#include <luh_youbot_interface/arm_interface.h>
 
-class YoubotInterface
+class YoubotArmVrepInterface : public YoubotArmInterface
 {
 public:
-    YoubotInterface(ros::NodeHandle &node);
-    ~YoubotInterface();
+    YoubotArmVrepInterface(std::string name, YoubotConfiguration &config);
+    ~YoubotArmVrepInterface();
     virtual void initialise(bool use_standard_gripper=true);
     virtual void readState();
-    virtual void writeCommands();
-    virtual void publishMessages();
-    virtual void update();
+    virtual bool writeCommands();
     virtual void stop();
+    virtual void publishMessages();
 
-    YoubotArmInterface* arm(int index=0);
-    YoubotBaseInterface* base();
-    int numArms(){return arms_.size();}
+    virtual bool isInitialised(){return is_initialised_;}
 
-    bool hasArms(){return arms_.size() > 0;}
-    bool hasBase(){return config_.has_base;}
+    virtual bool securityCheck();
 
 protected:
 
-    YoubotConfiguration config_;
+    std::vector<ros::Publisher> pub_arm_position_command_;
+    std::vector<ros::Subscriber> sub_arm_joint_states_;
+    ros::Subscriber sub_gripper_l_joint_states_;
+    ros::Subscriber sub_gripper_r_joint_states_;
+    ros::Publisher pub_gripper_l_position_command_;
+    ros::Publisher pub_gripper_r_position_command_;
 
-    YoubotBaseInterface *base_;
-    std::vector<YoubotArmInterface*> arms_;
+    bool is_initialised_;
 
-
-
-
+    void armJointStateCallback(const sensor_msgs::JointState& joint_state);
+    void gripperJointStateCallback(const sensor_msgs::JointState& joint_state);
 };
 
-
-
-
-
-
-#endif // LUH_YOUBOT_INTERFACE_H
+#endif // LUH_YOUBOT_ARM_INTERFACE_H

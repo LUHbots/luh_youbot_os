@@ -69,13 +69,26 @@ YoubotArmInterface::YoubotArmInterface(std::string name, YoubotConfiguration &co
     name_(name),
     config_(&config),
     has_new_gripper_command_(false),
-    has_new_arm_command_(false)
+    has_new_arm_command_(false),
+    arm_(NULL)
+{
+
+}
+
+//########## DESTRUCTOR ################################################################################################
+YoubotArmInterface::~YoubotArmInterface()
+{
+    delete arm_;
+}
+
+//########## INITIALISE ################################################################################################
+void YoubotArmInterface::initialise(bool use_standard_gripper)
 {
     // === PARAMETERS ===
     config_->node_handle->param("youbot_oodl_driver/disable_ramp", ramp_is_disabled_, false);
     config_->node_handle->param("youbot_oodl_driver/max_effort_max_duration", max_effort_max_duration_, 0.5);
     if(!ros::param::get("youbot_oodl_driver/max_effort", max_effort_))
-	ROS_WARN("Failed to get max_effort parameter.");
+    ROS_WARN("Failed to get max_effort parameter.");
 
    // === INITIALISATION ===
     arm_index_ = config_->num_arms++;
@@ -90,11 +103,7 @@ YoubotArmInterface::YoubotArmInterface(std::string name, YoubotConfiguration &co
     gripper_command_.assign(2, 0.0);
 
     effort_watchdog_time_.assign(ykin::N_JOINTS, ros::Time(0));
-}
 
-//########## INITIALISE ################################################################################################
-void YoubotArmInterface::initialise(bool use_standard_gripper)
-{
     use_standard_gripper_ = use_standard_gripper;
 
     try

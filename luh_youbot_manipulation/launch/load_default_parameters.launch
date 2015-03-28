@@ -11,6 +11,9 @@
 	<rosparam file="$(find luh_youbot_manipulation)/cfg/module_direct_control/params.yaml" command="load" ns="module_direct_control"/>
         <rosparam file="$(find luh_youbot_manipulation)/cfg/module_gravity_compensation/params.yaml" command="load" ns="module_gravity_compensation"/>
 
+        <!-- SIMULATION -->
+        <param name="luh_youbot_manipulation/use_vrep_simulation" value="false"/>
+
 	<!-- POSES FILE -->
 	<param name="luh_youbot_manipulation/poses_file" value="poses.yaml" />
 

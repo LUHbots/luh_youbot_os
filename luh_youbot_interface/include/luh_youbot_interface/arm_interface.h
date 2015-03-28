@@ -73,11 +73,12 @@ class YoubotArmInterface
 {
 public:
     YoubotArmInterface(std::string name, YoubotConfiguration &config);
-    void initialise(bool use_standard_gripper=true);
-    void readState();
-    bool writeCommands();
-    void stop();
-    void publishMessages();
+    ~YoubotArmInterface();
+    virtual void initialise(bool use_standard_gripper=true);
+    virtual void readState();
+    virtual bool writeCommands();
+    virtual void stop();
+    virtual void publishMessages();
     void setJointPositions(luh_youbot_kinematics::JointPosition positions);
     void setJointVelocities(luh_youbot_kinematics::JointVelocity velocities);
     void setJointTorques(luh_youbot_kinematics::JointVector torques);
@@ -87,9 +88,9 @@ public:
     luh_youbot_kinematics::JointVelocity getJointVelocity();
     luh_youbot_kinematics::JointVector getJointTorque();
 
-    bool isInitialised(){return arm_ != NULL;}
+    virtual bool isInitialised(){return arm_ != NULL;}
 
-    bool securityCheck();
+    virtual bool securityCheck();
 
 protected:
 
