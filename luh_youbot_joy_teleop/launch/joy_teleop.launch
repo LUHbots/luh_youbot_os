@@ -10,7 +10,7 @@
 	<!-- PARAMETERS -->
 	<param name="luh_youbot_joy_teleop/gripper_velocity" value="0.02" />
 	<param name="luh_youbot_joy_teleop/gripper_min_pos" value="0.0" />
-	<param name="luh_youbot_joy_teleop/gripper_max_pos" value="0.02299" />
+	<param name="luh_youbot_joy_teleop/gripper_max_pos" value="0.06" />
 	<param name="luh_youbot_joy_teleop/arm_velocity_q1" value="0.4" />
 	<param name="luh_youbot_joy_teleop/arm_velocity_x" value="0.04" />
 	<param name="luh_youbot_joy_teleop/arm_velocity_y" value="0.04" />
