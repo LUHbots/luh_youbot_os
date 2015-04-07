@@ -39,7 +39,7 @@ ManipulationNode::ManipulationNode(ros::NodeHandle &node):
     // === PARAMETERS ===
     node_->param("luh_youbot_manipulation/arm_controller_frequency", arm_frequency_, 200.0);
     node_->param("luh_youbot_manipulation/base_controller_frequency", base_frequency_, 50.0);
-    node_->param("luh_youbotmanipulation/use_standard_gripper", use_standard_gripper_, true);
+    node_->param("luh_youbot_manipulation/use_standard_gripper", use_standard_gripper_, true);
     node_->param("luh_youbot_manipulation/use_vrep_simulation", use_vrep_simulation_, false);
 
     if(use_standard_gripper_)
