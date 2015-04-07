@@ -76,7 +76,7 @@ void ModuleExternalGripper::init()
                 "gripper/joint_states", 1, &ModuleExternalGripper::jointstateCallback, this);
 
     // === PUBLISHER ===
-    gripper_command_publisher_ = node_->advertise<std_msgs::Float32>("gripper/gripper_command", 1);
+    gripper_command_publisher_ = node_->advertise<control_msgs::GripperCommand>("gripper/gripper_command", 1);
 
     ROS_INFO("Gripper Module initialised.");
 }
