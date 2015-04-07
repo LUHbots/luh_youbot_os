@@ -57,9 +57,9 @@ void ModuleExternalGripper::init()
 
     node_->param("module_external_gripper/min_gripper_width", min_gripper_width_, 0.0);
     node_->param("module_external_gripper/max_gripper_width", max_gripper_width_, 0.06);
-    node_->param("module_external_gripper/grip_force", grip_force_, 6.0);
-    node_->param("module_external_gripper/position_tolerance", position_tolerance_, 0.001);
-    node_->param("module_external_gripper/force_tolerance", force_tolerance_, 1.0);
+    node_->param("module_external_gripper/grip_force", grip_force_, 80.0);
+    node_->param("module_external_gripper/position_tolerance", position_tolerance_, 0.003);
+    node_->param("module_external_gripper/force_tolerance", force_tolerance_, 4.0);
 
     // === ACTION SERVERS ===
     grip_object_server_ = new GripObjectServer(*node_, "arm_1/grip_object", false);
@@ -154,7 +154,7 @@ void ModuleExternalGripper::gripObjectCallback()
     {
         control_mode_ = POSITION;
         gripper_command_.position = max_gripper_width_;
-        gripper_command_.max_effort = grip_force_;
+        gripper_command_.max_effort = 5*grip_force_;
     }
     else
     {
