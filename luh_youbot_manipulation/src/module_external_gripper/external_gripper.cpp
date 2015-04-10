@@ -218,5 +218,5 @@ void ModuleExternalGripper::jointstateCallback(const sensor_msgs::JointState &st
     ROS_ASSERT(state.position.size() >= 2 && state.effort.size() >= 2);
 
     current_position_ = state.position[0] + state.position[1];
-    current_force_ = (state.effort[0] + state.effort[1]) / 2; // TODO: mean, max, min?
+    current_force_ = (fabs(state.effort[0]) + fabs(state.effort[1])) / 2; // TODO: mean, max, min?
 }
