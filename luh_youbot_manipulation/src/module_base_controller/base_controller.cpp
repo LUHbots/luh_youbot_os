@@ -460,7 +460,7 @@ void ModuleBaseController::velocityCallback(const geometry_msgs::Twist::ConstPtr
 
     double vx = velocity_command_.linear.x;
     double vy = velocity_command_.linear.y;
-    double factor = vx*vx / (max_velocity_x_ * max_velocity_x_) + vy*vy / (max_velocity_y_ * max_velocity_y_);
+    double factor = sqrt(vx*vx / (max_velocity_x_ * max_velocity_x_) + vy*vy / (max_velocity_y_ * max_velocity_y_));
 
     if(factor > 1)
     {
