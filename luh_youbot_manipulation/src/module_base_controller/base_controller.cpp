@@ -464,8 +464,8 @@ void ModuleBaseController::velocityCallback(const geometry_msgs::Twist::ConstPtr
 
     if(factor > 1)
     {
-        velocity_command_.linear.x = vx * factor;
-        velocity_command_.linear.y = vy * factor;
+        velocity_command_.linear.x = vx / factor;
+        velocity_command_.linear.y = vy / factor;
     }
 
     velocity_command_.angular.z = std::min(velocity_command_.angular.z, max_velocity_theta_);
