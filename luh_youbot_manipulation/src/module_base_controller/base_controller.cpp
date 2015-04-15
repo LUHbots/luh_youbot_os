@@ -452,11 +452,21 @@ void ModuleBaseController::velocityCallback(const geometry_msgs::Twist::ConstPtr
 
     velocity_command_ = *velocity_msg;
 
-    velocity_command_.linear.x = std::min(velocity_command_.linear.x, max_velocity_x_);
-    velocity_command_.linear.x = std::max(velocity_command_.linear.x, -max_velocity_x_);
+//    velocity_command_.linear.x = std::min(velocity_command_.linear.x, max_velocity_x_);
+//    velocity_command_.linear.x = std::max(velocity_command_.linear.x, -max_velocity_x_);
 
-    velocity_command_.linear.y = std::min(velocity_command_.linear.y, max_velocity_y_);
-    velocity_command_.linear.y = std::max(velocity_command_.linear.y, -max_velocity_y_);
+//    velocity_command_.linear.y = std::min(velocity_command_.linear.y, max_velocity_y_);
+//    velocity_command_.linear.y = std::max(velocity_command_.linear.y, -max_velocity_y_);
+
+    double vx = velocity_command_.linear.x;
+    double vy = velocity_command_.linear.y;
+    double factor = vx*vx / (max_velocity_x_ * max_velocity_x_) + vy*vy / (max_velocity_y_ * max_velocity_y_);
+
+    if(factor > 1)
+    {
+        velocity_command_.linear.x = vx * factor;
+        velocity_command_.linear.y = vy * factor;
+    }
 
     velocity_command_.angular.z = std::min(velocity_command_.angular.z, max_velocity_theta_);
     velocity_command_.angular.z = std::max(velocity_command_.angular.z, -max_velocity_theta_);
