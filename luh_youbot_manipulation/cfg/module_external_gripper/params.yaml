@@ -1,7 +1,0 @@
-# min/max gripper opening width in meters
-min_gripper_width: 0.0
-max_gripper_width: 0.06
-
-grip_force: 80.0
-position_tolerance: 0.003
-force_tolerance: 4.0

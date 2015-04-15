@@ -27,7 +27,6 @@
 #include "luh_youbot_manipulation/module_direct_control/module_direct_control.h"
 #include "luh_youbot_manipulation/module_joint_trajectory/module_joint_trajectory.h"
 #include "luh_youbot_manipulation/module_gravity_compensation/module_gravity_compensation.h"
-#include "luh_youbot_manipulation/module_external_gripper/external_gripper.h"
 #include <luh_youbot_vrep_interface/youbot_interface.h>
 
 using namespace luh_youbot_kinematics;
@@ -94,8 +93,6 @@ ManipulationNode::ManipulationNode(ros::NodeHandle &node):
 
         if(use_standard_gripper_)
             arm_modules_.push_back(new ModuleGripper());
-        else
-            arm_modules_.push_back(new ModuleExternalGripper());
 
         // other modules can be added here
 
