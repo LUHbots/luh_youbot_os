@@ -44,6 +44,8 @@ void Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr &scan)
         frame_id_ = scan->header.frame_id;
         tf_listener.lookupTransform(target_frame_, frame_id_, ros::Time(0), transform_);
 
+        ROS_INFO("Translation: [%f; %f; %f]", transform_.getOrigin().x(), transform_.getOrigin().y(), transform_.getOrigin().z());
+
         // calculate sin and cos for all angles
         for(uint i=0; i<scan->ranges.size(); i++)
         {
@@ -58,7 +60,7 @@ void Laser::laserCallback(const sensor_msgs::LaserScan::ConstPtr &scan)
 
     // get cartesian scan points
     scan_points_.resize(scan->ranges.size());
-    tf::Point p1, p2;
+    tf::Vector3 p1, p2;
     p1.setZ(0);
     int j = 0;
 
