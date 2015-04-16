@@ -4,7 +4,6 @@
 	<rosparam file="$(find luh_youbot_manipulation)/cfg/module_interpolation/params.yaml" command="load" ns="module_interpolation" />
 	<rosparam file="$(find luh_youbot_manipulation)/cfg/module_motion_planner/params.yaml" command="load" ns="module_motion_planner" />
 	<rosparam file="$(find luh_youbot_manipulation)/cfg/module_gripper/params.yaml" command="load" ns="module_gripper"/>
-	<rosparam file="$(find luh_youbot_manipulation)/cfg/module_external_gripper/params.yaml" command="load" ns="module_external_gripper"/>
 	<rosparam file="$(find luh_youbot_manipulation)/cfg/module_base_controller/params.yaml" command="load" ns="module_base_controller"/>
 	<rosparam file="$(find luh_youbot_manipulation)/cfg/torque_controller/params.yaml" command="load" ns="torque_controller"/>
 	<rosparam file="$(find luh_youbot_manipulation)/cfg/module_joint_trajectory/params.yaml" command="load" ns="module_joint_trajectory"/>
