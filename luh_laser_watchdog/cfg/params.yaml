@@ -1,6 +1,6 @@
 target_frame: base_link
 footprint_width_y: 0.38
-footprint_width_x: 0.72
+footprint_width_x: 0.65
 laser_topics: [/scan, /scan_back]
 publish_frequency: 10.0
 
