@@ -614,7 +614,7 @@ void EthercatMasterWithThread::updateSensorActorValues() {
       }
 
       if (communicationErrors > maxCommunicationErrors) {
-        LOG(error) << "Lost EtherCAT connection";
+        LOG(error) << "Lost EtherCAT connection after " << communicationErrors << " communication errors.";
         this->closeEthercat();
         stopThread = true;
         break;
