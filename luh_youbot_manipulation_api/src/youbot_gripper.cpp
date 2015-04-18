@@ -66,10 +66,11 @@ void YoubotGripper::init(ros::NodeHandle &node)
 }
 
 //########## SET GRIPPER ###############################################################################################
-void YoubotGripper::setWidth(double value)
+void YoubotGripper::setWidth(double value, bool is_relative)
 {
     luh_youbot_msgs::SetGripperGoal goal;
     goal.gripper_width = value;
+    goal.is_relative = is_relative;
 
     active_client_ = SET_GRIPPER;
     is_busy_ = true;

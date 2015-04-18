@@ -212,7 +212,14 @@ void ModuleGripper::setGripperCallback()
 
     ROS_INFO("==== Module Gripper ====");
 
-    double new_goal_width = set_gripper_server_->acceptNewGoal()->gripper_width;
+    luh_youbot_msgs::SetGripperGoal::ConstPtr goal = set_gripper_server_->acceptNewGoal();
+    double new_goal_width = goal->gripper_width;
+    if(goal->is_relative)
+    {
+        ROS_WARN("Relative goals are not implemented for the standard gripper.");
+        set_gripper_server_->setAborted();
+        return;
+    }
 
     if(new_goal_width > max_gripper_width_ || new_goal_width < min_gripper_width_)
     {

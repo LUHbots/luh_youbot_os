@@ -94,8 +94,9 @@ public:
     /**
      * @brief Opens or closes the gripper to the specified width.
      * @param value Desired gripper width in meters.
+     * @param is_relative Specifies if the value is relative to current width.
      */
-    void setWidth(double value);
+    void setWidth(double value, bool is_relative=false);
 
     /**
      * @brief Opens the gripper to the maximum width.
