@@ -5,7 +5,8 @@ using namespace luh_laser_watchdog;
 
 //########## CONSTRUCTOR ###############################################################################################
 CollisionWatchdog::CollisionWatchdog(ros::NodeHandle &node, std::vector<Laser> &lasers):
-    lasers_(lasers), image_transport_(node)
+    lasers_(lasers), image_transport_(node),
+    is_enabled_(true)
 {
     // === PARAMETERS ===
     FootprintReader fp_reader;
@@ -13,18 +14,35 @@ CollisionWatchdog::CollisionWatchdog(ros::NodeHandle &node, std::vector<Laser> &
     if(footprint_.empty())
         ROS_ERROR("Could not find footprint on parameter server");
 
-    critical_time_ = 2;
+    // default values
+    critical_time_ = 1;
     sample_step_ = 0.1;
     progression_factor_ = 1.1;
     show_visualisation_ = true;
+    num_sample_steps_ = 100;
+    angle_sample_step_ = 5 * M_PI/180;
+    theta_sample_step_ = 0.05;
+    safe_velocity_ = 0.1;
+    enable_sampling_ = true;
 
     if(!(ros::param::get("laser_watchdog/critical_time", critical_time_) &&
          ros::param::get("laser_watchdog/sample_step", sample_step_) &&
          ros::param::get("laser_watchdog/progression_factor", progression_factor_)&&
          ros::param::get("laser_watchdog/publish_visualisation", show_visualisation_)&&
-         ros::param::get("laser_watchdog/safety_margin", safety_margin_)))
+         ros::param::get("laser_watchdog/safety_margin", safety_margin_) &&
+         ros::param::get("laser_watchdog/enable_on_startup", is_enabled_) &&
+         ros::param::get("laser_watchdog/angle_sample_step", angle_sample_step_) &&
+         ros::param::get("laser_watchdog/theta_sample_step", theta_sample_step_) &&
+         ros::param::get("laser_watchdog/num_sample_steps", num_sample_steps_) &&
+         ros::param::get("laser_watchdog/safe_velocity", safe_velocity_) &&
+         ros::param::get("laser_watchdog/enable_sampling", enable_sampling_)
+         ))
     {
         ROS_ERROR("Not all parameters could be loaded.");
+    }
+    else
+    {
+        ROS_INFO("All parameters loaded.");
     }
 
     // === SUBSCRIBER ===
@@ -33,6 +51,10 @@ CollisionWatchdog::CollisionWatchdog(ros::NodeHandle &node, std::vector<Laser> &
     // === PUBLISHER ===
     cmd_vel_publisher_ = node.advertise<geometry_msgs::Twist>("cmd_vel_safe", 10);
     image_publisher_ = image_transport_.advertise("laser_watchdog/image", 1);
+
+    // === SERVICE SERVERS ===
+    enable_server_ = node.advertiseService("laser_watchdog/enable", &CollisionWatchdog::enableCallback, this);
+    disable_server_ = node.advertiseService("laser_watchdog/disable", &CollisionWatchdog::disableCallback, this);
 
     // === INITIALISATION ===
     if(show_visualisation_)
@@ -62,17 +84,27 @@ CollisionWatchdog::CollisionWatchdog(ros::NodeHandle &node, std::vector<Laser> &
 //########## CALLBACK: CMD VEL #########################################################################################
 void CollisionWatchdog::velocityCallback(const geometry_msgs::Twist::ConstPtr &vel)
 {
+    if(!is_enabled_)
+    {
+        cmd_vel_publisher_.publish(*vel);
+        return;
+    }
+
     if(show_visualisation_)
         visualisation_.setTo(cv::Scalar(0,0,0));
 
-    double collision_time = getTimeToCollision(vel);
+    double collision_time = getTimeToCollision(*vel);
 
     geometry_msgs::Twist safe_vel = *vel;
+    double factor = collision_time / critical_time_;
 
-    if(collision_time >= 0)
+    if(enable_sampling_ && factor < 0.5)
     {
-        double factor = collision_time / critical_time_;
+        factor = sampleSafeVelocity(safe_vel);
+    }
 
+    if(factor < 1)
+    {
         safe_vel.linear.x *= factor;
         safe_vel.linear.y *= factor;
         safe_vel.angular.z *= factor;
@@ -91,7 +123,7 @@ void CollisionWatchdog::velocityCallback(const geometry_msgs::Twist::ConstPtr &v
 }
 
 //########## PREDICT FOOTPRINT #########################################################################################
-Footprint CollisionWatchdog::predictFootprint(const geometry_msgs::Twist::ConstPtr &vel, double seconds)
+Footprint CollisionWatchdog::predictFootprint(const geometry_msgs::Twist &vel, double seconds)
 {
     if(seconds == 0)
         return footprint_;
@@ -99,17 +131,17 @@ Footprint CollisionWatchdog::predictFootprint(const geometry_msgs::Twist::ConstP
     // predict position
     double dx, dy, dt;
 
-    if(fabs(vel->angular.z) < 1e-6)
+    if(fabs(vel.angular.z) < 1e-6)
     {
         dt = 0;
-        dx = vel->linear.x * seconds;
-        dy = vel->linear.y * seconds;
+        dx = vel.linear.x * seconds;
+        dy = vel.linear.y * seconds;
     }
     else
     {
-        dt = vel->angular.z * seconds;
-        dx = (vel->linear.x * sin(dt) - vel->linear.y * (1 - cos(dt))) / vel->angular.z;
-        dy = (vel->linear.y * sin(dt) + vel->linear.x * (1 - cos(dt))) / vel->angular.z;
+        dt = vel.angular.z * seconds;
+        dx = (vel.linear.x * sin(dt) - vel.linear.y * (1 - cos(dt))) / vel.angular.z;
+        dy = (vel.linear.y * sin(dt) + vel.linear.x * (1 - cos(dt))) / vel.angular.z;
     }
 
     // transform footprint
@@ -188,7 +220,7 @@ bool CollisionWatchdog::pointInPolygon(Point2D point, Footprint& footprint)
 }
 
 //########## GET TIME TO COLLISION #####################################################################################
-double CollisionWatchdog::getTimeToCollision(const geometry_msgs::Twist::ConstPtr &vel)
+double CollisionWatchdog::getTimeToCollision(const geometry_msgs::Twist &vel, bool draw_green)
 {
     double time = 0;
     double time_step = sample_step_;
@@ -217,12 +249,15 @@ double CollisionWatchdog::getTimeToCollision(const geometry_msgs::Twist::ConstPt
         }
         else if(show_visualisation_)
         {
-            drawFootprint(fp, cv::Scalar(100, 100, 100));
+            if(draw_green)
+                drawFootprint(fp, cv::Scalar(0, 100, 0));
+            else
+                drawFootprint(fp, cv::Scalar(100, 100, 100));
         }
     }
 
     // no collision
-    return -1;
+    return 10*critical_time_;
 }
 
 //########## DRAW SCANPOINTS ###########################################################################################
@@ -287,4 +322,81 @@ void CollisionWatchdog::publishImage()
 
     // === PUBLISH ===
     image_publisher_.publish(image);
+}
+
+//########## SAMPLE SAFE VELOCITY ######################################################################################
+double CollisionWatchdog::sampleSafeVelocity(geometry_msgs::Twist &vel)
+{
+    bool show_viz = show_visualisation_;
+    show_visualisation_ = false;
+
+    double phi_start = atan2(vel.linear.y, vel.linear.x);
+    double theta_start = vel.angular.z;
+    double abs_vel = safe_velocity_;
+
+    double max_collision_time = 0;
+    geometry_msgs::Twist best_vel = vel;
+
+    for(int i=1; i<=num_sample_steps_; i++)
+    {
+        double phi_step = i * angle_sample_step_;
+        double theta_step = i * theta_sample_step_;
+
+        for(int j=-1; j<=1; j++)
+        {
+            for(int k=-1; k<=1; k++)
+            {
+                double phi = phi_start + j * phi_step;
+                double theta = theta_start + k * theta_step;
+
+                vel.linear.x = abs_vel * cos(phi);
+                vel.linear.y = abs_vel * sin(phi);
+                vel.angular.z = theta;
+
+                double collision_time = getTimeToCollision(vel);
+
+                if(collision_time > max_collision_time)
+                {
+                    max_collision_time = collision_time;
+                    best_vel.linear.x = abs_vel * cos(phi);
+                    best_vel.linear.y = abs_vel * sin(phi);
+                    best_vel.angular.z = theta;
+                }
+            }
+
+        }
+
+        if(max_collision_time > 0)
+        {
+//            ROS_INFO("Found safe velocity (factor: %f).", max_collision_time / critical_time_);
+            break;
+        }
+    }
+
+    show_visualisation_ = show_viz;
+
+    if(show_visualisation_)
+        getTimeToCollision(vel, true);
+
+    vel = best_vel;
+
+    return max_collision_time / critical_time_;
+}
+
+//########## ENABLE CALLBACK ###########################################################################################
+bool CollisionWatchdog::enableCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
+{
+    ROS_INFO("Laser watchdog enabled.");
+    is_enabled_ = true;
+
+    return true;
+}
+
+//########## DISABLE CALLBACK ##########################################################################################
+bool CollisionWatchdog::disableCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
+{
+    ROS_INFO("Laser watchdog disabled.");
+    is_enabled_ = false;
+
+    return true;
 }
