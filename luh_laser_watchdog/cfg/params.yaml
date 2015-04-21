@@ -20,3 +20,4 @@ num_sample_steps: 100
 angle_sample_step: 0.087266
 theta_sample_step: 0.05
 safe_velocity: 0.1
+frequency: 8 #Hz

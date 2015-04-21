@@ -25,6 +25,7 @@ protected:
     image_transport::Publisher image_publisher_;
     ros::ServiceServer enable_server_;
     ros::ServiceServer disable_server_;
+    ros::Timer timer_;
 
     Footprint footprint_;
     std::vector<Laser>& lasers_;
@@ -46,6 +47,8 @@ protected:
     double safe_velocity_;
     bool enable_sampling_;
 
+    geometry_msgs::Twist velocity_command_;
+
     void velocityCallback(const geometry_msgs::Twist::ConstPtr &vel);
 
     Footprint predictFootprint(const geometry_msgs::Twist &vel, double seconds);
@@ -60,6 +63,8 @@ protected:
     double sampleSafeVelocity(geometry_msgs::Twist &vel);
     bool enableCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
     bool disableCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
+
+    void timerCallback(const ros::TimerEvent& e);
 };
 
 }

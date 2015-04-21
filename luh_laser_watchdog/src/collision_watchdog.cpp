@@ -24,6 +24,7 @@ CollisionWatchdog::CollisionWatchdog(ros::NodeHandle &node, std::vector<Laser> &
     theta_sample_step_ = 0.05;
     safe_velocity_ = 0.1;
     enable_sampling_ = true;
+    double timer_frequency = 8;
 
     if(!(ros::param::get("laser_watchdog/critical_time", critical_time_) &&
          ros::param::get("laser_watchdog/sample_step", sample_step_) &&
@@ -35,7 +36,8 @@ CollisionWatchdog::CollisionWatchdog(ros::NodeHandle &node, std::vector<Laser> &
          ros::param::get("laser_watchdog/theta_sample_step", theta_sample_step_) &&
          ros::param::get("laser_watchdog/num_sample_steps", num_sample_steps_) &&
          ros::param::get("laser_watchdog/safe_velocity", safe_velocity_) &&
-         ros::param::get("laser_watchdog/enable_sampling", enable_sampling_)
+         ros::param::get("laser_watchdog/enable_sampling", enable_sampling_) &&
+         ros::param::get("laser_watchdog/frequency", timer_frequency)
          ))
     {
         ROS_ERROR("Not all parameters could be loaded.");
@@ -55,6 +57,9 @@ CollisionWatchdog::CollisionWatchdog(ros::NodeHandle &node, std::vector<Laser> &
     // === SERVICE SERVERS ===
     enable_server_ = node.advertiseService("laser_watchdog/enable", &CollisionWatchdog::enableCallback, this);
     disable_server_ = node.advertiseService("laser_watchdog/disable", &CollisionWatchdog::disableCallback, this);
+
+    // === TIMER ===
+    timer_ = node.createTimer(ros::Duration(1/timer_frequency), &CollisionWatchdog::timerCallback, this, false, is_enabled_);
 
     // === INITIALISATION ===
     if(show_visualisation_)
@@ -80,22 +85,15 @@ CollisionWatchdog::CollisionWatchdog(ros::NodeHandle &node, std::vector<Laser> &
     }
 }
 
-
-//########## CALLBACK: CMD VEL #########################################################################################
-void CollisionWatchdog::velocityCallback(const geometry_msgs::Twist::ConstPtr &vel)
+//########## TIMER CALLBACK ############################################################################################
+void CollisionWatchdog::timerCallback(const ros::TimerEvent& e)
 {
-    if(!is_enabled_)
-    {
-        cmd_vel_publisher_.publish(*vel);
-        return;
-    }
-
     if(show_visualisation_)
         visualisation_.setTo(cv::Scalar(0,0,0));
 
-    double collision_time = getTimeToCollision(*vel);
+    double collision_time = getTimeToCollision(velocity_command_);
 
-    geometry_msgs::Twist safe_vel = *vel;
+    geometry_msgs::Twist safe_vel = velocity_command_;
     double factor = collision_time / critical_time_;
 
     if(enable_sampling_ && factor < 0.5)
@@ -116,10 +114,20 @@ void CollisionWatchdog::velocityCallback(const geometry_msgs::Twist::ConstPtr &v
     {
         drawScanPoints();
         drawMessage(collision_time);
-//        cv::imshow("Watchdog", visualisation_);
-//        cv::waitKey(1);
         publishImage();
     }
+}
+
+//########## CALLBACK: CMD VEL #########################################################################################
+void CollisionWatchdog::velocityCallback(const geometry_msgs::Twist::ConstPtr &vel)
+{
+    if(!is_enabled_)
+    {
+        cmd_vel_publisher_.publish(*vel);
+        return;
+    }
+
+    velocity_command_ = *vel;
 }
 
 //########## PREDICT FOOTPRINT #########################################################################################
@@ -388,6 +396,7 @@ bool CollisionWatchdog::enableCallback(std_srvs::Empty::Request &req, std_srvs::
 {
     ROS_INFO("Laser watchdog enabled.");
     is_enabled_ = true;
+    timer_.start();
 
     return true;
 }
@@ -397,6 +406,7 @@ bool CollisionWatchdog::disableCallback(std_srvs::Empty::Request &req, std_srvs:
 {
     ROS_INFO("Laser watchdog disabled.");
     is_enabled_ = false;
+    timer_.stop();
 
     return true;
 }
