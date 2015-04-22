@@ -797,7 +797,7 @@ void ModuleBaseController::approachCallback()
         else
             ROS_ERROR("No laser scanner data available. Can't accept new goals.");
 
-        move_base_server_->setAborted();
+        approach_server_->setAborted();
         return;
     }
 
