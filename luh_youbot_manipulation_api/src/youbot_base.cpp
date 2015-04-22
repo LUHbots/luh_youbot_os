@@ -130,7 +130,7 @@ bool YoubotBase::waitForCurrentAction(double timeout)
     if(!is_busy_)
         return true;
 
-    bool done;
+    bool done = false;
 
     if(active_client_ == MOVE_BASE)
         done = move_base_client_->waitForResult(ros::Duration(timeout));

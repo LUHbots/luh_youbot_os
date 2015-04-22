@@ -344,7 +344,7 @@ void ModuleBaseController::updateApproachMode()
         velocity_command_.linear.y = 0;
         velocity_command_.angular.z = 0;
 
-        ROS_INFO("Base movement finished.");
+        ROS_INFO("Approach action finished.");
         luh_youbot_msgs::ApproachBaseResult res;
         res.moved_distance.theta = moved_distance_.theta;
         res.moved_distance.x = moved_distance_.x;
@@ -368,6 +368,8 @@ void ModuleBaseController::deactivate()
 //########## EMERGENCY STOP ############################################################################################
 void ModuleBaseController::emergencyStop()
 {
+    ROS_WARN("Base emergency stop!");
+
     velocity_command_.linear.x = 0;
     velocity_command_.linear.y = 0;
     velocity_command_.angular.z = 0;
@@ -395,7 +397,7 @@ void ModuleBaseController::emergencyStop()
         res.moved_distance.theta = moved_distance_.theta;
         res.moved_distance.x = moved_distance_.x;
         res.moved_distance.y = moved_distance_.y;
-        approach_server_->setPreempted(res);
+        approach_server_->setAborted(res);
     }
 }
 
@@ -408,7 +410,7 @@ void ModuleBaseController::preemptCallback()
 
 //###################### CALLBACK: PREEMPT #############################################################################
 void ModuleBaseController::preempt()
-{
+{    
     velocity_command_.linear.x = 0;
     velocity_command_.linear.y = 0;
     velocity_command_.angular.z = 0;
@@ -438,6 +440,8 @@ void ModuleBaseController::preempt()
         res.moved_distance.y = moved_distance_.y;
         approach_server_->setPreempted(res);
     }
+
+    ROS_INFO("Preempted.");
 }
 
 //###################### CALLBACK: VELOCITY ############################################################################
@@ -447,6 +451,7 @@ void ModuleBaseController::velocityCallback(const geometry_msgs::Twist::ConstPtr
 
     if(mode_ == POSITION || mode_ == ALIGN || mode_ == APPROACH)
     {
+        ROS_WARN("Got velocity command. Preempting current action.");
         preempt();
     }
 
@@ -485,6 +490,7 @@ void ModuleBaseController::moveBaseCallback()
 
     if(mode_ == POSITION || mode_ == ALIGN || mode_ == APPROACH)
     {
+        ROS_WARN("Got new move base goal. Preempting current action.");
         preempt();
     }
 
@@ -529,6 +535,7 @@ void ModuleBaseController::alignBaseCallback()
 
     if(mode_ == POSITION || mode_ == ALIGN || mode_ == APPROACH)
     {
+        ROS_WARN("Received align goal. Preempting current action.");
         preempt();
     }
 
@@ -783,6 +790,7 @@ void ModuleBaseController::approachCallback()
 
     if(mode_ == POSITION || mode_ == ALIGN || mode_ == APPROACH)
     {
+        ROS_WARN("Received approach goal. Preempting current action.");
         preempt();
     }
 
