@@ -1,4 +1,5 @@
 #include "luh_laser_watchdog/laser.h"
+#include <deque>
 
 using namespace luh_laser_watchdog;
 
@@ -19,6 +20,7 @@ void Laser::init(ros::NodeHandle &node, std::string topic)
     node_->param("laser_watchdog/target_frame", target_frame_, std::string("base_link"));
     node_->param("laser_watchdog/footprint_width_x", footprint_width_x_, 0.7);
     node_->param("laser_watchdog/footprint_width_y", footprint_width_y_, 0.5);
+    node_->param("laser_watchdog/num_points_for_mean", num_points_for_mean_, 10);
 
     // === SUBSCRIBERS ===
     laser_subscriber_ = node_->subscribe(topic, 10, &Laser::laserCallback, this);
@@ -93,6 +95,21 @@ bool Laser::gotNewScan()
     return got_new_scan_;
 }
 
+double Laser::getMin(std::vector<double> &v)
+{
+    std::sort_heap(v.begin(), v.end());
+
+    // get min elements
+    int num_elements = std::min(num_points_for_mean_, (int)v.size());
+    double mean = 0;
+    for(int i=0; i<num_elements; i++)
+    {
+        mean += v[i];
+    }
+
+    return mean / num_elements;
+}
+
 //########## GET DISTANCES #############################################################################################
 Distances Laser::getDistances()
 {
@@ -106,6 +123,12 @@ Distances Laser::getDistances()
     double fx = footprint_width_x_ / 2;
     double fy = footprint_width_y_ / 2;
 
+    std::vector<double> front_heap;
+    std::vector<double> back_heap;
+    std::vector<double> left_heap;
+    std::vector<double> right_heap;
+
+
     for(uint i=0; i<scan_points_.size(); i++)
     {
         float x = scan_points_[i].x;
@@ -117,18 +140,51 @@ Distances Laser::getDistances()
         if(fabs(x) <= fx)
         {
             if(y > 0)
-                dist.left = std::min(dist.left, y);
+            {
+                left_heap.push_back(y);
+                std::push_heap(left_heap.begin(), left_heap.end());
+            }
             else
-                dist.right = std::min(dist.right, -y);
+            {
+                right_heap.push_back(-y);
+                std::push_heap(right_heap.begin(), right_heap.end());
+            }
         }
 
         if(fabs(y) <= fy)
         {
             if(x > 0)
-                dist.front = std::min(dist.front, x);
+            {
+                front_heap.push_back(x);
+                std::push_heap(front_heap.begin(), front_heap.end());
+            }
             else
-                dist.back = std::min(dist.back, -x);
+            {
+                back_heap.push_back(-x);
+                std::push_heap(back_heap.begin(), back_heap.end());
+            }
         }
+
+        dist.front = getMin(front_heap);
+        dist.back = getMin(back_heap);
+        dist.left = getMin(left_heap);
+        dist.right = getMin(right_heap);
+
+//        if(fabs(x) <= fx)
+//        {
+//            if(y > 0)
+//                dist.left = std::min(dist.left, y);
+//            else
+//                dist.right = std::min(dist.right, -y);
+//        }
+
+//        if(fabs(y) <= fy)
+//        {
+//            if(x > 0)
+//                dist.front = std::min(dist.front, x);
+//            else
+//                dist.back = std::min(dist.back, -x);
+//        }
     }
 
     got_new_scan_ = false;

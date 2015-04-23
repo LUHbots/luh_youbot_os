@@ -28,12 +28,15 @@ protected:
     sensor_msgs::LaserScan last_scan_;
     std::vector<Point2D> scan_points_;
     double footprint_width_x_, footprint_width_y_;
+    int num_points_for_mean_;
 
     // optimization
     std::vector<double> cos_phi_;
     std::vector<double> sin_phi_;
 
     void laserCallback(const sensor_msgs::LaserScan::ConstPtr &scan);
+
+    double getMin(std::vector<double> &v);
 
 };
 }
