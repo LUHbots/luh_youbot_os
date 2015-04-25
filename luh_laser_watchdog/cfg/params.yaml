@@ -7,7 +7,7 @@ laser_topics: [/scan, /scan_back]
 publish_frequency: 10.0
 num_points_for_mean: 10
 
-critical_time: 0.8
+critical_time: 1.5
 sample_step: 0.1
 progression_factor: 1.1
 publish_visualisation: true
