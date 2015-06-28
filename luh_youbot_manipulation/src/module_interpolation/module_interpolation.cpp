@@ -203,12 +203,22 @@ void ModuleInterpolation::init()
     max_cart_acceleration_.setQ5(max_acc_q5);
     this->cart_ramp_generator_.setMaxAcceleration(max_cart_acceleration_);
 
-    max_joint_velocity_.assign(ykin::MAX_JNT_VELOCITIES,
-                               ykin::MAX_JNT_VELOCITIES + ykin::N_JOINTS);
+//    max_joint_velocity_.assign(ykin::MAX_JNT_VELOCITIES,
+//                               ykin::MAX_JNT_VELOCITIES + ykin::N_JOINTS);
+    max_joint_velocity_.setQ1(max_vel_q1);
+    max_joint_velocity_.setQ2(max_vel_q2);
+    max_joint_velocity_.setQ3(max_vel_q3);
+    max_joint_velocity_.setQ4(max_vel_q4);
+    max_joint_velocity_.setQ5(max_vel_q5);
     this->jnt_ramp_generator_.setMaxVelocity(max_joint_velocity_);
 
-    max_joint_acceleration_.assign(ykin::MAX_JNT_ACCELERATIONS,
-                                   ykin::MAX_JNT_ACCELERATIONS + ykin::N_JOINTS);
+//    max_joint_acceleration_.assign(ykin::MAX_JNT_ACCELERATIONS,
+//                                   ykin::MAX_JNT_ACCELERATIONS + ykin::N_JOINTS);
+    max_joint_acceleration_.setQ1(max_acc_q1);
+    max_joint_acceleration_.setQ2(max_acc_q2);
+    max_joint_acceleration_.setQ3(max_acc_q3);
+    max_joint_acceleration_.setQ4(max_acc_q4);
+    max_joint_acceleration_.setQ5(max_acc_q5);
     this->jnt_ramp_generator_.setMaxAcceleration(max_joint_acceleration_);
 
     // === PID CONTROLLER ===
