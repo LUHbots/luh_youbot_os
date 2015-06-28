@@ -186,6 +186,14 @@ void ManipulationNode::armTimerCallback(const ros::TimerEvent &evt)
 
     // == PUBLISH JOINT STATE MESSAGES ===
     youbot_->arm()->publishMessages();
+
+    // === CHECK FREQUENCY ===
+    double time_delay = (evt.current_real - evt.current_expected).toSec();
+    if(fabs(time_delay) > 2.0 / arm_frequency_)
+    {
+        ROS_WARN("Loop is slower than desired frequency of %f Hz.", arm_frequency_);
+        ROS_WARN("Current delay is: %f", time_delay);
+    }
 }
 
 //########################## CALLBACK: BASE TIMER ######################################################################
