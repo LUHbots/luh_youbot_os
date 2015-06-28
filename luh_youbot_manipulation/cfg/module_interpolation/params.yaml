@@ -25,13 +25,13 @@ max_vel_theta: 1.5
 
 
 # max accelerations
-max_acc_q1: 1.9
-max_acc_q2: 1.9
-max_acc_q3: 1.9
-max_acc_q4: 1.9
-max_acc_q5: 1.9
-max_acc_r: 0.4
-max_acc_x: 0.4
-max_acc_y: 0.4
-max_acc_z: 0.4
-max_acc_theta: 1.0
+max_acc_q1: 0.5
+max_acc_q2: 0.5
+max_acc_q3: 0.5
+max_acc_q4: 0.5
+max_acc_q5: 0.5
+max_acc_r: 0.1
+max_acc_x: 0.1
+max_acc_y: 0.1
+max_acc_z: 0.1
+max_acc_theta: 0.25
