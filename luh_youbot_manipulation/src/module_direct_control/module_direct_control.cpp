@@ -80,6 +80,10 @@ void ModuleDirectControl::init()
     joint_pose_server_->start();
     named_pose_server_->start();
 
+    // === SUBSCRIBER ===
+    joint_position_subscriber_ = node_->subscribe("arm_1/joint_position_command", 10,
+                                                  &ModuleDirectControl::jointPositionCallback, this);
+
     // === SERVICE SERVERS ===
     relax_server_ = node_->advertiseService("arm_1/relax", &ModuleDirectControl::relaxCallback, this);
     stiffen_server_ = node_->advertiseService("arm_1/stiffen", &ModuleDirectControl::stiffenCallback, this);
@@ -414,4 +418,21 @@ bool ModuleDirectControl::stiffenCallback(std_srvs::Empty::Request &req, std_srv
     youbot_->arm()->setJointPositions(pos);
 
     return true;
+}
+
+//###################### JOINT POSITION CALLBACK #######################################################################
+void ModuleDirectControl::jointPositionCallback(const luh_youbot_msgs::JointVector::ConstPtr pos)
+{
+    boost::mutex::scoped_lock lock(arm_mutex_);
+
+    if(!arm_is_busy_)
+    {
+        luh_youbot_kinematics::JointPosition jpos;
+        jpos.setQ1(pos->q1);
+        jpos.setQ2(pos->q2);
+        jpos.setQ3(pos->q3);
+        jpos.setQ4(pos->q4);
+        jpos.setQ5(pos->q5);
+        youbot_->arm()->setJointPositions(jpos);
+    }
 }

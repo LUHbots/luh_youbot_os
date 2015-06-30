@@ -60,6 +60,9 @@ protected:
     JointServer* joint_pose_server_;
     NamedServer* named_pose_server_;
 
+    // subscriber
+    ros::Subscriber joint_position_subscriber_;
+
     // service servers
     ros::ServiceServer relax_server_;
     ros::ServiceServer stiffen_server_;
@@ -72,6 +75,7 @@ protected:
     void preemptCallback();
     bool relaxCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
     bool stiffenCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
+    void jointPositionCallback(const luh_youbot_msgs::JointVector::ConstPtr pos);
 
     void preempt();
 
