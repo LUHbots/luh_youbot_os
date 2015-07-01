@@ -47,6 +47,8 @@ protected:
     ros::ServiceServer stop_arm_server_;
     ros::ServiceServer stop_base_server_;
     ros::ServiceServer stop_bot_server_;
+    ros::ServiceServer enable_ramp_server_;
+    ros::ServiceServer disable_ramp_server_;
 
     std::vector<ManipulationModule*> arm_modules_;
     std::vector<ManipulationModule*> base_modules_;
@@ -76,6 +78,8 @@ protected:
     bool stopArmCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
     bool stopBaseCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
     bool stopBotCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
+    bool enableRampCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
+    bool disableRampCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
 
 };
 

@@ -608,3 +608,16 @@ ykin::JointVector YoubotArmInterface::getJointTorque()
 {
     return joint_torque_;
 }
+
+//########## ENABLE RAMP GENERATOR #####################################################################################
+void YoubotArmInterface::enableRampGenerator(bool enable)
+{
+    for (int i = 0; i < 5; ++i)
+    {
+        youbot::RampGeneratorSpeedAndPositionControl use_ramp;
+        use_ramp.setParameter(enable);
+        arm_->getArmJoint(i + 1).setConfigurationParameter(use_ramp);
+    }
+
+    ramp_is_disabled_ = enable;
+}

@@ -73,6 +73,10 @@ ManipulationNode::ManipulationNode(ros::NodeHandle &node):
             node_->advertiseService("base/stop", &ManipulationNode::stopBaseCallback, this);
     stop_bot_server_ =
             node_->advertiseService("youbot/stop", &ManipulationNode::stopBotCallback, this);
+    enable_ramp_server_ =
+            node_->advertiseService("arm_1/enable_ramp", &ManipulationNode::enableRampCallback, this);
+    disable_ramp_server_ =
+            node_->advertiseService("arm_1/disable_ramp", &ManipulationNode::disableRampCallback, this);
 
     // === INIT MODULES ===
     ManipulationModule::setArmIsBusy(false);
@@ -317,6 +321,24 @@ bool ManipulationNode::stopBotCallback(std_srvs::Empty::Request &req, std_srvs::
 
     stopArm();
     stopBase();
+
+    return true;
+}
+
+//########################## CALLBACK: ENABLE RAMP #####################################################################
+bool ManipulationNode::enableRampCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
+{
+    boost::mutex::scoped_lock lock(ManipulationModule::arm_mutex_);
+    youbot_->arm()->enableRampGenerator(true);
+
+    return true;
+}
+
+//########################## CALLBACK: DISABLE RAMP ####################################################################
+bool ManipulationNode::disableRampCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
+{
+    boost::mutex::scoped_lock lock(ManipulationModule::arm_mutex_);
+    youbot_->arm()->enableRampGenerator(false);
 
     return true;
 }

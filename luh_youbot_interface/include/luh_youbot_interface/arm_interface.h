@@ -92,6 +92,8 @@ public:
 
     virtual bool securityCheck();
 
+    void enableRampGenerator(bool enable);
+
 protected:
 
     ros::Publisher joint_state_publisher_;
