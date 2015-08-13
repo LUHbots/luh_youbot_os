@@ -131,7 +131,7 @@ protected:
     bool has_new_arm_command_;
 
     const static unsigned int LEFT_FINGER_INDEX = 0;
-    const static unsigned int RIGHT_FINGER_INDEX = 0;
+    const static unsigned int RIGHT_FINGER_INDEX = 1;
 
     ros::Time current_sample_time_;
     ros::Time last_sample_time_;
