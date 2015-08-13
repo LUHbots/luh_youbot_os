@@ -27,7 +27,7 @@
 			<visual>
 				<origin xyz="0 0 -0.0139" rpy="0 ${-M_PI/2} ${M_PI/2}"/>
 				<geometry>
-					<mesh filename="package://youbot_description/meshes/youbot_gripper/palm.STL" />
+					<mesh filename="package://youbot_description/meshes/youbot_gripper/palm.dae" />
 				</geometry>
 				<material name="Black" />
 			</visual>
