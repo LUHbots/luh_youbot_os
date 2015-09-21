@@ -62,6 +62,7 @@ protected:
 
     bool use_standard_gripper_;
     bool use_vrep_simulation_;
+    bool use_gazebo_simulation_;
 
     void stopBase();
     void stopArm();

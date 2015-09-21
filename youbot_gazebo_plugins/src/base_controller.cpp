@@ -43,7 +43,7 @@ namespace gazebo
     robot_namespace_ = "";
     if (!sdf->HasElement("robotNamespace")) 
     {
-      ROS_INFO("PlanarMovePlugin missing <robotNamespace>, "
+      ROS_INFO("YoubotBaseController missing <robotNamespace>, "
           "defaults to \"%s\"", robot_namespace_.c_str());
     }
     else 
@@ -122,7 +122,7 @@ namespace gazebo
     // Ensure that ROS has been initialized and subscribe to cmd_vel
     if (!ros::isInitialized()) 
     {
-      ROS_FATAL_STREAM("PlanarMovePlugin (ns = " << robot_namespace_
+      ROS_FATAL_STREAM("YoubotBaseController (ns = " << robot_namespace_
         << "). A ROS node for Gazebo has not been initialized, "
         << "unable to load plugin. Load the Gazebo system plugin "
         << "'libgazebo_ros_api_plugin.so' in the gazebo_ros package)");
@@ -154,6 +154,34 @@ namespace gazebo
       event::Events::ConnectWorldUpdateBegin(
           boost::bind(&YoubotBaseController::UpdateChild, this));
 
+    // get wheel joints
+    wheel_joints_.push_back(parent_->GetJoint("wheel_joint_fl"));
+    wheel_joints_.push_back(parent_->GetJoint("wheel_joint_fr"));
+    wheel_joints_.push_back(parent_->GetJoint("wheel_joint_bl"));
+    wheel_joints_.push_back(parent_->GetJoint("wheel_joint_br"));
+
+    // disable force limits to allow velocity control
+    for(uint i=0; i<wheel_joints_.size(); i++)
+        wheel_joints_[i]->SetMaxForce(0, HUGE_VAL);
+
+    // base kinematics
+    double r = 0.0475;
+    double b = 0.3;
+    double l = 0.47;
+    base_kin_inv_.assign(12, 1.0 / r);
+    base_kin_inv_[0]  *=  1.0;
+    base_kin_inv_[1]  *= -1.0;
+    base_kin_inv_[2]  *= -0.5 * (b + l);
+    base_kin_inv_[3]  *=  1.0;
+    base_kin_inv_[4]  *=  1.0;
+    base_kin_inv_[5]  *=  0.5 * (b + l);
+    base_kin_inv_[6]  *=  1.0;
+    base_kin_inv_[7]  *=  1.0;
+    base_kin_inv_[8]  *= -0.5 * (b + l);
+    base_kin_inv_[9]  *=  1.0;
+    base_kin_inv_[10] *= -1.0;
+    base_kin_inv_[11] *=  0.5 * (b + l);
+
   }
 
   // Update the controller
@@ -161,6 +189,7 @@ namespace gazebo
   {
     boost::mutex::scoped_lock scoped_lock(lock);
 
+    // set cartesian velocity
     math::Pose pose = base_link_->GetWorldPose();
     float roll = pose.rot.GetRoll();
     float pitch = pose.rot.GetPitch();
@@ -174,6 +203,13 @@ namespace gazebo
         base_link_->SetAngularVel(math::Vector3(0, 0, rot_));
     }
 
+    // set wheel velocity
+    wheel_joints_[0]->SetVelocity(0, base_kin_inv_[0] * x_ + base_kin_inv_[1]  * y_ + base_kin_inv_[2]  * rot_);
+    wheel_joints_[1]->SetVelocity(0, base_kin_inv_[3] * x_ + base_kin_inv_[4]  * y_ + base_kin_inv_[5]  * rot_);
+    wheel_joints_[2]->SetVelocity(0, base_kin_inv_[6] * x_ + base_kin_inv_[7]  * y_ + base_kin_inv_[8]  * rot_);
+    wheel_joints_[3]->SetVelocity(0, base_kin_inv_[9] * x_ + base_kin_inv_[10] * y_ + base_kin_inv_[11] * rot_);
+
+    // publish odometry
     if (odometry_rate_ > 0.0) {
       common::Time current_time = parent_->GetWorld()->GetSimTime();
       double seconds_since_last_update = 

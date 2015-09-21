@@ -8,7 +8,7 @@
 			<remap from="joint_states" to="base/joint_states"/>
 		</node>
 		<group if="$(arg youBotHasArm)" >
-			<param name="robot_description" command="$(find xacro)/xacro.py '$(find youbot_description)/robots/youbot_RC.urdf.xacro'"/>
+			<param name="robot_description" command="$(find xacro)/xacro.py '$(find youbot_description)/robots/youbot.urdf.xacro'"/>
 		</group>
 		<group unless="$(arg youBotHasArm)" >
 			<param name="robot_description" command="$(find xacro)/xacro.py '$(find youbot_description)/robots/youbot_base.urdf.xacro'"/>
@@ -20,7 +20,7 @@
 			<remap from="joint_states" to="arm_1/joint_states"/>
 		</node>
 		<group if="$(arg youBotHasBase)" >
-			<param name="robot_description" command="$(find xacro)/xacro.py '$(find youbot_description)/robots/youbot_RC.urdf.xacro'"/>
+			<param name="robot_description" command="$(find xacro)/xacro.py '$(find youbot_description)/robots/youbot.urdf.xacro'"/>
 		</group>
 		<group unless="$(arg youBotHasBase)" >
 			<param name="robot_description" command="$(find xacro)/xacro.py '$(find youbot_description)/robots/youbot_arm.urdf.xacro'"/>

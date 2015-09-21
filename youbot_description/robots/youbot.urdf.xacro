@@ -17,6 +17,9 @@
   <!-- youbot gripper -->
   <xacro:include filename="$(find youbot_description)/urdf/youbot_gripper/gripper.urdf.xacro" />
 
+  <!-- joint state publisher -->
+  <xacro:include filename="$(find youbot_description)/robots/youbot_gazebo.xacro" />
+
   <!-- Now we can start using the macros included above to define the actual youbot -->
   <xacro:youbot_base name="base"/>
 
@@ -31,5 +34,7 @@
   <xacro:youbot_gripper name="gripper" parent="arm_link_5">
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:youbot_gripper>
+
+  <xacro:joint_state_publisher />
 
 </robot>

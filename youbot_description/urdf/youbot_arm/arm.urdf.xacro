@@ -2,6 +2,7 @@
 <robot  xmlns:xacro="http://ros.org/wiki/xacro">
 
 	<xacro:include filename="$(find youbot_description)/urdf/youbot_arm/limits.urdf.xacro" />
+	<xacro:include filename="$(find youbot_description)/urdf/youbot_arm/arm.gazebo.xacro" />
 
 	<xacro:macro name="youbot_arm" params="parent name *origin">
 
@@ -199,5 +200,8 @@
 				</geometry>
 			</collision>
 		</link>
+                
+                <xacro:youbot_arm_controller />
+
 	</xacro:macro>
 </robot>

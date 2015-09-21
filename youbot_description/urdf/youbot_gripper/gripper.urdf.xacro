@@ -26,12 +26,12 @@
 				</geometry>
 			</visual>
 			
-			<collision>
+			<!--collision>
 				<origin xyz="0.003 0 0.01" rpy="0 0 0" />
 				<geometry>
 					<mesh filename="package://youbot_description/meshes/youbot_gripper/palm_convex.dae" />
 				</geometry>
-			</collision>
+			</collision-->
 		</link>
 
 		
@@ -55,15 +55,14 @@
 			</inertial>
 			
 			<visual>
-				<origin xyz="0.0078 0 -0.0144" rpy="0 ${-M_PI/2} 0" /> <!---->
+				<origin xyz="0 -0.015 -0.02" rpy="0 ${-M_PI/2} 0" /> <!---->
 				<geometry>
 					<mesh filename="package://youbot_description/meshes/youbot_gripper/finger.dae" />
 				</geometry>
-				<material name="DarkGrey" />
 			</visual>
 			
 			<collision>
-				<origin xyz="0.0007 0.0105 0.0185" rpy="0 0 0" />
+				<origin xyz="0 -0.015 -0.02" rpy="0 ${-M_PI/2} 0" />
 				<geometry>
 					<mesh filename="package://youbot_description/meshes/youbot_gripper/finger_convex.dae" />
 				</geometry>
@@ -88,15 +87,14 @@
 			</inertial>
 			
 			<visual>
-				<origin xyz="0.0077 0 -0.0144" rpy="0 ${-M_PI/2} 0" /> <!-- -->
+				<origin xyz="0 -0.015 -0.02" rpy="0 ${-M_PI/2} 0" /> <!-- -->
 				<geometry>
 					<mesh filename="package://youbot_description/meshes/youbot_gripper/finger.dae" />
 				</geometry>
-				<material name="DarkGrey" />
 			</visual>
 			
 			<collision>
-				<origin xyz="0.0007 0.0105 0.0185" rpy="0 0 0" />
+				<origin xyz="0 -0.015 -0.02" rpy="0 ${-M_PI/2} 0" />
 				<geometry>
 					<mesh filename="package://youbot_description/meshes/youbot_gripper/finger_convex.dae" />
 				</geometry>

@@ -8,7 +8,12 @@
   <!-- youbot base -->
   <xacro:include filename="$(find youbot_description)/urdf/youbot_base/base.urdf.xacro" />
 
+  <!-- joint state publisher -->
+  <xacro:include filename="$(find youbot_description)/robots/youbot_gazebo.xacro" />
+
   <!-- Now we can start using the macros included above to define the actual youbot -->
   <xacro:youbot_base name="base"/>  
+
+  <xacro:joint_state_publisher />
 
 </robot>

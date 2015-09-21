@@ -22,8 +22,8 @@
  * Date: 29 July 2013
  */
 
-#ifndef YOUBOT_GAZEBO_PLUGINS_BASE_CONTROLLER_HH
-#define YOUBOT_GAZEBO_PLUGINS_BASE_CONTROLLER_HH
+#ifndef YOUBOT_GAZEBO_PLUGINS_ARM_CONTROLLER_HH
+#define YOUBOT_GAZEBO_PLUGINS_ARM_CONTROLLER_HH
 
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
@@ -33,49 +33,44 @@
 #include <gazebo/physics/physics.hh>
 #include <sdf/sdf.hh>
 
-#include <geometry_msgs/Twist.h>
-#include <nav_msgs/OccupancyGrid.h>
-#include <nav_msgs/Odometry.h>
 #include <ros/advertise_options.h>
 #include <ros/callback_queue.h>
 #include <ros/ros.h>
-#include <tf/transform_broadcaster.h>
-#include <tf/transform_listener.h>
+
+#include <luh_youbot_msgs/JointVector.h>
 
 namespace gazebo {
 
-  class YoubotBaseController : public ModelPlugin {
+  class YoubotArmController : public ModelPlugin {
 
     public: 
-      YoubotBaseController();
-      ~YoubotBaseController();
+      YoubotArmController();
+      ~YoubotArmController();
       void Load(physics::ModelPtr parent, sdf::ElementPtr sdf);
 
     protected: 
       virtual void UpdateChild();
       virtual void FiniChild();
 
-    private:
-      void publishOdometry(double step_time);
+    private:      
+      enum CommandMode
+      {
+          CMD_POSITION,
+          CMD_VELOCITY,
+          CMD_TORQUE
+      }cmd_mode_;
 
       physics::ModelPtr parent_;
       event::ConnectionPtr update_connection_;
 
       boost::shared_ptr<ros::NodeHandle> rosnode_;
-      ros::Publisher odometry_pub_;
+      ros::Subscriber pos_sub_;
       ros::Subscriber vel_sub_;
-      boost::shared_ptr<tf::TransformBroadcaster> transform_broadcaster_;
-      nav_msgs::Odometry odom_;
-      std::string tf_prefix_;
+      ros::Subscriber trq_sub_;
 
       boost::mutex lock;
 
       std::string robot_namespace_;
-      std::string command_topic_;
-      std::string odometry_topic_;
-      std::string odometry_frame_;
-      std::string robot_base_frame_;
-      double odometry_rate_;
 
       // Custom Callback Queue
       ros::CallbackQueue queue_;
@@ -83,21 +78,16 @@ namespace gazebo {
       void QueueThread();
 
       // command velocity callback
-      void cmdVelCallback(const geometry_msgs::Twist::ConstPtr& cmd_msg);
+      void posCmdCallback(const luh_youbot_msgs::JointVector::ConstPtr &pos);
+      void velCmdCallback(const luh_youbot_msgs::JointVector::ConstPtr &vel);
+      void trqCmdCallback(const luh_youbot_msgs::JointVector::ConstPtr &trq);
 
-      double x_;
-      double y_;
-      double rot_;
+      luh_youbot_msgs::JointVector cmd_;
+      std::vector<physics::JointPtr> arm_joints_;
       bool alive_;
-      common::Time last_odom_publish_time_;
-      math::Pose last_odom_pose_;
-
-      physics::LinkPtr base_link_;
-      std::vector<double> base_kin_inv_;
-      std::vector<physics::JointPtr> wheel_joints_;
   };
 
 }
 
-#endif /* end of include guard: YOUBOT_GAZEBO_PLUGINS_BASE_CONTROLLER_HH */
+#endif /* end of include guard: YOUBOT_GAZEBO_PLUGINS_ARM_CONTROLLER_HH */
 

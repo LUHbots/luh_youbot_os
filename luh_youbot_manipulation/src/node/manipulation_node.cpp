@@ -28,6 +28,7 @@
 #include "luh_youbot_manipulation/module_joint_trajectory/module_joint_trajectory.h"
 #include "luh_youbot_manipulation/module_gravity_compensation/module_gravity_compensation.h"
 #include <luh_youbot_vrep_interface/youbot_interface.h>
+#include <luh_youbot_gazebo/youbot_interface.h>
 
 using namespace luh_youbot_kinematics;
 
@@ -40,6 +41,7 @@ ManipulationNode::ManipulationNode(ros::NodeHandle &node):
     node_->param("luh_youbot_manipulation/base_controller_frequency", base_frequency_, 50.0);
     node_->param("luh_youbot_manipulation/use_standard_gripper", use_standard_gripper_, true);
     node_->param("luh_youbot_manipulation/use_vrep_simulation", use_vrep_simulation_, false);
+    node_->param("luh_youbot_manipulation/use_gazebo_simulation", use_gazebo_simulation_, false);
 
     if(use_standard_gripper_)
         ROS_INFO("Using standard gripper.");
@@ -48,11 +50,16 @@ ManipulationNode::ManipulationNode(ros::NodeHandle &node):
 
 
     // === YOUBOT INTERFACE ===
-    if(use_vrep_simulation_)
+    if(use_gazebo_simulation_)
+    {
+        ROS_WARN("Running in GAZEBO simulation mode.");
+        youbot_ = new YoubotGazeboInterface(node);
+    }
+    else if(use_vrep_simulation_)
     {
         ROS_WARN("Running in VREP simulation mode.");
         youbot_ = new YoubotVrepInterface(node);
-    }
+    }    
     else
         youbot_ = new YoubotInterface(node);
 

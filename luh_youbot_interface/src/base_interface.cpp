@@ -178,12 +178,12 @@ void YoubotBaseInterface::initialise()
     wheel_names.push_back("wheel_joint_fr"); //wheel #2
     wheel_names.push_back("wheel_joint_bl"); //wheel #3
     wheel_names.push_back("wheel_joint_br"); //wheel #4
-    wheel_names.push_back("caster_joint_fl"); // virtual joint #1
-    wheel_names.push_back("caster_joint_fr"); // virtual joint #2
-    wheel_names.push_back("caster_joint_bl"); // virtual joint #3
-    wheel_names.push_back("caster_joint_br"); // virtual joint #4
+//    wheel_names.push_back("caster_joint_fl"); // virtual joint #1
+//    wheel_names.push_back("caster_joint_fr"); // virtual joint #2
+//    wheel_names.push_back("caster_joint_bl"); // virtual joint #3
+//    wheel_names.push_back("caster_joint_br"); // virtual joint #4
 
-    for(int i=0; i<8; i++)
+    for(int i=0; i<4; i++)
     {
         joint_state_msg_.name.push_back(wheel_names[i]);
         joint_state_msg_.position.push_back(0.0);
@@ -280,8 +280,8 @@ void YoubotBaseInterface::readState()
      * We actually flipp the directions of the wheel on the right side such that the standard ROS controllers
      * (e.g. for PR2) can be used for the youBot
      */
-        joint_state_msg_.position[2] = -joint_state_msg_.position[2];
-        joint_state_msg_.position[4] = -joint_state_msg_.position[4];
+        joint_state_msg_.position[1] = -joint_state_msg_.position[1];
+        joint_state_msg_.position[3] = -joint_state_msg_.position[3];
 
         base_->getJointData(current_current);
         base_->getJointData(current_torque);

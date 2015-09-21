@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   cmake_modules
   control_msgs
   luh_youbot_vrep_interface
+  luh_youbot_gazebo
 )
 find_package(orocos_kdl REQUIRED)
 

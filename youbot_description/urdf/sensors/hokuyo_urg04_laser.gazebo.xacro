@@ -4,7 +4,7 @@
 
   <xacro:macro name="hokuyo_urg04_laser_gazebo" params="name ros_topic update_rate min_angle max_angle">
     <gazebo reference="${name}_link">
-      <sensor name="${name}" type="gpu_ray">
+      <sensor name="${name}" type="ray">
         <pose>0 0 0 0 0 0</pose>
         <ray>
           <scan>
@@ -21,11 +21,11 @@
             <resolution>0.360000</resolution>
           </range>
         </ray>
-        <always_on>0</always_on>
+        <always_on>true</always_on>
         <update_rate>${update_rate}</update_rate>
-        <visualize>0</visualize>
+        <visualize>false</visualize>
         
-        <plugin name="gazebo_ros_laser" filename="libgazebo_ros_gpu_laser.so">
+        <plugin name="gazebo_ros_laser" filename="libgazebo_ros_laser.so">
           <gaussianNoise>0.02</gaussianNoise>
           <alwaysOn>true</alwaysOn>
           <hokuyoMinIntensity>101</hokuyoMinIntensity>

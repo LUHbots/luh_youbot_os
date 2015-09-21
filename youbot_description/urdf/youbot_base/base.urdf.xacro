@@ -11,24 +11,13 @@
   	<property name="base_size_z" value="0.100" />
 	<property name="base_mass" value="22.0" />
 
-	<property name="caster_offset_x" value="0.228"  />  
-  	<property name="caster_offset_y" value="0.158"  />  
-  	<property name="caster_offset_z" value="-0.034" />
-	<property name="caster_mass" value="0.1" />
-
-	<property name="wheel_offset_x" value="0.0"  />  
-  	<property name="wheel_offset_y" value="0.0"  />  
-  	<property name="wheel_offset_z" value="0.0" />
+	<property name="wheel_offset_x" value="0.228"  />  
+  	<property name="wheel_offset_y" value="0.158"  />  
+  	<property name="wheel_offset_z" value="-0.034" />
 	<property name="wheel_mass" value="0.4" />
 
 	<property name="wheel_radius" value="0.05" />
 	<property name="wheel_length" value="0.07" />
-  	
-	<property name="caster_joint_damping" value="1.0" />
-	<property name="caster_joint_friction" value="1.0" />
-	<property name="caster_joint_effort" value="30" />
-	<property name="caster_joint_velocity" value="10" />
-	<property name="caster_joint_safety_k_velocity" value="10.0" />
 
 	<property name="wheel_joint_damping" value="0.0" />
 	<property name="wheel_joint_friction" value="0.0" />
@@ -39,13 +28,6 @@
 	<xacro:macro name="youbot_base" params="name">
 		
 		<link name="${name}_footprint">
-      			<inertial>
-        			<mass value="0.01" />
-        			<origin xyz="0 0 ${-base_size_z / 2.0}" rpy="0 0 0" />
-        			<inertia ixx="0.001" ixy="0.001" ixz="0.001"
-                 			iyy="0.001" iyz="0.001" izz="0.001" />
-      			</inertial>
-
       			<visual>
         			<origin xyz="0 0 0" rpy="0 0 0" />
         			<geometry>
@@ -102,11 +84,11 @@
 
 	        <!-- front left wheel -->		
 		<joint name="wheel_joint_fl" type="continuous">
-			<origin xyz="${caster_offset_x} ${caster_offset_y} ${caster_offset_z}" rpy="0 0 0" />
+			<origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0" />
       			<axis xyz="0 1 0" />
-      			<limit effort="${caster_joint_effort}" velocity="${caster_joint_velocity}"/> 
-      			<dynamics damping="${caster_joint_damping}" friction="${caster_joint_friction}" />
-			<safety_controller k_velocity="${caster_joint_safety_k_velocity}" />
+      			<limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/> 
+      			<dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}" />
+			<safety_controller k_velocity="${wheel_joint_safety_k_velocity}" />
 			<parent link="${name}_link"/>
       			<child link="wheel_link_fl" />
     		</joint>
@@ -135,11 +117,11 @@
 
 	<!-- front right wheel -->
 		<joint name="wheel_joint_fr" type="continuous">
-			<origin xyz="${caster_offset_x} ${-caster_offset_y} ${caster_offset_z}" rpy="0 0 0" />
+			<origin xyz="${wheel_offset_x} ${-wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0" />
       			<axis xyz="0 1 0" />
-      			<limit effort="${caster_joint_effort}" velocity="${caster_joint_velocity}"/> 
-      			<dynamics damping="${caster_joint_damping}" friction="${caster_joint_friction}" />
-			<safety_controller k_velocity="${caster_joint_safety_k_velocity}" />
+      			<limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/> 
+      			<dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}" />
+			<safety_controller k_velocity="${wheel_joint_safety_k_velocity}" />
 			<parent link="${name}_link"/>
       			<child link="wheel_link_fr" />
     		</joint>
@@ -169,11 +151,11 @@
 
 	        <!-- back left wheel -->
 		<joint name="wheel_joint_bl" type="continuous">
-			<origin xyz="${-caster_offset_x} ${caster_offset_y} ${caster_offset_z}" rpy="0 0 0" />
+			<origin xyz="${-wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0" />
       			<axis xyz="0 1 0" />
-      			<limit effort="${caster_joint_effort}" velocity="${caster_joint_velocity}"/>  
-      			<dynamics damping="${caster_joint_damping}" friction="${caster_joint_friction}" />
-			<safety_controller k_velocity="${caster_joint_safety_k_velocity}" />
+      			<limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/>  
+      			<dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}" />
+			<safety_controller k_velocity="${wheel_joint_safety_k_velocity}" />
 			<parent link="${name}_link"/>
       			<child link="wheel_link_bl" />
     		</joint>
@@ -201,11 +183,11 @@
 
 	<!-- back right wheel -->
 		<joint name="wheel_joint_br" type="continuous">
-			<origin xyz="${-caster_offset_x} ${-caster_offset_y} ${caster_offset_z}" rpy="0 0 0" />
+			<origin xyz="${-wheel_offset_x} ${-wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0" />
       			<axis xyz="0 1 0" />
-      			<limit effort="${caster_joint_effort}" velocity="${caster_joint_velocity}"/>  
-      			<dynamics damping="${caster_joint_damping}" friction="${caster_joint_friction}" />
-			<safety_controller k_velocity="${caster_joint_safety_k_velocity}" />
+      			<limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/>  
+      			<dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}" />
+			<safety_controller k_velocity="${wheel_joint_safety_k_velocity}" />
 			<parent link="${name}_link"/>
       			<child link="wheel_link_br" />
     		</joint>
