@@ -1,11 +1,6 @@
 <?xml version="1.0"?>
-<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
-       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
-       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
-       xmlns:xacro="http://ros.org/wiki/xacro">
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-	<xacro:include filename="$(find youbot_description)/urdf/youbot_gripper/gripper.gazebo.xacro" />
-	<xacro:include filename="$(find youbot_description)/urdf/youbot_gripper/gripper.transmission.xacro" />
 	<xacro:include filename="$(find youbot_description)/urdf/youbot_gripper/limits.urdf.xacro" />
 
 	<xacro:macro name="youbot_gripper" params="parent name *origin">
@@ -29,14 +24,12 @@
 				<geometry>
 					<mesh filename="package://youbot_description/meshes/youbot_gripper/palm.dae" />
 				</geometry>
-				<material name="Black" />
 			</visual>
 			
 			<collision>
 				<origin xyz="0.003 0 0.01" rpy="0 0 0" />
 				<geometry>
-					<box size="0.05 0.09 0.065"/>
-					<!--<mesh filename="package://youbot_description/meshes/youbot_gripper/palm.STL" />-->
+					<mesh filename="package://youbot_description/meshes/youbot_gripper/palm_convex.dae" />
 				</geometry>
 			</collision>
 		</link>
@@ -64,8 +57,7 @@
 			<visual>
 				<origin xyz="0.0078 0 -0.0144" rpy="0 ${-M_PI/2} 0" /> <!---->
 				<geometry>
-					<!--<box size="0.014 0.020 0.068"/>-->
-					<mesh filename="package://youbot_description/meshes/youbot_gripper/finger.STL" />
+					<mesh filename="package://youbot_description/meshes/youbot_gripper/finger.dae" />
 				</geometry>
 				<material name="DarkGrey" />
 			</visual>
@@ -73,8 +65,7 @@
 			<collision>
 				<origin xyz="0.0007 0.0105 0.0185" rpy="0 0 0" />
 				<geometry>
-					<box size="0.014 0.020 0.068"/>
-					<!--<mesh filename="package://youbot_description/meshes/youbot_gripper/finger.STL" />-->
+					<mesh filename="package://youbot_description/meshes/youbot_gripper/finger_convex.dae" />
 				</geometry>
 			</collision>
 		</link>
@@ -99,8 +90,7 @@
 			<visual>
 				<origin xyz="0.0077 0 -0.0144" rpy="0 ${-M_PI/2} 0" /> <!-- -->
 				<geometry>
-					<!--<box size="0.014 0.020 0.068"/>-->
-					<mesh filename="package://youbot_description/meshes/youbot_gripper/finger.STL" />
+					<mesh filename="package://youbot_description/meshes/youbot_gripper/finger.dae" />
 				</geometry>
 				<material name="DarkGrey" />
 			</visual>
@@ -108,8 +98,7 @@
 			<collision>
 				<origin xyz="0.0007 0.0105 0.0185" rpy="0 0 0" />
 				<geometry>
-					<box size="0.014 0.020 0.068"/>
-					<!--<mesh filename="package://youbot_description/meshes/youbot_gripper/finger.STL" />-->
+					<mesh filename="package://youbot_description/meshes/youbot_gripper/finger_convex.dae" />
 				</geometry>
 			</collision>
 		</link>
@@ -127,26 +116,6 @@
 				<inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
 			</inertial>
 		</link>
-
-		<!-- coordinate frame for usb_cam from hand-eye-calib -->
-		<joint name="usb_cam_joint" type="fixed">
-			<origin xyz="-0.0417 -0.0078 0.0207" rpy="1.49224 3.09978 1.5769" />			
-			<!--<origin xyz="-0.0928 -0.0117 0.0431" rpy="1.50579 2.83312 1.6295" />-->
-			<!--<origin xyz="-0.02476 -0.0244 0.0125" rpy="2.67678 3.15999 3.05878" /> -->			
-			<parent link="${name}_tip" />
-			<child link="usb_cam" />
-		</joint>
-		<link name="usb_cam">
-			<inertial>
-				<mass value="0.001" />
-				<origin xyz="0 0 0" />
-				<inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
-			</inertial>
-		</link>
-
-		<!-- extensions -->
-		<xacro:youbot_gripper_gazebo name="${name}" /> 
-		<xacro:youbot_gripper_transmission name="${name}" />
 
 	</xacro:macro>
 

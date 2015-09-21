@@ -1,13 +1,10 @@
 <?xml version="1.0"?>
 
-<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
-       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
-       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
-       xmlns:xacro="http://ros.org/wiki/xacro">
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:macro name="hokuyo_urg04_laser_gazebo" params="name ros_topic update_rate min_angle max_angle">
     <gazebo reference="${name}_link">
-      <sensor name="${name}" type="ray">
+      <sensor name="${name}" type="gpu_ray">
         <pose>0 0 0 0 0 0</pose>
         <ray>
           <scan>
@@ -28,14 +25,14 @@
         <update_rate>${update_rate}</update_rate>
         <visualize>0</visualize>
         
-        <plugin name="gazebo_ros_laser" filename="libgazebo_ros_laser.so">
+        <plugin name="gazebo_ros_laser" filename="libgazebo_ros_gpu_laser.so">
           <gaussianNoise>0.02</gaussianNoise>
           <alwaysOn>true</alwaysOn>
           <hokuyoMinIntensity>101</hokuyoMinIntensity>
           <updateRate>${update_rate}</updateRate>
           <topicName>${ros_topic}</topicName>
           <frameName>/${name}_link</frameName>
-          <interface:laser name="gazebo_ros_${name}_iface" />
+          <!--interface:laser name="gazebo_ros_${name}_iface" /-->
         </plugin>
       </sensor>
     </gazebo>
