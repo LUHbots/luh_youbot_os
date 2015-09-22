@@ -20,7 +20,7 @@
 
 /**
  * \file
- * @author Simon Aden (simon.aden@mailbox.org)
+ * @author Simon Aden (info@luhbots.de)
  * @date   November 2014
  *
  * @brief  Source file for all cartesian vectors.

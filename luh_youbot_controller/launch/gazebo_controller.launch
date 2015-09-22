@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="youBotHasBase" default="true"/>
+	<arg name="youBotHasArm" default="true"/>
+
+	
+        <!-- LOAD DEFAULT DRIVER PARAMETERS -->
+        <include file="$(find luh_youbot_driver_api)/launch/load_default_parameters.launch">
+                <arg name="youBotHasArm" value="$(arg youBotHasArm)"/>
+                <arg name="youBotHasBase" value="$(arg youBotHasBase)"/>
+        </include>
+
+	<!-- LOAD DEFAULT MANIPULATION PARAMETERS -->
+	<include file="$(find luh_youbot_controller)/launch/load_default_parameters.launch" />
+
+        <!-- LAUNCH GAZEBO -->
+        <!--include file="$(find luh_youbot_gazebo)/launch/youbot.launch"/-->
+
+        <!-- USE GAZEBO SIMULATION -->
+        <param name="luh_youbot_controller/use_gazebo_simulation" value="true"/>
+        <param name="module_motion_planner/finepos_vel_tolerance" value="1.0"/>
+        <param name="module_direct_control/joint_velocity_tolerance" value="1.0"/>
+        <param name="luh_youbot_controller/arm_controller_frequency" value="50.0" />
+        <param name="luh_youbot_controller/base_controller_frequency" value="10.0" />
+
+       	<!-- LAUNCH DRIVER NODE -->
+	<node name="controller_node" pkg="luh_youbot_controller" type="controller_node" output="screen" />
+</launch>

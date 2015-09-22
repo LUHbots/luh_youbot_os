@@ -4,14 +4,12 @@
   <version>0.1.0</version>
   <description>
 
-     luh_youbot_gui
+     The GUI can be used to manually control the manipulator and to manage predefined poses.
 
   </description>
-  <maintainer email="simon@gmail.com">simon</maintainer>
-  <author>simon</author>
+  <maintainer email="info@luhbots.de">Simon Aden</maintainer>
+  <author>Simon Aden</author>
   <license>BSD</license>
-  <!-- <url type="bugtracker">https://github.com/stonier/qt_ros/issues</url> -->
-  <!-- <url type="repository">https://github.com/stonier/qt_ros</url> -->
 
 
   <buildtool_depend>catkin</buildtool_depend>

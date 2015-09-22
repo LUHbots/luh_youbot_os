@@ -2,9 +2,9 @@
 <package>
   <name>luh_youbot_gazebo</name>
   <version>0.0.0</version>
-  <description>The luh_youbot_gazebo package</description>
+  <description>Contains Gazebo plugins for the youbot and a fake driver api for Gazebo</description>
 
-  <maintainer email="simon.aden@mailbox.org">Simon Aden</maintainer>
+  <maintainer email="info@luhbots.de">Simon Aden</maintainer>
 
   <license>BSD</license>
 
@@ -15,18 +15,26 @@
   <build_depend>setcap</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>std_srvs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>roslib</build_depend>
   <build_depend>luh_youbot_kinematics</build_depend>
-  <build_depend>luh_youbot_interface</build_depend>
+  <build_depend>luh_youbot_driver_api</build_depend>
+  <build_depend>gazebo_ros</build_depend>
   <run_depend>geometry_msgs</run_depend>
   <run_depend>nav_msgs</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>std_msgs</run_depend>
   <run_depend>std_srvs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
   <run_depend>tf</run_depend>
   <run_depend>roslib</run_depend>
   <run_depend>luh_youbot_kinematics</run_depend>
-  <run_depend>luh_youbot_interface</run_depend>
+  <run_depend>luh_youbot_driver_api</run_depend>
+  <run_depend>gazebo_ros</run_depend>
+
+  <export>
+    <gazebo_ros plugin_path="${prefix}/lib" gazebo_media_path="${prefix}" />
+  </export>
 
 </package>

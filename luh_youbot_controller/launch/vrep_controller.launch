@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="youBotHasBase" default="true"/>
+	<arg name="youBotHasArm" default="true"/>
+
+	
+        <!-- LOAD DEFAULT DRIVER PARAMETERS -->
+        <include file="$(find luh_youbot_driver_api)/launch/load_default_parameters.launch">
+                <arg name="youBotHasArm" value="$(arg youBotHasArm)"/>
+                <arg name="youBotHasBase" value="$(arg youBotHasBase)"/>
+        </include>
+
+	<!-- LOAD DEFAULT MANIPULATION PARAMETERS -->
+	<include file="$(find luh_youbot_controller)/launch/load_default_parameters.launch" />
+
+        <!-- LAUNCH STATE PUBLISHER -->
+        <include file="$(find luh_youbot_controller)/launch/youbot_state_publisher.launch">
+                <arg name="youBotHasArm" value="$(arg youBotHasArm)"/>
+                <arg name="youBotHasBase" value="$(arg youBotHasBase)"/>
+        </include>
+
+        <!-- USE VREP SIMULATION -->
+        <param name="luh_youbot_controller/use_gazebo_simulation" value="false"/>
+        <param name="luh_youbot_controller/use_vrep_simulation" value="true"/>
+        <param name="luh_youbot_controller/arm_controller_frequency" value="50.0" />
+        <param name="luh_youbot_controller/base_controller_frequency" value="10.0" />
+
+       	<!-- LAUNCH DRIVER NODE -->
+	<node name="controller_node" pkg="luh_youbot_controller" type="controller_node" output="screen" />
+</launch>

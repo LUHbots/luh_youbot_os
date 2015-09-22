@@ -10,21 +10,32 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   roslib
   luh_youbot_kinematics
-  luh_youbot_interface
+  luh_youbot_driver_api
+  gazebo_ros
 )
+
+find_package(gazebo REQUIRED)
 
 catkin_package(
  INCLUDE_DIRS include
  LIBRARIES luh_youbot_gazebo_interface
+ DEPENDS gazebo_ros
+         geometry_msgs
+         sensor_msgs
+         nav_msgs
+         roscpp
+         tf
 )
 
-# include_directories(include)
+link_directories(${GAZEBO_LIBRARY_DIRS})
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${GAZEBO_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIR}
 )
 
-## Declare a cpp library
+### interface ###
 add_library(luh_youbot_gazebo_interface
   include/${PROJECT_NAME}/youbot_interface.h
   src/youbot_interface.cpp
@@ -33,5 +44,14 @@ add_library(luh_youbot_gazebo_interface
   include/${PROJECT_NAME}/base_interface.h
   src/base_interface.cpp
 )
+add_dependencies(luh_youbot_gazebo_interface luh_youbot_driver_api)
 
-add_dependencies(luh_youbot_gazebo_interface luh_youbot_interface)
+### plugins ###
+add_library(youbot_base_controller src/plugins/base_controller.cpp include/${PROJECT_NAME}/plugins/base_controller.h)
+target_link_libraries(youbot_base_controller ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+
+add_library(youbot_arm_controller src/plugins/arm_controller.cpp include/${PROJECT_NAME}/plugins/arm_controller.h)
+target_link_libraries(youbot_arm_controller ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+
+add_library(youbot_joint_state_publisher src/plugins/joint_state_publisher.cpp include/${PROJECT_NAME}/plugins/joint_state_publisher.h)
+target_link_libraries(youbot_joint_state_publisher ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})

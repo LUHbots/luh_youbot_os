@@ -6,7 +6,7 @@ project(luh_youbot_joy_teleop)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
-  luh_youbot_manipulation_api
+  luh_youbot_controller_api
   roscpp
   roslib
   sensor_msgs
@@ -86,7 +86,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES luh_youbot_joy_teleop
-#  CATKIN_DEPENDS geometry_msgs luh_youbot_manipulation_api roscpp roslib sensor_msgs tf
+#  CATKIN_DEPENDS geometry_msgs luh_youbot_controller_api roscpp roslib sensor_msgs tf
 #  DEPENDS system_lib
 )
 

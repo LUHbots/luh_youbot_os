@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package>
+  <name>luh_youbot_driver_api</name>
+  <version>0.0.0</version>
+  <description>The Youbot Driver API is a wrapper for the youbot driver. It communicates with the motor controllers.</description>
+
+  <maintainer email="info@luhbots.de">Simon Aden</maintainer>
+
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>setcap</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>std_srvs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>youbot_driver</build_depend>
+  <build_depend>roslib</build_depend>
+  <build_depend>luh_youbot_kinematics</build_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>std_srvs</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>youbot_driver</run_depend>
+  <run_depend>roslib</run_depend>
+  <run_depend>luh_youbot_kinematics</run_depend>
+
+</package>

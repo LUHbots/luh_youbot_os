@@ -5,7 +5,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   roslib
   sensor_msgs
-  luh_youbot_manipulation_api
+  luh_youbot_controller_api
 )
 
 catkin_package()

@@ -1,0 +1,15 @@
+# min/max gripper opening width in meters
+min_gripper_width: 0.0
+max_gripper_width: 0.06
+
+grip_force: 80.0
+position_tolerance: 0.003
+force_tolerance: 4.0
+open_force: 1000.0
+frequency: 50.0
+min_angle: 0
+max_angle: 90
+static_grip_force: 20.0
+
+serial_port: /dev/arduino
+baudrate: 57600

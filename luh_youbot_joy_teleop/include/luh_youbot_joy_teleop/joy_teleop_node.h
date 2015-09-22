@@ -16,15 +16,15 @@
  *
  * For further information see http://www.linfo.org/bsdlicense.html
  *
- * Author: Simon Aden (simon.aden@mailbox.org)
+ * Author: Simon Aden (info@luhbots.de)
  ******************************************************************/
 
 #ifndef LUH_YOUBOT_JOY_TELEOP_NODE_H
 #define LUH_YOUBOT_JOY_TELEOP_NODE_H
 
 #include <ros/ros.h>
-#include <luh_youbot_manipulation_api/youbot_arm.h>
-#include <luh_youbot_manipulation_api/youbot_gripper.h>
+#include <luh_youbot_controller_api/youbot_arm.h>
+#include <luh_youbot_controller_api/youbot_gripper.h>
 #include <sensor_msgs/Joy.h>
 #include <std_msgs/Float32.h>
 #include <std_srvs/Empty.h>
@@ -62,8 +62,8 @@ protected:
 
     ros::Timer timer_;
 
-    manipulation_api::YoubotArm youbot_arm_;
-    manipulation_api::YoubotGripper youbot_gripper_;
+    youbot_api::YoubotArm youbot_arm_;
+    youbot_api::YoubotGripper youbot_gripper_;
 
     ros::ServiceServer enable_server_;
     ros::ServiceServer disable_server_;

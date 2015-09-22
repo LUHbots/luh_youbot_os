@@ -1,10 +1,10 @@
 #include <ros/ros.h>
 #include <sensor_msgs/JointState.h>
-#include <luh_youbot_manipulation_api/manipulation_api.h>
+#include <luh_youbot_controller_api/youbot_api.h>
 #include <luh_youbot_kinematics/arm_dynamics.h>
 #include <nlopt.hpp>
 
-namespace yapi = manipulation_api;
+namespace yapi = youbot_api;
 namespace ykin = luh_youbot_kinematics;
 
 struct Data

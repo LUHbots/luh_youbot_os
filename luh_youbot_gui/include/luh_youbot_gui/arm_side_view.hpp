@@ -16,7 +16,7 @@
  *
  * For further information see http://www.linfo.org/bsdlicense.html
  *
- * Author: Simon Aden (simon.aden@mailbox.org)
+ * Author: Simon Aden (info@luhbots.de)
  ******************************************************************/
 
 #ifndef LUH_YOUBOT_GUI_ARM_SIDE_VIEW_HPP

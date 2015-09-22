@@ -1,6 +1,6 @@
 /* *****************************************************************
  *
- * luh_youbot_interface
+ * luh_youbot_driver_api
  *
  * Copyright (c) 2015,
  * Institute of Mechatronic Systems,
@@ -16,7 +16,7 @@
  *
  * For further information see http://www.linfo.org/bsdlicense.html
  *
- * Author: Simon Aden (simon.aden@mailbox.org)
+ * Author: Simon Aden (info@luhbots.de)
  *
  *
  *
@@ -71,7 +71,7 @@
 //#include <tf/tf.h>
 //#include <tf/transform_broadcaster.h>
 //#include <geometry_msgs/Pose2D.h>
-#include <luh_youbot_interface/base_interface.h>
+#include <luh_youbot_driver_api/base_interface.h>
 
 class YoubotBaseGazeboInterface : public YoubotBaseInterface
 {

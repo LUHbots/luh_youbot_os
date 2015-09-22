@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="youBotHasBase" default="true"/>
+	<arg name="youBotHasArm" default="true"/>
+	
+	<param name="youBotHasBase"	type="bool"		value="$(arg youBotHasBase)"/>
+	<param name="youBotHasArm"      type="bool"		value="$(arg youBotHasArm)"/>
+
+	<param name="youBotBaseName" type="str" value="youbot-base"/>
+
+        <group if="$(arg youBotHasArm)">
+                <group if="$(arg youBotHasBase)">
+	                <param name="youBotArmName1" type="str" value="youbot-manipulator_nogripper"/>
+                </group>
+                <group unless="$(arg youBotHasBase)">
+	                <param name="youBotArmName1" type="str" value="youbot-manipulator-single"/>
+                </group>
+        </group>
+	
+        <rosparam command="load" file="$(find luh_youbot_driver_api)/cfg/default_params.yaml"/>
+	
+</launch>

@@ -2,6 +2,6 @@
 	<!-- LOAD PARAMETERS -->
 	<rosparam file="$(find luh_laser_watchdog)/cfg/params.yaml" command="load" ns="laser_watchdog" />	
 
-	<!-- LAUNCH MANAGER NODE -->
+	<!-- LAUNCH NODE -->
 	<node name="laser_watchdog" pkg="luh_laser_watchdog" type="watchdog" output="screen" />
 </launch>

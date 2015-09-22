@@ -16,7 +16,7 @@
  *
  * For further information see http://www.linfo.org/bsdlicense.html
  *
- * Author: Simon Aden (simon.aden@mailbox.org)
+ * Author: Simon Aden (info@luhbots.de)
  ******************************************************************/
 
 #include "luh_youbot_joy_teleop/joy_teleop_node.h"
@@ -80,7 +80,7 @@ JoyTeleopNode::JoyTeleopNode():
     if(youbot_has_arm_)
     {
         youbot_arm_.disableAllClients();
-        youbot_arm_.enableClient(manipulation_api::ActionClient::NAME_PLAN);
+        youbot_arm_.enableClient(youbot_api::ActionClient::NAME_PLAN);
         youbot_arm_.init(*this);
         youbot_gripper_.init(*this);
 

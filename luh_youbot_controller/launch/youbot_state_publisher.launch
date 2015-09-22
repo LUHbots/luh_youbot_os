@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="youBotHasBase" default="true"/>
+	<arg name="youBotHasArm" default="true"/>	
+
+	<group if="$(arg youBotHasBase)" >
+		<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_base_state_publisher" output="screen">
+			<remap from="joint_states" to="base/joint_states"/>
+		</node>
+		<group if="$(arg youBotHasArm)" >
+			<param name="robot_description" command="$(find xacro)/xacro.py '$(find luh_youbot_description)/robots/youbot.urdf.xacro'"/>
+		</group>
+		<group unless="$(arg youBotHasArm)" >
+			<param name="robot_description" command="$(find xacro)/xacro.py '$(find luh_youbot_description)/robots/youbot_base.urdf.xacro'"/>
+		</group>
+	</group>
+
+	<group if="$(arg youBotHasArm)" >
+		<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_arm_state_publisher" output="screen">
+			<remap from="joint_states" to="arm_1/joint_states"/>
+		</node>
+		<group if="$(arg youBotHasBase)" >
+			<param name="robot_description" command="$(find xacro)/xacro.py '$(find luh_youbot_description)/robots/youbot.urdf.xacro'"/>
+		</group>
+		<group unless="$(arg youBotHasBase)" >
+			<param name="robot_description" command="$(find xacro)/xacro.py '$(find luh_youbot_description)/robots/youbot_arm.urdf.xacro'"/>
+		</group>
+	</group>
+ 
+</launch>

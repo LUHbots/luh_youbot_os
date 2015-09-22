@@ -16,7 +16,7 @@
  *
  * For further information see http://www.linfo.org/bsdlicense.html
  *
- * Author: Simon Aden (simon.aden@mailbox.org)
+ * Author: Simon Aden (info@luhbots.de)
  ******************************************************************/
 
 #include <ros/ros.h>
@@ -120,7 +120,7 @@ void QNode::run()
 
     while(!joint_pose_client_direct_->waitForServer(ros::Duration(1)))
     {
-        Q_EMIT logMessage("Waiting for luh_youbot_manipulation node...");
+        Q_EMIT logMessage("Waiting for luh_youbot_controller node...");
 
         if(!ros::ok())
         {

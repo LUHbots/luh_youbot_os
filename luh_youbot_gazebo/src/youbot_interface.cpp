@@ -1,6 +1,6 @@
 /* *****************************************************************
  *
- * luh_youbot_interface
+ * luh_youbot_driver_api
  *
  * Copyright (c) 2015,
  * Institute of Mechatronic Systems,
@@ -16,7 +16,7 @@
  *
  * For further information see http://www.linfo.org/bsdlicense.html
  *
- * Author: Simon Aden (simon.aden@mailbox.org)
+ * Author: Simon Aden (info@luhbots.de)
  *
  *
  *
