@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   luh_youbot_kinematics
   luh_youbot_driver_api
   gazebo_ros
+  luh_youbot_gripper
 )
 
 find_package(gazebo REQUIRED)
@@ -52,6 +53,9 @@ target_link_libraries(youbot_base_controller ${catkin_LIBRARIES} ${GAZEBO_LIBRAR
 
 add_library(youbot_arm_controller src/plugins/arm_controller.cpp include/${PROJECT_NAME}/plugins/arm_controller.h)
 target_link_libraries(youbot_arm_controller ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+
+add_library(youbot_gripper_controller src/plugins/gripper_controller.cpp include/${PROJECT_NAME}/plugins/gripper_controller.h)
+target_link_libraries(youbot_gripper_controller ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 add_library(youbot_joint_state_publisher src/plugins/joint_state_publisher.cpp include/${PROJECT_NAME}/plugins/joint_state_publisher.h)
 target_link_libraries(youbot_joint_state_publisher ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})

@@ -40,16 +40,17 @@ namespace gazebo
     /* Parse parameters */
 
     robot_namespace_ = "";
-    if (!sdf->HasElement("robotNamespace")) 
+    if (!sdf->HasElement("namespace"))
     {
-      ROS_INFO("YoubotArmController missing <robotNamespace>, "
+      ROS_INFO("YoubotArmController missing <namespace>, "
           "defaults to \"%s\"", robot_namespace_.c_str());
     }
     else 
     {
       robot_namespace_ = 
-        sdf->GetElement("robotNamespace")->Get<std::string>();
+        sdf->GetElement("namespace")->Get<std::string>();
     }
+    if ( !robot_namespace_.empty() ) this->robot_namespace_ += "/";
 
     alive_ = true;
 
@@ -71,17 +72,17 @@ namespace gazebo
 
     // subscribe to the odometry topic
     ros::SubscribeOptions so =
-      ros::SubscribeOptions::create<luh_youbot_msgs::JointVector>("gazebo/joint_position_command", 1,
+      ros::SubscribeOptions::create<luh_youbot_msgs::JointVector>("joint_position_command", 1,
           boost::bind(&YoubotArmController::posCmdCallback, this, _1),
           ros::VoidPtr(), &queue_);
     pos_sub_ = rosnode_->subscribe(so);
     so =
-          ros::SubscribeOptions::create<luh_youbot_msgs::JointVector>("gazebo/joint_velocity_command", 1,
+          ros::SubscribeOptions::create<luh_youbot_msgs::JointVector>("joint_velocity_command", 1,
               boost::bind(&YoubotArmController::velCmdCallback, this, _1),
               ros::VoidPtr(), &queue_);
     vel_sub_ = rosnode_->subscribe(so);
     so =
-          ros::SubscribeOptions::create<luh_youbot_msgs::JointVector>("gazebo/joint_torque_command", 1,
+          ros::SubscribeOptions::create<luh_youbot_msgs::JointVector>("joint_torque_command", 1,
               boost::bind(&YoubotArmController::trqCmdCallback, this, _1),
               ros::VoidPtr(), &queue_);
     trq_sub_ = rosnode_->subscribe(so);

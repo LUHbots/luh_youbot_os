@@ -5,7 +5,8 @@
 
 	<!-- BUTTON CONFIG FILE -->
 	<param name="luh_youbot_joy_teleop/key_config_dir" value="$(find luh_youbot_joy_teleop)/cfg" />
-	<param name="luh_youbot_joy_teleop/key_config_file" value="FlashFire.yaml" />	
+	<!--param name="luh_youbot_joy_teleop/key_config_file" value="FlashFire.yaml" /-->	
+	<param name="luh_youbot_joy_teleop/key_config_file" value="default_config.yaml" />	
 
 	<!-- PARAMETERS -->
 	<param name="luh_youbot_joy_teleop/gripper_velocity" value="0.02" />

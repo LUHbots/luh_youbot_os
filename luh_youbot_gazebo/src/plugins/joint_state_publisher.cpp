@@ -49,7 +49,6 @@ void YoubotJointStatePublisher::Load ( physics::ModelPtr _parent, sdf::ElementPt
                    this->robot_namespace_.c_str() );
     } else {
         this->robot_namespace_ = _sdf->GetElement ( "robotNamespace" )->Get<std::string>();
-        if ( this->robot_namespace_.empty() ) this->robot_namespace_ = parent_->GetName ();
     }
     if ( !robot_namespace_.empty() ) this->robot_namespace_ += "/";
     rosnode_ = boost::shared_ptr<ros::NodeHandle> ( new ros::NodeHandle ( this->robot_namespace_ ) );

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:macro name="joint_state_publisher">
+  <xacro:macro name="joint_state_publisher" params="namespace">
   <gazebo>
       <plugin name="youbot_joint_state_publisher" filename="libyoubot_joint_state_publisher.so">
- 	<robotNamespace>gazebo</robotNamespace>
+ 	<robotNamespace>${namespace}</robotNamespace>
  	<updateRate>100.0</updateRate>
  	<alwaysOn>true</alwaysOn>
       </plugin>

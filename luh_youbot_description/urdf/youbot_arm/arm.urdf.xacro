@@ -4,7 +4,7 @@
 	<xacro:include filename="$(find luh_youbot_description)/urdf/youbot_arm/limits.urdf.xacro" />
 	<xacro:include filename="$(find luh_youbot_description)/urdf/youbot_arm/arm.gazebo.xacro" />
 
-	<xacro:macro name="youbot_arm" params="parent name *origin">
+	<xacro:macro name="youbot_arm" params="parent name namespace *origin">
 
 		<!-- joint between base_link and arm_0_link -->
 		<joint name="${name}_joint_0" type="fixed" >
@@ -188,20 +188,19 @@
 			<visual>
 				<origin xyz="0.003 0 -0.034" rpy="0 0 0" />
 				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm5.dae" />
+					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm5_new.dae" />
 				</geometry>
-				<material name="DarkGrey" />
 			</visual>
 			
 			<collision>
 				<origin xyz="0.003 0 -0.034" rpy="0 0 0" />
 				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm5_convex.dae" />
+					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm5_new_convex.dae" />
 				</geometry>
 			</collision>
 		</link>
                 
-                <xacro:youbot_arm_controller />
+                <xacro:youbot_arm_controller namespace="${namespace}"/>
 
 	</xacro:macro>
 </robot>

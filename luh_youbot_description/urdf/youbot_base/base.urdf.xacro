@@ -25,7 +25,7 @@
 	<property name="wheel_joint_velocity" value="10" />
 	<property name="wheel_joint_safety_k_velocity" value="10.0" />
 
-	<xacro:macro name="youbot_base" params="name">
+	<xacro:macro name="youbot_base" params="name namespace">
 		
 		<link name="${name}_footprint">
       			<visual>
@@ -213,7 +213,7 @@
       			</collision>
     		</link>
 	
-                <xacro:youbot_base_controller/>
+                <xacro:youbot_base_controller namespace="${namespace}"/>
 
 	</xacro:macro>
 

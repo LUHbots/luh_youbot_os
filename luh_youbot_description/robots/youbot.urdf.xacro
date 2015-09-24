@@ -21,20 +21,20 @@
   <xacro:include filename="$(find luh_youbot_description)/robots/youbot_gazebo.xacro" />
 
   <!-- Now we can start using the macros included above to define the actual youbot -->
-  <xacro:youbot_base name="base"/>
+  <xacro:youbot_base name="base" namespace="gazebo"/>
 
   <xacro:youbot_plate name="plate" parent="base_link">
     <origin xyz="-0.039 0 0.064" rpy="0 0 0" />
   </xacro:youbot_plate>
 
-  <xacro:youbot_arm name="arm" parent="base_link">
+  <xacro:youbot_arm name="arm" parent="base_link" namespace="gazebo">
     <origin xyz="0.258 0 0.066" rpy="0 0 0.576" />
   </xacro:youbot_arm>
 
-  <xacro:youbot_gripper name="gripper" parent="arm_link_5">
+  <xacro:youbot_gripper name="gripper" parent="arm_link_5" namespace="">
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:youbot_gripper>
 
-  <xacro:joint_state_publisher />
+  <xacro:joint_state_publisher namespace="gazebo"/>
 
 </robot>

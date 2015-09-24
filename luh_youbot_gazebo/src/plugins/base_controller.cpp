@@ -51,6 +51,7 @@ namespace gazebo
       robot_namespace_ = 
         sdf->GetElement("robotNamespace")->Get<std::string>();
     }
+    if ( !robot_namespace_.empty() ) this->robot_namespace_ += "/";
 
     command_topic_ = "cmd_vel";
     if (!sdf->HasElement("commandTopic")) 
