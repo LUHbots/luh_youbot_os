@@ -68,13 +68,14 @@
 #include <sensor_msgs/JointState.h>
 #include <std_srvs/Empty.h>
 #include <luh_youbot_kinematics/arm_kinematics.h>
+#include "luh_youbot_driver_api/arduino_gripper.h"
 
 class YoubotArmInterface
 {
 public:
     YoubotArmInterface(std::string name, YoubotConfiguration &config);
     ~YoubotArmInterface();
-    virtual void initialise(bool use_standard_gripper=true);
+    virtual void initialise(bool use_standard_gripper=true, bool use_luh_gripper_v3=false);
     virtual void readState();
     virtual bool writeCommands();
     virtual void stop();
@@ -113,6 +114,7 @@ protected:
     std::string name_;
 
     youbot::YouBotManipulator *arm_;
+    arduino_gripper* luh_gripper_v3_;
 
     enum ControlMode{POSITION, VELOCITY, TORQUE} mode_;
 
@@ -126,6 +128,7 @@ protected:
     std::vector<double> position_command_;
 
     std::vector<double> gripper_command_;
+    float luh_gripper_v3_position_command_;
 
     bool has_new_gripper_command_;
     bool has_new_arm_command_;
@@ -142,6 +145,7 @@ protected:
     std::vector<ros::Time> effort_watchdog_time_;
 
     bool use_standard_gripper_;
+    bool use_luh_gripper_v3_;
 
     bool switchOffArmMotorsCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
     bool switchOnArmMotorsCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
