@@ -88,6 +88,9 @@ public:
     luh_youbot_kinematics::JointPosition getJointPosition();
     luh_youbot_kinematics::JointVelocity getJointVelocity();
     luh_youbot_kinematics::JointVector getJointTorque();
+    double getGripperEffort(){return gripper_effort_;}
+    double getGripperVelocity(){return gripper_velocity_;}
+    double getGripperPosition(){return gripper_position_;}
 
     virtual bool isInitialised(){return arm_ != NULL;}
 
@@ -109,12 +112,16 @@ protected:
     luh_youbot_kinematics::JointPosition joint_position_;
     luh_youbot_kinematics::JointVelocity joint_velocity_;
     luh_youbot_kinematics::JointVector joint_torque_;
+    double gripper_position_;
+    double gripper_velocity_;
+    double gripper_effort_;
 
     bool ramp_is_disabled_;
     std::string name_;
 
     youbot::YouBotManipulator *arm_;
     arduino_gripper* luh_gripper_v3_;
+    int luh_gripper_v3_read_state_counter_;
 
     enum ControlMode{POSITION, VELOCITY, TORQUE} mode_;
 

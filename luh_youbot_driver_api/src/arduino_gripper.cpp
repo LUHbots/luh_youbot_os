@@ -107,6 +107,8 @@ void arduino_gripper::setPosition(float LengthBetweenGripperBarsInMeter)
 
     m_pArduinoGripper->getConfigurationParameter(MyMessage);
 
+    std::cout << "Message set and the respose value is: " << MyMessage.stctInput.value << std::endl;
+
     if(!MyMessage.stctInput.status==100)
     {
         std::cout << "Something went terrible wrong, the respose status is not 100, but i just dont care and am going further!" << std::endl;
@@ -130,7 +132,7 @@ void arduino_gripper::getPosition(float& LengthBetweenGripperBarsInMeter)
     {
         std::cout << "Something went terrible wrong, the respose status is not 100, but i just dont care and am going further!" << std::endl;
     } else {
-        LengthBetweenGripperBarsInMeter=MyMessage.stctInput.value*M_PI*27.85/360*2; //27.85=Diameter of the Servo-Wheel
+        LengthBetweenGripperBarsInMeter=MyMessage.stctInput.value*M_PI*27.85/360*2/1000; //27.85=Diameter of the Servo-Wheel
     }
 }
 

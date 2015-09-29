@@ -61,6 +61,7 @@ void ModuleGripper::init()
     node_->param("module_gripper/min_gripper_width", min_gripper_width_, 0.0);
     node_->param("module_gripper/max_gripper_width", max_gripper_width_, 0.06);
     node_->param("module_gripper/gripper_velocity", gripper_velocity_, 0.02);
+    node_->param("module_gripper/static_grip_force", static_grip_force_, 25.0);
     goal_width_ = HUGE_VAL; // huge val means unknown
 
     // === ACTION SERVERS ===
@@ -73,6 +74,10 @@ void ModuleGripper::init()
 
     // === SUBSCRIBER ===
     gripper_subscriber_ = node_->subscribe("arm_1/gripper_command", 1, &ModuleGripper::gripperMsgCallback, this);
+
+
+    // === SERVICE SERVER ===
+    grip_check_server_ = node_->advertiseService("gripper/check", &ModuleGripper::gripCheckCallback, this);
 
     ROS_INFO("Gripper Module initialised.");
 }
@@ -264,4 +269,16 @@ void ModuleGripper::gripperMsgCallback(const std_msgs::Float32::ConstPtr &msg)
     gripping_object_ = true;
     publish_only_once_ = true;
     goal_width_ = msg->data;
+}
+
+//########## CALLBACK: CHECK GRIPPER  ########################################################################
+bool ModuleGripper::gripCheckCallback(luh_youbot_msgs::GripCheck::Request &req, luh_youbot_msgs::GripCheck::Response &res)
+{
+
+    double current_force = fabs(youbot_->arm()->getGripperEffort());
+
+    res.has_object = current_force > static_grip_force_;
+
+
+    return true;
 }

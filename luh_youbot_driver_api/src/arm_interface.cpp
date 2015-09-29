@@ -157,6 +157,13 @@ void YoubotArmInterface::initialise(bool use_standard_gripper, bool use_luh_grip
 
             luh_gripper_v3_=new arduino_gripper();
             luh_gripper_v3_->initAdruinoGripper(slaveNumber,config_->config_path); //TODO Slave Number
+            luh_gripper_v3_read_state_counter_=0;
+            ROS_INFO("Kalibrating Gripper...");
+            sleep(3);
+            luh_gripper_v3_->setPosition(0.03);
+            sleep(3);
+            luh_gripper_v3_->setPosition(0.06);
+            sleep(3);
         }
     }
     catch (std::exception& e)
@@ -210,12 +217,26 @@ void YoubotArmInterface::initialise(bool use_standard_gripper, bool use_luh_grip
         joint_state_.velocity.resize(7);
         joint_state_.effort.resize(7);
     }
+    else if(use_luh_gripper_v3_)
+    {
+        joint_state_.name.push_back(gripper_finger_names_[LEFT_FINGER_INDEX]);
+        joint_state_.name.push_back(gripper_finger_names_[RIGHT_FINGER_INDEX]);
+
+        joint_state_.position.resize(7);
+        joint_state_.velocity.resize(7);
+        joint_state_.effort.resize(7);
+
+    }
     else
     {
         joint_state_.position.resize(5);
         joint_state_.velocity.resize(5);
         joint_state_.effort.resize(5);
     }
+    gripper_position_=0;
+    gripper_velocity_=0;
+    gripper_effort_=0;
+
     // === MOVE TO VALID INITIAL POSE ===
 
     readState();
@@ -318,20 +339,48 @@ void YoubotArmInterface::readState()
     // ensure that all joint values will be sent at the same time
     youbot::EthercatMaster::getInstance().AutomaticReceiveOn(true);
 
-    if(use_luh_gripper_v3_)
+    luh_gripper_v3_read_state_counter_++;
+
+    if(use_luh_gripper_v3_ && luh_gripper_v3_read_state_counter_>20)
     {
-//        float currentPosition=0.0;
-//        float currentVelocity=0.0;
-//        float currentEffort=0.0;
-//        luh_gripper_v3_->getPosition(currentPosition);
-//        luh_gripper_v3_->getVelocity(currentVelocity);
-//        luh_gripper_v3_->getEffort(currentEffort);
-//        joint_state_.position[5] = currentPosition/2;
-//        joint_state_.position[6] = currentPosition/2;
-//        joint_state_.velocity[5] = currentVelocity/2;
-//        joint_state_.velocity[6] = currentVelocity/2;
-//        joint_state_.effort[5]= currentEffort;
-//        joint_state_.effort[6]= currentEffort;
+        luh_gripper_v3_read_state_counter_=0;
+
+        std::vector<bool> JointReachedPosition(5);
+        unsigned int StatusFlags;
+        for (int i=0;i<5;i++)
+        {
+
+            arm_->getArmJoint(i+1).getStatus(StatusFlags);
+            if(StatusFlags & POSITION_REACHED)
+            {
+                JointReachedPosition[i]=true;
+            }else{
+                JointReachedPosition[i]=false;
+            }
+        }
+
+        if(JointReachedPosition[0] && JointReachedPosition[1] && JointReachedPosition[2] && JointReachedPosition[3] && JointReachedPosition[4])
+        {
+            float currentPosition=0.0;
+            float currentVelocity=0.0;
+            float currentEffort=0.0;
+            luh_gripper_v3_->getPosition(currentPosition);
+            ROS_INFO("Gripper_Position= %f",currentPosition);
+            luh_gripper_v3_->getVelocity(currentVelocity);
+            ROS_INFO("Gripper_Velocity= %f",currentVelocity);
+            luh_gripper_v3_->getEffort(currentEffort);
+            ROS_INFO("Gripper_Effort= %f",currentEffort);
+            joint_state_.position[5] = currentPosition/2;
+            joint_state_.position[6] = currentPosition/2;
+            joint_state_.velocity[5] = currentVelocity/2;
+            joint_state_.velocity[6] = currentVelocity/2;
+            joint_state_.effort[5]= currentEffort;
+            joint_state_.effort[6]= currentEffort;
+            gripper_position_=currentPosition;
+            gripper_velocity_=currentVelocity;
+            gripper_effort_=currentEffort;
+        }
+
     }
 
     joint_position_.setValues(joint_state_.position);
