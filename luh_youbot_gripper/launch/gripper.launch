@@ -1,7 +1,7 @@
 <launch>
 	<!-- LOAD PARAMETERS -->
-	<rosparam file="$(find luh_gripper)/cfg/params.yaml" command="load" ns="luh_gripper" />	
+	<rosparam file="$(find luh_youbot_gripper)/cfg/params.yaml" command="load" ns="luh_gripper" />	
 
 	<!-- LAUNCH MANAGER NODE -->
-	<node name="luh_gripper" pkg="luh_gripper" type="luh_gripper_node" output="screen" />
+	<node name="luh_youbot_gripper" pkg="luh_youbot_gripper" type="luh_gripper_node" output="screen" />
 </launch>
