@@ -972,6 +972,7 @@ void ModuleInterpolation::update()
     // === GET JOINTSPACE VELOCITY ===
     ykin::JointVelocity joint_velocity;
     if(coordinate_mode_ == CARTESIAN)
+    
         joint_velocity = ((ykin::CartesianVelocity)velocity).toJointspace(joint_state_position_);
     else if(coordinate_mode_ == CYLINDRIC)
         joint_velocity = ((ykin::CylindricVelocity)velocity).toJointspace(joint_state_position_);
@@ -983,9 +984,12 @@ void ModuleInterpolation::update()
 
     ykin::JointPosition joint_position;
     if(coordinate_mode_ == CARTESIAN)
-    {
-        joint_position = ((ykin::CartesianPosition)position_command).toJointspace(joint_state_position_);
-    }
+        {
+            joint_velocity = ((ykin::CartesianVelocity)velocity).toJointspace(joint_state_position_);
+            ROS_INFO("Velocity Joint 5 before change: %f",joint_velocity[4]);
+            joint_velocity.setQ5(-joint_velocity[0]);
+            ROS_INFO("Velocity Joint 5 before change: %f",joint_velocity[4]);
+        }
     else if(coordinate_mode_ == CYLINDRIC)
     {
         joint_position = ((ykin::CylindricPosition)position_command).toJointspace(joint_state_position_);
