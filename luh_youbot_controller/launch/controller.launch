@@ -20,5 +20,6 @@
         </include>
 
        	<!-- LAUNCH DRIVER NODE -->
+	<param name="luh_youbot_controller/use_luh_gripper_v3" value="true" />
 	<node name="controller_node" pkg="luh_youbot_controller" type="controller_node" output="screen" />
 </launch>
