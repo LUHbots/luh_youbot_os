@@ -10,8 +10,8 @@ find_package(catkin REQUIRED COMPONENTS
   luh_youbot_msgs
   luh_youbot_poses
   roscpp
-  sensor_msgs
   tf
+  sensor_msgs
   tf_conversions
   cmake_modules
   control_msgs
@@ -99,8 +99,19 @@ target_link_libraries(controller_node modules)
 ## GIVE SUDO RIGHTS TO NODE TO ACCESS ETHERNET INTERFACE
 set(EXECUTABLE_PATH "${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_BIN_DESTINATION}")
 
-add_custom_command(TARGET controller_node POST_BUILD
-    #COMMAND sudo setcap cap_net_raw+ep controller_node
-    COMMAND gksudo setcap cap_net_raw+ep controller_node
-    WORKING_DIRECTORY ${EXECUTABLE_PATH}
-)
+
+message("=========================================================")
+message("Jenkins: $ENV{JENKINS} ")
+
+if(NOT DEFINED $ENV{JENKINS})
+    add_custom_command(TARGET controller_node POST_BUILD
+        #COMMAND sudo setcap cap_net_raw+ep controller_node
+        COMMAND gksudo setcap cap_net_raw+ep controller_node
+        WORKING_DIRECTORY ${EXECUTABLE_PATH}
+    )
+    message("PRODUCTION BUILD - EXECUTING  sudo setcap cap_net_raw+ep controller_node")
+else()
+    message("JENKINS BUILD - Skipping  sudo setcap cap_net_raw+ep controller_node")
+endif()
+
+
