@@ -17,7 +17,9 @@ add_service_files(
 
 generate_messages()
 
-catkin_package()
+catkin_package(
+  DEPENDS luh_youbot_msgs
+)
 
 ###########
 ## Build ##
