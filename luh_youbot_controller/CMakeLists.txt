@@ -103,15 +103,16 @@ set(EXECUTABLE_PATH "${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_BIN_DESTINATION}")
 message("=========================================================")
 message("Jenkins: $ENV{JENKINS} ")
 
-if(NOT DEFINED $ENV{JENKINS})
+if DEFINED $ENV{JENKINS})
+    message("JENKINS BUILD - Skipping  sudo setcap cap_net_raw+ep controller_node")
+
+else()
     add_custom_command(TARGET controller_node POST_BUILD
         #COMMAND sudo setcap cap_net_raw+ep controller_node
         COMMAND gksudo setcap cap_net_raw+ep controller_node
         WORKING_DIRECTORY ${EXECUTABLE_PATH}
     )
     message("PRODUCTION BUILD - EXECUTING  sudo setcap cap_net_raw+ep controller_node")
-else()
-    message("JENKINS BUILD - Skipping  sudo setcap cap_net_raw+ep controller_node")
 endif()
 
 
