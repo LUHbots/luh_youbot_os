@@ -34,3 +34,16 @@ add_dependencies(watchdog luh_laser_watchdog_generate_messages_cpp)
 target_link_libraries(watchdog
   ${catkin_LIBRARIES}
 )
+
+
+if(CATKIN_ENABLE_TESTING)
+  find_package(rostest REQUIRED)
+  find_package(gtest)
+
+  add_rostest_gtest(test_services test/test_watchdog.test test/test_services.cpp)
+
+  target_link_libraries(test_services 
+    ${catkin_LIBRARIES}
+    ${GTEST_LIBRARIES}
+  ) 
+endif()

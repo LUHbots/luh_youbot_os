@@ -1,0 +1,4 @@
+<launch>
+  <node name="watchdog" pkg="luh_laser_watchdog" type="watchdog"/>
+  <test test-name="test_watchdog_services" pkg="luh_laser_watchdog" type="test_services" />
+</launch>

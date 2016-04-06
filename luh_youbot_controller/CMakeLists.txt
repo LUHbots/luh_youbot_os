@@ -101,9 +101,9 @@ set(EXECUTABLE_PATH "${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_BIN_DESTINATION}")
 
 
 message("=========================================================")
-message("Jenkins: $ENV{JENKINS} ")
+message("Jenkins: ${JENKINS}")
 
-if (DEFINED $ENV{JENKINS})
+if (${JENKINS})
     message("JENKINS BUILD - Skipping  sudo setcap cap_net_raw+ep controller_node")
 
 else()
