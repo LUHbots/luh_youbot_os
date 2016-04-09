@@ -365,11 +365,11 @@ void YoubotArmInterface::readState()
             float currentVelocity=0.0;
             float currentEffort=0.0;
             luh_gripper_v3_->getPosition(currentPosition);
-            ROS_INFO("Gripper_Position= %f",currentPosition);
+//            ROS_INFO("Gripper_Position= %f",currentPosition);
             luh_gripper_v3_->getVelocity(currentVelocity);
-            ROS_INFO("Gripper_Velocity= %f",currentVelocity);
+//            ROS_INFO("Gripper_Velocity= %f",currentVelocity);
             luh_gripper_v3_->getEffort(currentEffort);
-            ROS_INFO("Gripper_Effort= %f",currentEffort);
+//            ROS_INFO("Gripper_Effort= %f",currentEffort);
             joint_state_.position[5] = currentPosition/2;
             joint_state_.position[6] = currentPosition/2;
             joint_state_.velocity[5] = currentVelocity/2;
