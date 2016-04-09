@@ -155,10 +155,10 @@ void YoubotArmInterface::initialise(bool use_standard_gripper, bool use_luh_grip
         {
             int slaveNumber=9; //Erstmal hardgecoded TODO
             std::string gripper_bar_name;
-            gripper_bar_name="finger_joint_l";
+            gripper_bar_name="gripper_finger_joint_l";
             gripper_finger_names_[LEFT_FINGER_INDEX] = gripper_bar_name;
             ROS_INFO("Joint %i for gripper of arm %s has name: %s", 1, name_.c_str(), gripper_bar_name.c_str());
-            gripper_bar_name="finger_joint_r";
+            gripper_bar_name="gripper_finger_joint_r";
             gripper_finger_names_[RIGHT_FINGER_INDEX] = gripper_bar_name;
             ROS_INFO("Joint %i for gripper of arm %s has name: %s", 2, name_.c_str(), gripper_bar_name.c_str());
 
