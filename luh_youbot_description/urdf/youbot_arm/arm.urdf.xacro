@@ -185,7 +185,7 @@
 				<xacro:link_5_inertia_tensor />
 			</inertial>
 			
-			<visual>
+				<visual>
 				<origin xyz="0.003 0 -0.034" rpy="0 0 0" />
 				<geometry>
 					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm5_new.dae" />
