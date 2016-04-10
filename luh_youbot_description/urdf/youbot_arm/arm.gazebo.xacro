@@ -5,7 +5,7 @@
 
     <gazebo>
       <plugin name="arm_controller" filename="libyoubot_arm_controller.so">
-         <namespace>${namespace}</namespace>
+         <namespace></namespace>
       </plugin>
    </gazebo>
 
