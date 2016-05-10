@@ -1,0 +1,3 @@
+All changes to load another the world in gazebo are now in the youbot.launch
+(Make sure that the "name".world file is in the luh_youbot_gazebo/worlds/ order
+and that the models are in the ~/.gazebo/models order) 
