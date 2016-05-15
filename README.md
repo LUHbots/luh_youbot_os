@@ -7,12 +7,12 @@ The image shows an overview of the core components.
 ![alt tag](https://raw.githubusercontent.com/LUHbots/luh_youbot_os/master/luh_youbot_os/luh_youbot_os_overview.png)
 
 
-# Tutorials
+## Tutorials
 
 https://github.com/LUHbots/luh_youbot_os/wiki
 
 
-# Package Overview
+## Package Overview
 
 Package | Description
 ------------- | -------------
