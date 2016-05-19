@@ -7,12 +7,12 @@
     <arg name="gui" value="true"/>
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
-    <arg name="world_name" value="$(find luh_youbot_gazebo)/worlds/layout_leipzig2.world"/>
+    <arg name="world_name" value="$(find luh_youbot_gazebo)/worlds/layout_leipzig_neu.world"/>
   </include>
     
     <!-- Not sure if the following param is necessary \('_')/ -->
     <!-- send world urdf to param server -->
-	<param name="world_description" command="$(find xacro)/xacro.py $(find luh_youbot_gazebo)/worlds/layout_leipzig2.world" />
+	<param name="world_description" command="$(find xacro)/xacro.py $(find luh_youbot_gazebo)/worlds/layout_leipzig_neu.world" />
    <!--spawn uploaded world model -->
 	<node pkg="gazebo_ros" type="spawn_model" name="gazebo_world_model" args="-u -param world_description -model world -x 0.0 -y 0.0 -z 0.2" respawn="false" output="screen" /> 
 
@@ -20,7 +20,7 @@
   <param name="robot_description" command="$(find xacro)/xacro.py $(find luh_youbot_description)/robots/youbot.urdf.xacro" />
 
   <!-- Spawn a robot into Gazebo -->
-  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x -5.2 -y 1 -z 0.1 -model youbot" />
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x -5.2 -y 0.5 -z 1 -model youbot" />
 
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="youbot_state_publisher" output="screen">
   </node>
