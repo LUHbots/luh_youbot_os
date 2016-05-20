@@ -7,12 +7,12 @@
     <arg name="gui" value="true"/>
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
-    <arg name="world_name" value="$(find luh_youbot_gazebo)/worlds/layout_leipzig_neu.world"/>
+    <arg name="world_name" value="$(find luh_youbot_gazebo)/worlds/layout_leipzig2.world"/>
   </include>
     
     <!-- Not sure if the following param is necessary \('_')/ -->
     <!-- send world urdf to param server -->
-	<param name="world_description" command="$(find xacro)/xacro.py $(find luh_youbot_gazebo)/worlds/layout_leipzig_neu.world" />
+	<param name="world_description" command="$(find xacro)/xacro.py $(find luh_youbot_gazebo)/worlds/layout_leipzig2.world" />
    <!--spawn uploaded world model -->
 	<node pkg="gazebo_ros" type="spawn_model" name="gazebo_world_model" args="-u -param world_description -model world -x 0.0 -y 0.0 -z 0.2" respawn="false" output="screen" /> 
 
