@@ -20,7 +20,7 @@
   <param name="robot_description" command="$(find xacro)/xacro.py $(find luh_youbot_description)/robots/youbot.urdf.xacro" />
 
   <!-- Spawn a robot into Gazebo -->
-  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x -5.2 -y 1 -z 0.1 -model youbot" />
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x -5.2 -y 0.5 -z 1 -model youbot" />
 
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="youbot_state_publisher" output="screen">
   </node>
