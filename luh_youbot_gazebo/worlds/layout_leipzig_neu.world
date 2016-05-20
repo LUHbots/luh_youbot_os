@@ -80,13 +80,13 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <state world_name='default'>
-      <sim_time>1 67000000</sim_time>
-      <real_time>1 71252148</real_time>
-      <wall_time>1463575899 609295723</wall_time>
+      <sim_time>769 647000000</sim_time>
+      <real_time>161 639764048</real_time>
+      <wall_time>1463747781 749999062</wall_time>
       <model name='Conveyor_Belt_180degree'>
-        <pose>-0.129819 2.71899 0 0 -0 0</pose>
+        <pose>-0.129819 2.33857 0 0 -0 0</pose>
         <link name='link'>
-          <pose>-0.129819 2.71899 0 0 -0 0</pose>
+          <pose>-0.129819 2.33857 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -173,15 +173,6 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='Wall_540x300x40_90degree_1'>
-        <pose>-2.04521 3.75553 0 0 -0 0</pose>
-        <link name='link'>
-          <pose>-2.04521 3.75553 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
       <model name='Wall_540x300x40_90degree_2'>
         <pose>-3.4418 5.61159 0 0 -0 0</pose>
         <link name='link'>
@@ -195,15 +186,6 @@
         <pose>0 0 0 0 -0 0</pose>
         <link name='link'>
           <pose>0 0 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='Wall_800x300x40_0'>
-        <pose>-0.404407 4.85589 0 0 -0 0</pose>
-        <link name='link'>
-          <pose>-0.404407 4.85589 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -326,6 +308,15 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
+      <model name='Wall_800x300x40_90degree_6'>
+        <pose>-1.78507 3.75501 0 0 -0 0</pose>
+        <link name='link'>
+          <pose>-1.78507 3.75501 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
         <link name='link'>
@@ -371,6 +362,24 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
+      <model name='platform_800x500x99_3'>
+        <pose>0.094527 2.90847 0 0 -0 0</pose>
+        <link name='link'>
+          <pose>0.094527 2.90847 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='platform_800x500x99_4'>
+        <pose>-4.0002 0.108431 0 0 -0 0</pose>
+        <link name='link'>
+          <pose>-4.0002 0.108431 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
       <model name='platform_800x500x99_90degree'>
         <pose>-1.76068 2.73884 0 0 -0 0</pose>
         <link name='link'>
@@ -384,6 +393,24 @@
         <pose>-3.48604 3.40411 0 0 -0 0</pose>
         <link name='link'>
           <pose>-3.48604 3.40411 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='platform_800x500x99_90degree_1'>
+        <pose>-1.60932 7.75889 0 0 -0 0</pose>
+        <link name='link'>
+          <pose>-1.60932 7.75889 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='platform_800x500x99_90degree_2'>
+        <pose>-3.05104 7.77406 0 0 -0 0</pose>
+        <link name='link'>
+          <pose>-3.05104 7.77406 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -407,24 +434,6 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='shelf_assembly_270degree'>
-        <pose>-2.40881 7.75817 0 0 -0 0</pose>
-        <link name='link'>
-          <pose>-2.40881 7.75817 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='shelf_assembly_270degree_0'>
-        <pose>-3.85099 7.77406 0 0 -0 0</pose>
-        <link name='link'>
-          <pose>-3.85099 7.77406 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
       <model name='shelf_assembly_270degree_1'>
         <pose>-1.92205 5.60502 0 0 -0 0</pose>
         <link name='link'>
@@ -443,19 +452,19 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='turning_table'>
-        <pose>-2.11838 -0.345548 0 0 -0 0</pose>
+      <model name='unit_cylinder_1'>
+        <pose>-2.11419 -0.343426 0.054868 0 -0 0.004536</pose>
         <link name='link'>
-          <pose>-2.11838 -0.345548 0 0 -0 0</pose>
+          <pose>-2.11419 -0.343426 0.054868 0 -0 0.004536</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
+          <acceleration>0 0 -9.8 0.118194 -4.33681e-19 0.018807</acceleration>
+          <wrench>0 0 -9.8 0 -0 0</wrench>
         </link>
       </model>
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>-4.08711 7.3925 13.7473 -5.28809e-15 1.5498 -2.01187</pose>
+        <pose>-0.671956 1.76411 1.02951 -8.21986e-18 0.565796 2.96248</pose>
         <view_controller>orbit</view_controller>
       </camera>
     </gui>
@@ -652,45 +661,6 @@
       </link>
       <pose>0 3.5871 0 0 -0 0</pose>
     </model>
-    <model name='Wall_800x300x40_0'>
-      <static>1</static>
-      <link name='link'>
-        <pose>0 0 0 0 -0 0</pose>
-        <collision name='collision'>
-          <pose>-0.02 0.4 0.15 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.04 0.8 0.3</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <bounce/>
-            <friction>
-              <ode/>
-            </friction>
-            <contact>
-              <ode/>
-            </contact>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://wall_800x300x40/meshes/wall_800x300x40.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <velocity_decay>
-          <linear>0</linear>
-          <angular>0</angular>
-        </velocity_decay>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose>-0.404407 5 0 0 -0 0</pose>
-    </model>
     <model name='Wall_800x300x40_1'>
       <static>1</static>
       <link name='link'>
@@ -807,82 +777,6 @@
         <gravity>1</gravity>
       </link>
       <pose>0 6.46138 0 0 -0 0</pose>
-    </model>
-    <model name='shelf_assembly_270degree'>
-      <static>1</static>
-      <link name='link'>
-        <pose>0 0 0 0 -0 0</pose>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://shelf_assembly_270degree/meshes/shelf_assembly_270degree.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <bounce/>
-            <friction>
-              <ode/>
-            </friction>
-            <contact>
-              <ode/>
-            </contact>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://shelf_assembly_270degree/meshes/shelf_assembly_270degree.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <velocity_decay>
-          <linear>0</linear>
-          <angular>0</angular>
-        </velocity_decay>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose>-2.40419 8 0 0 -0 0</pose>
-    </model>
-    <model name='shelf_assembly_270degree_0'>
-      <static>1</static>
-      <link name='link'>
-        <pose>0 0 0 0 -0 0</pose>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://shelf_assembly_270degree/meshes/shelf_assembly_270degree.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <bounce/>
-            <friction>
-              <ode/>
-            </friction>
-            <contact>
-              <ode/>
-            </contact>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://shelf_assembly_270degree/meshes/shelf_assembly_270degree.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <velocity_decay>
-          <linear>0</linear>
-          <angular>0</angular>
-        </velocity_decay>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose>-4 8 0 0 -0 0</pose>
     </model>
     <model name='Wall_800x300x40_90degree_1'>
       <static>1</static>
@@ -1079,45 +973,6 @@
       </link>
       <pose>-2.47501 4.43528 0 0 -0 0</pose>
     </model>
-    <model name='Wall_540x300x40_90degree_1'>
-      <static>1</static>
-      <link name='link'>
-        <pose>0 0 0 0 -0 0</pose>
-        <collision name='collision'>
-          <pose>-0.27 -0.02 0.15 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.54 0.04 0.3</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <bounce/>
-            <friction>
-              <ode/>
-            </friction>
-            <contact>
-              <ode/>
-            </contact>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://wall_540x300x40_90degree/meshes/wall_540x300x40_90degree.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <velocity_decay>
-          <linear>0</linear>
-          <angular>0</angular>
-        </velocity_decay>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose>-2.46827 3.52869 0 0 -0 0</pose>
-    </model>
     <model name='Wall_1200x300x40_0'>
       <static>1</static>
       <link name='link'>
@@ -1272,44 +1127,6 @@
         <gravity>1</gravity>
       </link>
       <pose>-1.56308 2.59803 0 0 -0 0</pose>
-    </model>
-    <model name='turning_table'>
-      <static>1</static>
-      <link name='link'>
-        <pose>0 0 0 0 -0 0</pose>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://turning_table/meshes/turning_table.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <bounce/>
-            <friction>
-              <ode/>
-            </friction>
-            <contact>
-              <ode/>
-            </contact>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://turning_table/meshes/turning_table.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <velocity_decay>
-          <linear>0</linear>
-          <angular>0</angular>
-        </velocity_decay>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose>-2 -0.502308 0 0 -0 0</pose>
     </model>
     <model name='table_monitor'>
       <static>1</static>
@@ -2010,6 +1827,252 @@
         <gravity>1</gravity>
       </link>
       <pose>-3.54652 3.40323 0 0 -0 0</pose>
+    </model>
+    <model name='platform_800x500x99_90degree_1'>
+      <static>1</static>
+      <link name='link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://platform_800x500x99_90degree/meshes/platform_800x500x99_90degree.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://platform_800x500x99_90degree/meshes/platform_800x500x99_90degree.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose>-1.58522 7 0 0 -0 0</pose>
+    </model>
+    <model name='platform_800x500x99_90degree_2'>
+      <static>1</static>
+      <link name='link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://platform_800x500x99_90degree/meshes/platform_800x500x99_90degree.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://platform_800x500x99_90degree/meshes/platform_800x500x99_90degree.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose>-3 7 0 0 -0 0</pose>
+    </model>
+    <model name='platform_800x500x99_3'>
+      <static>1</static>
+      <link name='link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://platform_800x500x99/meshes/platform_800x500x99.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://platform_800x500x99/meshes/platform_800x500x99.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose>0 3 0 0 -0 0</pose>
+    </model>
+    <model name='Wall_800x300x40_90degree_6'>
+      <static>1</static>
+      <link name='link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://wall_800x300x40_90degree/meshes/wall_800x300x40_90degree.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://wall_800x300x40_90degree/meshes/wall_800x300x40_90degree.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose>-1.59904 4 0 0 -0 0</pose>
+    </model>
+    <model name='platform_800x500x99_4'>
+      <static>1</static>
+      <link name='link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://platform_800x500x99/meshes/platform_800x500x99.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://platform_800x500x99/meshes/platform_800x500x99.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose>-3.58052 0.581682 0 0 -0 0</pose>
+    </model>
+    <model name='unit_cylinder_1'>
+      <pose>-2 -1.54555 0.5 0 -0 0</pose>
+      <link name='link'>
+        <inertial>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <cylinder>
+              <radius>0.5</radius>
+              <length>0.109738</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <cylinder>
+              <radius>0.5</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <static>0</static>
     </model>
   </world>
 </sdf>
