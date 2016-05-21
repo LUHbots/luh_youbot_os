@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="youbot_base_bumper" params="namespace">
+
+  <gazebo reference="${name}_link">   <!--  -->
+    <sensor name="youbot_base_bumper" type="contact">
+      <always_on>true</always_on>
+      <update_rate>30.0</update_rate>
+
+      <contact>
+        <collision>${name}_link_collision</collision>
+      </contact>
+      <plugin name="gripper_bumper" filename="libgazebo_ros_bumper.so">
+        <bumperTopicName>youbot_base_bumper</bumperTopicName>
+        <frameName>${name}_link</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  </xacro:macro>
+
+</robot>

@@ -3,13 +3,14 @@
 
 	<!-- sensors -->
 	<xacro:include filename="$(find luh_youbot_description)/urdf/sensors/hokuyo_urg04_laser.urdf.xacro"/>
-        <xacro:include filename="$(find luh_youbot_description)/urdf/youbot_base/base.gazebo.xacro" />
+  <xacro:include filename="$(find luh_youbot_description)/urdf/youbot_base/base.gazebo.xacro" />
+  <xacro:include filename="$(find luh_youbot_description)/urdf/youbot_base/bumper.gazebo.xacro" />
         
  	<!-- simplified box collision geometry for base -->
-  	<property name="base_size_x" value="0.570" />
-  	<property name="base_size_y" value="0.360" />
+  	<property name="base_size_x" value="0.750" />
+  	<property name="base_size_y" value="0.40" />
   	<property name="base_size_z" value="0.100" />
-	<property name="base_mass" value="22.0" />
+	  <property name="base_mass" value="22.0" />
 
 	<property name="wheel_offset_x" value="0.228"  />  
   	<property name="wheel_offset_y" value="0.158"  />  
@@ -66,7 +67,8 @@
       			<collision>
         			<origin xyz="0 0 0" rpy="0 0 0" />
         			<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_base/base_convex.dae"/>
+          				<box size="${base_size_x} ${base_size_y} ${base_size_z}" />
+			<!--		<mesh filename="package://luh_youbot_description/meshes/youbot_base/base_convex.dae"/>   -->
 	       			</geometry>
       			</collision>
     		</link>		
@@ -213,7 +215,10 @@
       			</collision>
     		</link>
 	
-                <xacro:youbot_base_controller namespace="${namespace}"/>
+        <xacro:youbot_base_controller namespace="${namespace}"/>
+        <xacro:youbot_base_bumper namespace="${namespace}"/>
+
+
 
 	</xacro:macro>
 
