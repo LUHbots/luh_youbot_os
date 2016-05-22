@@ -7,7 +7,7 @@
   <xacro:include filename="$(find luh_youbot_description)/urdf/youbot_base/bumper.gazebo.xacro" />
         
  	<!-- simplified box collision geometry for base -->
-  	<property name="base_size_x" value="0.750" />
+  	<property name="base_size_x" value="0.570" />
   	<property name="base_size_y" value="0.40" />
   	<property name="base_size_z" value="0.100" />
 	  <property name="base_mass" value="22.0" />
