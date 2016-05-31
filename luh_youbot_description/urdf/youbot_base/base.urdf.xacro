@@ -67,11 +67,10 @@
       			<collision>
         			<origin xyz="0 0 0" rpy="0 0 0" />
         			<geometry>
-          				<box size="${base_size_x} ${base_size_y} ${base_size_z}" />
-			<!--		<mesh filename="package://luh_youbot_description/meshes/youbot_base/base_convex.dae"/>   -->
+					<mesh filename="package://luh_youbot_description/meshes/youbot_base/base_convex.dae"/>   
 	       			</geometry>
       			</collision>
-    		</link>		
+    		</link>
                
 		<!-- base laser front -->
     		<xacro:hokuyo_urg04_laser name="${name}_laser_front" parent="${name}" ros_topic="scan" update_rate="10" min_angle="-1.57" max_angle="1.57" >
