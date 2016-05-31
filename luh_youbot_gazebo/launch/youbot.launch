@@ -22,6 +22,19 @@
   <!-- Spawn a robot into Gazebo -->
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x -5.2 -y 0.5 -z 1 -model youbot" />
 
+    <!--Load Locations -->
+   <!-- <arg name="location_file" default="$(find luh_navigation_launcher)/map/map_leipzig1_simuliert_locations.yaml"/>
+    <arg name = "model_path1" default="$(find luh_youbot_gazebo)/worlds/models/F20_20/model.sdf"/>
+    <arg name = "model_path2" default="$(find luh_youbot_gazebo)/worlds/models/M20/model.sdf"/>
+    <arg name = "model_path3" default="$(find luh_youbot_gazebo)/worlds/models/M20_100/model.sdf"/>
+    <arg name = "model_path4" default="$(find luh_youbot_gazebo)/worlds/models/M30/model.sdf"/>
+    <arg name = "model_path5" default="$(find luh_youbot_gazebo)/worlds/models/R20/model.sdf"/>
+    <arg name = "model_path6" default="$(find luh_youbot_gazebo)/worlds/models/S40_40/model.sdf"/>
+    <arg name = "model_path7" default="$(find luh_youbot_gazebo)/worlds/models/V20/model.sdf"/>
+	<arg name = "number" default="10"/>
+    
+	<node name="luh_model_spawn" pkg="luh_model_spawn" type="luh_model_spawn" args="$(arg  location_file) $(arg model_path1) $(arg model_path2) $(arg model_path3) $(arg model_path4) $(arg model_path5) $(arg model_path6) $(arg model_path7) $(arg number)" respawn="true"/>-->
+
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="youbot_state_publisher" output="screen">
   </node>
 

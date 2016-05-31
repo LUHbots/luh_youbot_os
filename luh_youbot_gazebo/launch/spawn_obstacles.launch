@@ -1,0 +1,24 @@
+<?xml version = "1.0"?>
+<launch>
+<!--Obstacles for Navigation - Dont use all 5 together -->
+
+    <!-- 1 -->
+        <node name="spawn_sdf1" pkg="gazebo_ros" type="spawn_model" args="-file $(find luh_youbot_gazebo)/worlds/models/wall_540x300x40/model-1_4.sdf -sdf -x -3 -y 1.5 -z 0.0 -model o_nav1" />
+    <!-- 2 -->
+        <node name="spawn_sdf2" pkg="gazebo_ros" type="spawn_model" args="-file $(find luh_youbot_gazebo)/worlds/models/wall_540x300x40/model-1_4.sdf -sdf -x -2.3 -y 3.8 -z 0.0 -model o_nav2" />
+    <!-- 3 -->
+        <node name="spawn_sdf3" pkg="gazebo_ros" type="spawn_model" args="-file $(find luh_youbot_gazebo)/worlds/models/wall_540x300x40/model-1_4.sdf -sdf -x -0.48 -y 5 -z 0.0 -model o_nav3" />
+    <!-- 4 -->
+        <node name="spawn_sdf4" pkg="gazebo_ros" type="spawn_model" args="-file $(find luh_youbot_gazebo)/worlds/models/wall_540x300x40/model-1_4.sdf -sdf -x -1.95 -y 5.96 -z 0.0 -model o_nav4" />
+    <!-- 5 -->
+        <!--<node name="spawn_sdf5" pkg="gazebo_ros" type="spawn_model" args="-file $(find luh_youbot_gazebo)/worlds/models/wall_540x300x40/model-1_4.sdf -sdf -x -4.2 -y 6.16 -z 0.0 -model o_nav5" />-->
+<!--Obstacles for Recovery - Dont use 5 with 8-->
+
+    <!-- 6 -->
+        <node name="spawn_sdf6" pkg="gazebo_ros" type="spawn_model" args="-file $(find luh_youbot_gazebo)/worlds/models/wall_540x300x40/model-1_4.sdf -sdf -x -1.76 -y 3.17 -z 0.0 -model o_rec1" />
+    <!-- 7 -->
+        <node name="spawn_sdf7" pkg="gazebo_ros" type="spawn_model" args="-file $(find luh_youbot_gazebo)/worlds/models/wall_540x300x40/model-1_4.sdf -sdf -x -3.2 -y 0.28 -z 0.0 -model o_rec2" />
+    <!-- 8 -->
+        <!--<node name="spawn_sdf8" pkg="gazebo_ros" type="spawn_model" args="-file $(find luh_youbot_gazebo)/worlds/models/wall_540x300x40/model-1_4.sdf -sdf -x -4.78 -y 3.6 -z 0.00 -model o_rec3" />-->
+
+</launch>
