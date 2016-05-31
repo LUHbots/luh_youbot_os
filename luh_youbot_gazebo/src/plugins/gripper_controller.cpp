@@ -24,7 +24,7 @@
 
 #include "luh_youbot_gazebo/plugins/gripper_controller.h"
 
-namespace gazebo 
+namespace gazebo
 {
 
 YoubotGripperController::YoubotGripperController() {}
@@ -113,7 +113,6 @@ void YoubotGripperController::UpdateChild()
         else
         {
             left_joint_->SetAngle(0, math::Angle(0.5 * pos_cmd_));
-            left_pos_reached_ = true;
         }
     }
 
@@ -131,7 +130,6 @@ void YoubotGripperController::UpdateChild()
         else
         {
             right_joint_->SetAngle(0, math::Angle(0.5 * pos_cmd_));
-            right_pos_reached_ = true;
         }
     }
 
