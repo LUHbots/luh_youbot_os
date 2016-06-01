@@ -1,7 +1,14 @@
+<?xml version="1.0"?>
 <launch>
+
+  <arg name="output" default="screen"/>
+  <arg name="sim" default="false"/>
+  <arg name="gui" default="false"/>
+
+
 	<!-- LOAD PARAMETERS -->
 	<rosparam file="$(find luh_laser_watchdog)/cfg/params.yaml" command="load" ns="laser_watchdog" />	
 
 	<!-- LAUNCH NODE -->
-	<node name="laser_watchdog" pkg="luh_laser_watchdog" type="watchdog" output="screen" />
+	<node name="laser_watchdog" pkg="luh_laser_watchdog" type="watchdog" output="$(arg output)" />
 </launch>
