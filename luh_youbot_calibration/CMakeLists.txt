@@ -19,7 +19,7 @@ if(NOT NLOPT_FOUND)
 message(STATUS "### WARNING###\nNLOPT library is not installed. luh_youbot_calibration will not be built.")
 endif(NOT NLOPT_FOUND)
 
-if(NLOPT_FOUND)
+#if(NLOPT_FOUND)
 
 add_executable(static_calibration src/static_calibration.cpp)
 
@@ -29,4 +29,4 @@ target_link_libraries(static_calibration
   nlopt
 )
 
-endif(NLOPT_FOUND)
+#endif(NLOPT_FOUND)

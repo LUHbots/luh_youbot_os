@@ -22,6 +22,7 @@
 #include <ros/ros.h>
 #include <sensor_msgs/JointState.h>
 //#include <luh_youbot_controller_api/youbot_api.h>
+#include <luh_youbot_controller_api/controller_api.h>
 //#include <luh_youbot_kinematics/arm_dynamics.h>
 #include <luh_youbot_kinematics/arm_kinematics.h>
 #include <nlopt.hpp>
@@ -30,6 +31,7 @@
 #include <fstream>
 #include <luh_youbot_kinematics/arm_dynamics.h>
 
+
 namespace ykin = luh_youbot_kinematics;
 struct State
 {
@@ -37,6 +39,7 @@ struct State
     ykin::JointVelocity vel;
     ykin::JointVector trq;
 };
+
 
 std::vector<State> data;
 
@@ -55,9 +58,15 @@ std::string paramfile;
 
 ykin::YoubotArmDynamics dynamics;
 
+// DECLARATIONS FOR AUTOMATED CALIBRATION MOVEMENT
+std::string calibrationPosesFilePath;
+youbot_api::YoubotArm arm;
+std::vector<luh_youbot_kinematics::JointPosition> posesMatrix;
+luh_youbot_kinematics::JointPosition poseRow;
+
 //############## JOINT STATE CALLBACK ##################################################################################
 void jointStateCallback(const sensor_msgs::JointState::ConstPtr msg)
-{    
+{
     if(save_data)
     {
         ykin::JointPosition jnt_pos(msg->position);
@@ -113,14 +122,14 @@ void deserializeParameters(const std::vector<double> &x, ykin::StaticParameters 
     params.friction_4     = x[13];
     params.friction_3     = x[14];
     params.friction_2     = x[15];
-//    params.gravity        = x[9];
+    //    params.gravity        = x[9];
 
 }
 
 //############## OPTIMIZATION FUNCTION #################################################################################
 double errorFunction(const std::vector<double> &x, std::vector<double> &grad, void *func_data)
 {
-//    Data *data = reinterpret_cast<Data*>(func_data);
+    //    Data *data = reinterpret_cast<Data*>(func_data);
     ykin::StaticParameters p;
     deserializeParameters(x, p);
 
@@ -168,8 +177,8 @@ void evaluate()
     ROS_INFO("Evaluating...");
 
     // === INITIALIZE OPTIMIZER ===
-//    nlopt::opt opt(nlopt::GN_ESCH , n_params);
-    nlopt::opt opt(nlopt::LN_COBYLA, n_params);
+    nlopt::opt opt(nlopt::GN_ESCH , n_params);
+//    nlopt::opt opt(nlopt::LN_COBYLA, n_params);
 
     // initial values
     ykin::StaticParameters init_params;
@@ -189,7 +198,7 @@ void evaluate()
     init_params.friction_3 = 0.0;
     init_params.friction_4 = 0.0;
     init_params.friction_5 = 0.0;
-//    init_params.gravity = 9.81;
+    //    init_params.gravity = 9.81;
 
     // lower bounds
     ykin::StaticParameters lower_bound;
@@ -209,7 +218,7 @@ void evaluate()
     lower_bound.friction_3 = -5.0;
     lower_bound.friction_4 = -5.0;
     lower_bound.friction_5 = -5.0;
-//    lower_bound.gravity = 8.0;
+    //    lower_bound.gravity = 8.0;
 
     std::vector<double> lb;
     serializeParameters(lower_bound, lb);
@@ -233,7 +242,7 @@ void evaluate()
     upper_bound.friction_3 = 5.0;
     upper_bound.friction_4 = 5.0;
     upper_bound.friction_5 = 5.0;
-//    upper_bound.gravity = 12;
+    //    upper_bound.gravity = 12;
 
     std::vector<double> ub;
     serializeParameters(upper_bound, ub);
@@ -343,6 +352,7 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "static_calibration");
     ros::NodeHandle node;
     ros::Subscriber joint_state_sub = node.subscribe("arm_1/joint_states", 1000, jointStateCallback);
+    arm.init(node);
 
     param_names.push_back("mass_5");
     param_names.push_back("mass_4");
@@ -361,12 +371,14 @@ int main(int argc, char** argv)
     param_names.push_back("friction_3");
     param_names.push_back("friction_2");
 
-//    param_names.push_back("gravity");
+    //    param_names.push_back("gravity");
 
     datafile = ros::package::getPath("luh_youbot_calibration");
     paramfile = datafile;
+    calibrationPosesFilePath = datafile;///
     datafile.append("/data/data.yaml");
     paramfile.append("/data/params.yaml");
+    calibrationPosesFilePath.append("/data/calibrationPoses.yaml"); ///
 
     save_data = false;
     ros::AsyncSpinner spinner(1);
@@ -378,39 +390,173 @@ int main(int argc, char** argv)
     if(ans[0] == 'y')
         load();
 
-    // === DO CALIBRATION MOVEMENT ===
+    std::cout << "automated or manuel pose adoption? [a/m]" << std::endl;
+    std::cin >> ans;
+    std::ifstream posesFile;
+    ykin::JointPosition pose;
+
+    posesFile.open(calibrationPosesFilePath.c_str());
     ros::Rate r(200);
-    while(true)
+
+    // === DO (MANUEL) CALIBRATION MOVEMENT ===
+    if(ans[0] != 'a')
     {
-        std::cout << "Move the arm then type 's' to save pose or 'q' to quit." << std::endl;
-        std::string ans;
-        std::cin >> ans;
-
-        if(ans[0] == 'q')
-            break;
-
-        if(ans[0] != 's')
-            continue;
-
-        // get 40 messages
-        data.push_back(State());
-        msg_counter = 0;
-        save_data = true;
-        std::cout << "Saving joint states..." << std::endl;
-
-        while(msg_counter < 40)
+        while(true)
         {
-            r.sleep();
+            std::cout << "Move the arm then type 's' to save pose or 'q' to quit." << std::endl;
+            std::string ans;
+            std::cin >> ans;
+
+            if(ans[0] == 'q')
+                break;
+
+            if(ans[0] != 's')
+                continue;
+
+            // get 40 messages
+            data.push_back(State());
+            msg_counter = 0;
+            save_data = true;
+            std::cout << "Saving joint states..." << std::endl;
+
+            while(msg_counter < 40)
+            {
+                r.sleep();
+            }
+
+            save_data = false;
+
+            data.back().pos /= msg_counter;
+            data.back().vel /= msg_counter;
+            data.back().trq /= msg_counter;
+
+            std::cout << data.size() << " poses saved." << std::endl;
+            data.back().trq.printValues("Torqes");
         }
+    }
+    // === DO (AUTOMATED) CALIBRATION MOVEMENT ===
+    else
+    {
+        if (posesFile.is_open())
+        {
+            //count number of poses in posesFile
+            std::string line;
+            int totalPoseNumber = -1;
+            while(std::getline(posesFile, line))
+            {
+                if (line == "---")
+                    totalPoseNumber++;
+            }
+            std::cout << "totalPoseNumber (starting with 0) in " << calibrationPosesFilePath.c_str() << " is: " << totalPoseNumber << std::endl;
 
-        save_data = false;
+            //Write values q1, q2, q, q4, q5 of poseFile in poseMatrix
 
-        data.back().pos /= msg_counter;
-        data.back().vel /= msg_counter;
-        data.back().trq /= msg_counter;
+            int poseNumber = -1;
+            posesFile.clear();
+            posesFile.seekg(0, std::ios::beg);
 
-        std::cout << data.size() << " poses saved." << std::endl;
-        data.back().trq.printValues("Torqes");
+            char buffer [100];
+            while(std::getline(posesFile, line))
+            {
+                if (line == "---")
+                {
+                    poseNumber++;
+
+                    std::getline(posesFile, line); //Pose Name
+
+                    // q1
+                    std::getline(posesFile, line, ':');
+                    std::getline(posesFile, line);
+                    strcpy(buffer,line.c_str());
+                    poseRow [0] = atof (buffer);
+
+
+                    // q2
+                    std::getline(posesFile, line, ':');
+                    std::getline(posesFile, line);
+                    strcpy(buffer,line.c_str());
+                    poseRow [1] = atof (buffer);
+
+
+                    // q3
+                    std::getline(posesFile, line, ':');
+                    std::getline(posesFile, line);
+                    strcpy(buffer,line.c_str());
+                    poseRow [2] = atof (buffer);
+
+                    // q4
+                    std::getline(posesFile, line, ':');
+                    std::getline(posesFile, line);
+                    strcpy(buffer,line.c_str());
+                    poseRow [3] = atof (buffer);
+
+                    // q5
+                    std::getline(posesFile, line, ':');
+                    std::getline(posesFile, line);
+                    strcpy(buffer,line.c_str());
+                    poseRow [4] = atof (buffer);
+
+                    posesMatrix.push_back(poseRow);
+                }
+            }
+
+            std::cout << "Type 's' to initialize each movement to the next pose via console input or 'a' to use the automated mode." << std::endl;
+            std::string ans_initMovementManuel;
+            std::cin >> ans_initMovementManuel;
+            //Move to positions from posesMatrix
+            for (uint i = 0; i < totalPoseNumber + 1; i++)
+            {
+                //set joint values
+                pose.setQ1( posesMatrix [i] [0]);
+                pose.setQ2( posesMatrix [i] [1]);
+                pose.setQ3( posesMatrix [i] [2]);
+                pose.setQ4( posesMatrix [i] [3]);
+                pose.setQ5( posesMatrix [i] [4]);
+
+                if (ans_initMovementManuel[0] != 'a')
+                {
+                    std::cout << "Type 's' to start the movement to the next pose and to save pose or 'q' to quit." << std::endl;
+                    std::string ans;
+                    std::cin >> ans;
+
+                    if(ans[0] == 'q')
+                        break;
+
+                    if(ans[0] != 's')
+                        continue;
+                }
+
+                pose *= M_PI/180.0;
+                pose.addOffset();
+                arm.moveToPose(pose);
+                arm.waitForCurrentAction();
+                ros::Duration(0.9).sleep(); // sleep for half a second
+
+                // get 40 messages
+                data.push_back(State());
+                msg_counter = 0;
+                save_data = true;
+                std::cout << "Saving joint states..." << std::endl;
+
+                while(msg_counter < 120)
+                {
+                    r.sleep();
+                }
+
+                save_data = false;
+
+                data.back().pos /= msg_counter;
+                data.back().vel /= msg_counter;
+                data.back().trq /= msg_counter;
+
+                std::cout << data.size() << " poses saved." << std::endl;
+                data.back().trq.printValues("Torqes");
+            }
+        }
+        else
+        {
+            std::cout << "failed to open: " << calibrationPosesFilePath.c_str() << std::endl;
+        }
     }
 
     // === EVALUATE RESULTS ===
