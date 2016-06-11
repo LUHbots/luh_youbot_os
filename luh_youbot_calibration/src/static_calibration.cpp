@@ -177,8 +177,8 @@ void evaluate()
     ROS_INFO("Evaluating...");
 
     // === INITIALIZE OPTIMIZER ===
-    nlopt::opt opt(nlopt::GN_ESCH , n_params);
-//    nlopt::opt opt(nlopt::LN_COBYLA, n_params);
+//    nlopt::opt opt(nlopt::GN_ESCH , n_params);
+    nlopt::opt opt(nlopt::LN_COBYLA, n_params);
 
     // initial values
     ykin::StaticParameters init_params;
