@@ -50,7 +50,8 @@ protected:
         TO_HOME_POSE,
         XY_MODE,
         GRIP_MODE,
-        NOT_ASSIGNED
+        NOT_ASSIGNED,
+        TURN
     };
 
     ros::Publisher cartesian_velocity_publisher_;
