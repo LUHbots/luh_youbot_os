@@ -82,11 +82,11 @@ JoyTeleopNode::JoyTeleopNode():
         youbot_arm_.disableAllClients();
         youbot_arm_.enableClient(youbot_api::ActionClient::NAME_PLAN);
         youbot_arm_.init(*this);
-        youbot_gripper_.init(*this);
+   //     youbot_gripper_.init(*this);
 
-        youbot_gripper_.setWidth(gripper_max_);
-        gripper_state_.data = gripper_max_;
-        gripper_velocity_command_ = 0;
+   //     youbot_gripper_.setWidth(gripper_max_);
+   //     gripper_state_.data = gripper_max_;
+   //     gripper_velocity_command_ = 0;
     }
 
     loadKeyConfig();
@@ -128,9 +128,9 @@ bool JoyTeleopNode::loadKeyConfig()
         {
             key_map_[i] = LEFT_RIGHT;
         }
-        else if(name.compare("TURN_LEFT") == 0)
+        else if(name.compare("TURN") == 0)
         {
-            key_map_[i] = TURN_LEFT;
+            key_map_[i] = TURN;
         }
         else if(name.compare("TURN_RIGHT") == 0)
         {
@@ -331,7 +331,7 @@ void JoyTeleopNode::joyCallback(const sensor_msgs::Joy::ConstPtr &msg)
             ee_velocity_.x = 0;
             ee_velocity_.y = arm_velocity_y_ * key_values_[LEFT_RIGHT];
             ee_velocity_.z = arm_velocity_z_ * key_values_[UP_DOWN];
-            ee_velocity_.q5 = arm_velocity_q5_ * (key_values_[TURN_LEFT] - key_values_[TURN_RIGHT]);
+            ee_velocity_.q5 = arm_velocity_q5_ * (key_values_[TURN] - key_values_[TURN_RIGHT]);
 
             // vrep
 //            ee_velocity_.x = arm_velocity_x_ * key_values_[UP_DOWN];
@@ -360,7 +360,7 @@ void JoyTeleopNode::joyCallback(const sensor_msgs::Joy::ConstPtr &msg)
 //            ee_velocity_.z = arm_velocity_z_ * key_values_[UP_DOWN];
 //            ee_velocity_.q5 = 0;
 
-            ee_velocity_.theta = arm_velocity_theta_ * (key_values_[TURN_RIGHT] - key_values_[TURN_LEFT]);
+            ee_velocity_.theta = arm_velocity_theta_ * (key_values_[TURN_RIGHT] - key_values_[TURN]);
 
             gripper_velocity_command_ = -gripper_velocity_ * key_values_[LEFT_RIGHT];
             base_velocity_.linear.x = 0;
@@ -377,7 +377,8 @@ void JoyTeleopNode::joyCallback(const sensor_msgs::Joy::ConstPtr &msg)
             gripper_velocity_command_ = 0;
             base_velocity_.linear.x = base_velocity_x_ * key_values_[UP_DOWN];
             base_velocity_.linear.y = base_velocity_y_ * key_values_[LEFT_RIGHT];
-            base_velocity_.angular.z = base_velocity_theta_ * (key_values_[TURN_LEFT] - key_values_[TURN_RIGHT]);
+            base_velocity_.angular.z = base_velocity_theta_ * (key_values_[TURN]);
+      //      base_velocity_.angular.z = base_velocity_theta_ * (key_values_[TURN_LEFT] - key_values_[TURN_RIGHT]);
         }
 
         cart_vel_has_changed_ =
@@ -427,8 +428,8 @@ void JoyTeleopNode::saveKeyConfig(std::string filename)
             name = "UP_DOWN";
         else if(key_map_[i] == LEFT_RIGHT)
             name = "LEFT_RIGHT";
-        else if(key_map_[i] == TURN_LEFT)
-            name = "TURN_LEFT";
+        else if(key_map_[i] == TURN)
+            name = "TURN";
         else if(key_map_[i] == TURN_RIGHT)
             name = "TURN_RIGHT";
         else if(key_map_[i] == ARM_LEFT)
@@ -473,9 +474,9 @@ void JoyTeleopNode::defineKeys()
     key = waitForKey();
     key_map_[key] = LEFT_RIGHT;
 
-    std::cout << "Press TURN LEFT key." << std::endl;
+    std::cout << "Press TURN key." << std::endl;
     key = waitForKey();
-    key_map_[key] = TURN_LEFT;
+    key_map_[key] = TURN;
 
     std::cout << "Press TURN RIGHT key." << std::endl;
     key = waitForKey();
