@@ -11,13 +11,15 @@
 			<insert_block name="origin" />
 			<parent link="${parent}" />
 			<child link="${name}_link_0" />
-			
+            <!--without Dynamics maybe causes jittering-->
+			<dynamics damping="1" friction="1" />			
 		</joint>
 
 		<link name="${name}_link_0">
 			<inertial>
 				<origin xyz="0 0 0" rpy="0 0 0"/>
-				<mass value="${link_0_mass}"/>
+				<!--<mass value="${link_0_mass}"/>-->
+				<mass value="0.845"/>
 				<inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
 			</inertial>
 
@@ -50,8 +52,12 @@
 
 		<link name="${name}_link_1">
 			<inertial>
-				<mass value="${link_1_mass}"/>
-				<xacro:link_1_inertia_tensor />
+                <!--See if this cause arm-jittering -->
+				<!--<mass value="${link_1_mass}"/>-->
+				<mass value="2.412"/>
+                <!-- looks like this is not loaded try with default-->
+				<!--<xacro:link_1_inertia_tensor />-->
+                <inertia ixx="0.003863" ixy="-0.000979" ixz="0.000000" iyy="0.006196" iyz="0.000000" izz="0.006369" />
 			</inertial>
 			
 			<visual>
@@ -82,8 +88,11 @@
 
 		<link name="${name}_link_2">
 			<inertial>
-				<mass value="${link_2_mass}"/>
-				<xacro:link_2_inertia_tensor />
+                <!--See if this cause arm-jittering -->
+				<!--<mass value="${link_2_mass}"/>-->
+				<mass value="1.155"/>
+				<!--<xacro:link_2_inertia_tensor />-->
+                <inertia ixx="0.000823" ixy="0.000000" ixz="-0.000000" iyy="0.004447" iyz ="0.000000" izz="0.004439" />
 			</inertial>
 			
 			<visual>
@@ -115,8 +124,11 @@
 
 		<link name="${name}_link_3">
 			<inertial>
-				<mass value="${link_3_mass}"/>
-				<xacro:link_3_inertia_tensor />
+                <!--See if this cause arm-jittering -->
+				<!--<mass value="${link_3_mass}"/>-->
+				<mass value="0.934"/>
+				<!--<xacro:link_3_inertia_tensor />-->
+				<inertia ixx="0.002459" ixy="0.000000" ixz="0.000000" iyy="0.002571" iyz="-0.000000" izz="0.000535" />
 			</inertial>
 			
 			<visual>
@@ -148,8 +160,11 @@
 
 		<link name="${name}_link_4">
 			<inertial>
-				<mass value="${link_4_mass}"/>
-				<xacro:link_4_inertia_tensor />
+                <!--See if this cause arm-jittering -->
+				<!--<mass value="${link_4_mass}"/>-->
+				<mass value="0.877"/>
+				<!--<xacro:link_4_inertia_tensor />-->
+				<inertia ixx="0.000869" ixy="0.000000" ixz="-0.000000" iyy="0.001173" iyz="-0.000231" izz="0.001091" />
 			</inertial>
 		
 			<visual>
@@ -181,8 +196,11 @@
 
 		<link name="${name}_link_5">
 			<inertial>
-				<mass value="${link_5_mass}"/>
-				<xacro:link_5_inertia_tensor />
+                <!--See if this cause arm-jittering -->
+				<!--<mass value="${link_5_mass}"/>-->
+				<mass value="0.251"/>
+				<!--<xacro:link_5_inertia_tensor />-->
+				<inertia ixx="0.000280" ixy="0.000000" ixz="0.000000" iyy="0.000339" iyz="0.000000" izz="0.000119" />
 			</inertial>
 			
 				<visual>
