@@ -30,6 +30,7 @@ add_service_files(
   SetCylindricVelocity.srv
   SetJointVelocity.srv
   GetLoad.srv
+  GripCheck.srv
 )
 
 ## Generate actions in the 'action' folder

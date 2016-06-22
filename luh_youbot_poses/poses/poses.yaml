@@ -28,32 +28,32 @@ A_TEST_POS_2:
   - arm_joint_5: 171.2991549295774
 ---
 CARGO_1:
-  - arm_joint_1: 41.8
-  - arm_joint_2: 74.3
-  - arm_joint_3: -56.09999999999999
-  - arm_joint_4: 181.3
-  - arm_joint_5: 169
+  - arm_joint_1: 41.66653846153846
+  - arm_joint_2: 77.57134615384614
+  - arm_joint_3: -47.62889999999999
+  - arm_joint_4: 169.5498591549296
+  - arm_joint_5: 168.5192957746479
 ---
 CARGO_1_ABOVE:
-  - arm_joint_1: 41.8
-  - arm_joint_2: 46
-  - arm_joint_3: -56.2
-  - arm_joint_4: 181.3
-  - arm_joint_5: 169
+  - arm_joint_1: 41.66596153846153
+  - arm_joint_2: 52.98692307692306
+  - arm_joint_3: -55.39050000000001
+  - arm_joint_4: 169.5485915492958
+  - arm_joint_5: 168.5154929577465
 ---
 CARGO_1_OVERHEAD:
-  - arm_joint_1: 223.6
-  - arm_joint_2: 33.1
-  - arm_joint_3: -202.6
-  - arm_joint_4: 18.4
-  - arm_joint_5: 172
+  - arm_joint_1: 221.5269230769231
+  - arm_joint_2: 26.33480769230769
+  - arm_joint_3: -204.4098
+  - arm_joint_4: 21.55943661971831
+  - arm_joint_5: 170.8681690140845
 ---
 CARGO_1_OVERHEAD_ABOVE:
-  - arm_joint_1: 223.6
-  - arm_joint_2: 52.6
-  - arm_joint_3: -202.6
-  - arm_joint_4: 18.4
-  - arm_joint_5: 172
+  - arm_joint_1: 221.5263461538461
+  - arm_joint_2: 35.91576923076923
+  - arm_joint_3: -192.6468
+  - arm_joint_4: 21.56197183098591
+  - arm_joint_5: 170.8491549295775
 ---
 CARGO_1_PLACE:
   - arm_joint_1: 41.8
@@ -70,32 +70,32 @@ CARGO_1_PLACE_OVERHEAD:
   - arm_joint_5: 172
 ---
 CARGO_2:
-  - arm_joint_1: 22.99999999999999
-  - arm_joint_2: 74.3
-  - arm_joint_3: -56.09999999999999
-  - arm_joint_4: 181.3
-  - arm_joint_5: 169
+  - arm_joint_1: 21.77999999999999
+  - arm_joint_2: 76.20057692307691
+  - arm_joint_3: -47.81339999999999
+  - arm_joint_4: 170.6121126760563
+  - arm_joint_5: 165.9866197183098
 ---
 CARGO_2_ABOVE:
-  - arm_joint_1: 22.99999999999999
-  - arm_joint_2: 46
-  - arm_joint_3: -56.2
-  - arm_joint_4: 181.3
-  - arm_joint_5: 169
+  - arm_joint_1: 21.78057692307692
+  - arm_joint_2: 53.43230769230768
+  - arm_joint_3: -55.2546
+  - arm_joint_4: 170.5981690140845
+  - arm_joint_5: 165.9245070422535
 ---
 CARGO_2_OVERHEAD:
-  - arm_joint_1: 203
-  - arm_joint_2: 33.1
-  - arm_joint_3: -202.6
-  - arm_joint_4: 18.4
-  - arm_joint_5: 172
+  - arm_joint_1: 201.5353846153846
+  - arm_joint_2: 24.82442307692308
+  - arm_joint_3: -201.015
+  - arm_joint_4: 17.75408450704225
+  - arm_joint_5: 165.8421126760563
 ---
 CARGO_2_OVERHEAD_ABOVE:
-  - arm_joint_1: 203
-  - arm_joint_2: 52.6
-  - arm_joint_3: -202.6
-  - arm_joint_4: 18.4
-  - arm_joint_5: 172
+  - arm_joint_1: 202.9996153846154
+  - arm_joint_2: 35.90076923076923
+  - arm_joint_3: -192.5982
+  - arm_joint_4: 18.39802816901408
+  - arm_joint_5: 172.0939436619718
 ---
 CARGO_2_PLACE:
   - arm_joint_1: 22.99999999999999
@@ -112,32 +112,32 @@ CARGO_2_PLACE_OVERHEAD:
   - arm_joint_5: 172
 ---
 CARGO_3:
-  - arm_joint_1: 2.499999999999997
-  - arm_joint_2: 74.3
-  - arm_joint_3: -56.09999999999999
-  - arm_joint_4: 181.3
-  - arm_joint_5: 169
+  - arm_joint_1: 2.442692307692314
+  - arm_joint_2: 75.72
+  - arm_joint_3: -45.60570000000001
+  - arm_joint_4: 166.2769014084507
+  - arm_joint_5: 162.1850704225352
 ---
 CARGO_3_ABOVE:
-  - arm_joint_1: 2.499999999999997
-  - arm_joint_2: 46
-  - arm_joint_3: -56.2
-  - arm_joint_4: 181.3
-  - arm_joint_5: 169
+  - arm_joint_1: 1.294038461538466
+  - arm_joint_2: 53.24711538461538
+  - arm_joint_3: -55.31850000000001
+  - arm_joint_4: 168.6042253521127
+  - arm_joint_5: 159.5154929577465
 ---
 CARGO_3_OVERHEAD:
-  - arm_joint_1: 182
-  - arm_joint_2: 33.1
-  - arm_joint_3: -202.6
-  - arm_joint_4: 18.4
-  - arm_joint_5: 172
+  - arm_joint_1: 181.9494230769231
+  - arm_joint_2: 26.49865384615384
+  - arm_joint_3: -203.2686
+  - arm_joint_4: 20.7456338028169
+  - arm_joint_5: 160.7678873239437
 ---
 CARGO_3_OVERHEAD_ABOVE:
-  - arm_joint_1: 182
-  - arm_joint_2: 52.6
-  - arm_joint_3: -202.6
-  - arm_joint_4: 18.4
-  - arm_joint_5: 172
+  - arm_joint_1: 181.9073076923077
+  - arm_joint_2: 36.36692307692307
+  - arm_joint_3: -192.8781
+  - arm_joint_4: 20.64676056338028
+  - arm_joint_5: 161.4498591549296
 ---
 CARGO_3_PLACE:
   - arm_joint_1: 2.499999999999997

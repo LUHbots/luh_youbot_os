@@ -72,7 +72,7 @@ class YoubotInterface
 public:
     YoubotInterface(ros::NodeHandle &node);
     ~YoubotInterface();
-    virtual void initialise(bool use_standard_gripper=true);
+    virtual void initialise(bool use_standard_gripper=true, bool use_luh_gripper_v3=false);
     virtual void readState();
     virtual void writeCommands();
     virtual void publishMessages();
