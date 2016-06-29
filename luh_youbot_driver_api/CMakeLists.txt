@@ -41,6 +41,8 @@ add_library(luh_youbot_driver_api
   src/arm_interface.cpp
   include/${PROJECT_NAME}/base_interface.h
   src/base_interface.cpp
+  include/${PROJECT_NAME}/arduino_gripper.h
+  src/arduino_gripper.cpp
 )
 
 add_dependencies(luh_youbot_driver_api luh_youbot_kinematics)

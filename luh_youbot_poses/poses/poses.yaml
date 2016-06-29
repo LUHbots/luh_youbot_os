@@ -28,130 +28,151 @@ A_TEST_POS_2:
   - arm_joint_5: 171.2991549295774
 ---
 CARGO_1:
-  - arm_joint_1: 41.8
-  - arm_joint_2: 74.3
-  - arm_joint_3: -56.09999999999999
-  - arm_joint_4: 181.3
-  - arm_joint_5: 169
+  - arm_joint_1: 41.67057692307693
+  - arm_joint_2: 74.81653846153846
+  - arm_joint_3: -45.9045
+  - arm_joint_4: 169.8502816901408
+  - arm_joint_5: 173.044647887324
 ---
 CARGO_1_ABOVE:
-  - arm_joint_1: 41.8
-  - arm_joint_2: 46
-  - arm_joint_3: -56.2
-  - arm_joint_4: 181.3
-  - arm_joint_5: 169
+  - arm_joint_1: 41.66596153846153
+  - arm_joint_2: 52.98692307692306
+  - arm_joint_3: -55.39050000000001
+  - arm_joint_4: 169.5485915492958
+  - arm_joint_5: 168.5154929577465
+---
+CARGO_1_OLD:
+  - arm_joint_1: 41.66653846153846
+  - arm_joint_2: 77.57134615384614
+  - arm_joint_3: -47.62889999999999
+  - arm_joint_4: 169.5498591549296
+  - arm_joint_5: 168.5192957746479
 ---
 CARGO_1_OVERHEAD:
-  - arm_joint_1: 223.6
-  - arm_joint_2: 33.1
-  - arm_joint_3: -202.6
-  - arm_joint_4: 18.4
-  - arm_joint_5: 172
+  - arm_joint_1: 221.5269230769231
+  - arm_joint_2: 26.33480769230769
+  - arm_joint_3: -204.4098
+  - arm_joint_4: 21.55943661971831
+  - arm_joint_5: 170.8681690140845
 ---
 CARGO_1_OVERHEAD_ABOVE:
-  - arm_joint_1: 223.6
-  - arm_joint_2: 52.6
-  - arm_joint_3: -202.6
-  - arm_joint_4: 18.4
-  - arm_joint_5: 172
+  - arm_joint_1: 221.5263461538461
+  - arm_joint_2: 35.91576923076923
+  - arm_joint_3: -192.6468
+  - arm_joint_4: 21.56197183098591
+  - arm_joint_5: 170.8491549295775
 ---
 CARGO_1_PLACE:
-  - arm_joint_1: 41.8
-  - arm_joint_2: 71.2
-  - arm_joint_3: -56.2
-  - arm_joint_4: 183.3
-  - arm_joint_5: 169
+  - arm_joint_1: 41.77788461538461
+  - arm_joint_2: 73.61884615384616
+  - arm_joint_3: -46.00530000000001
+  - arm_joint_4: 170.7452112676056
+  - arm_joint_5: 173.0383098591549
 ---
 CARGO_1_PLACE_OVERHEAD:
-  - arm_joint_1: 223.7
-  - arm_joint_2: 30.9
-  - arm_joint_3: -195.8
-  - arm_joint_4: 12.1
-  - arm_joint_5: 172
+  - arm_joint_1: 223.6811538461538
+  - arm_joint_2: 30.60173076923076
+  - arm_joint_3: -207.9
+  - arm_joint_4: 22.40999999999999
+  - arm_joint_5: 172.2067605633803
 ---
 CARGO_2:
-  - arm_joint_1: 22.99999999999999
-  - arm_joint_2: 74.3
-  - arm_joint_3: -56.09999999999999
-  - arm_joint_4: 181.3
-  - arm_joint_5: 169
+  - arm_joint_1: 21.76384615384614
+  - arm_joint_2: 77.3301923076923
+  - arm_joint_3: -47.36519999999998
+  - arm_joint_4: 171.0659154929577
+  - arm_joint_5: 166.4708450704225
 ---
 CARGO_2_ABOVE:
-  - arm_joint_1: 22.99999999999999
-  - arm_joint_2: 46
-  - arm_joint_3: -56.2
-  - arm_joint_4: 181.3
-  - arm_joint_5: 169
+  - arm_joint_1: 21.78057692307692
+  - arm_joint_2: 53.43230769230768
+  - arm_joint_3: -55.2546
+  - arm_joint_4: 170.5981690140845
+  - arm_joint_5: 165.9245070422535
+---
+CARGO_2_OLD:
+  - arm_joint_1: 21.77999999999999
+  - arm_joint_2: 76.20057692307691
+  - arm_joint_3: -47.81339999999999
+  - arm_joint_4: 170.6121126760563
+  - arm_joint_5: 165.9866197183098
 ---
 CARGO_2_OVERHEAD:
-  - arm_joint_1: 203
-  - arm_joint_2: 33.1
-  - arm_joint_3: -202.6
-  - arm_joint_4: 18.4
-  - arm_joint_5: 172
+  - arm_joint_1: 201.5353846153846
+  - arm_joint_2: 24.82442307692308
+  - arm_joint_3: -201.015
+  - arm_joint_4: 17.75408450704225
+  - arm_joint_5: 165.8421126760563
 ---
 CARGO_2_OVERHEAD_ABOVE:
-  - arm_joint_1: 203
-  - arm_joint_2: 52.6
-  - arm_joint_3: -202.6
-  - arm_joint_4: 18.4
-  - arm_joint_5: 172
+  - arm_joint_1: 202.9996153846154
+  - arm_joint_2: 35.90076923076923
+  - arm_joint_3: -192.5982
+  - arm_joint_4: 18.39802816901408
+  - arm_joint_5: 172.0939436619718
 ---
 CARGO_2_PLACE:
-  - arm_joint_1: 22.99999999999999
-  - arm_joint_2: 71.2
-  - arm_joint_3: -56.2
-  - arm_joint_4: 183.3
-  - arm_joint_5: 169
+  - arm_joint_1: 21.56307692307692
+  - arm_joint_2: 72.98423076923078
+  - arm_joint_3: -47.26350000000001
+  - arm_joint_4: 173.7912676056338
+  - arm_joint_5: 168.312676056338
 ---
 CARGO_2_PLACE_OVERHEAD:
-  - arm_joint_1: 203
-  - arm_joint_2: 30.9
-  - arm_joint_3: -195.8
-  - arm_joint_4: 12.1
-  - arm_joint_5: 172
+  - arm_joint_1: 202.5011538461539
+  - arm_joint_2: 33.33173076923077
+  - arm_joint_3: -213.0741
+  - arm_joint_4: 26.17859154929579
+  - arm_joint_5: 168.2898591549296
 ---
 CARGO_3:
-  - arm_joint_1: 2.499999999999997
-  - arm_joint_2: 74.3
-  - arm_joint_3: -56.09999999999999
-  - arm_joint_4: 181.3
-  - arm_joint_5: 169
+  - arm_joint_1: 0.8688461538461664
+  - arm_joint_2: 72.18230769230769
+  - arm_joint_3: -42.20010000000001
+  - arm_joint_4: 166.5912676056338
+  - arm_joint_5: 162.1166197183099
 ---
 CARGO_3_ABOVE:
-  - arm_joint_1: 2.499999999999997
-  - arm_joint_2: 46
-  - arm_joint_3: -56.2
-  - arm_joint_4: 181.3
-  - arm_joint_5: 169
+  - arm_joint_1: 1.294038461538466
+  - arm_joint_2: 53.24711538461538
+  - arm_joint_3: -55.31850000000001
+  - arm_joint_4: 168.6042253521127
+  - arm_joint_5: 159.5154929577465
+---
+CARGO_3_OLD:
+  - arm_joint_1: 2.442692307692314
+  - arm_joint_2: 75.72
+  - arm_joint_3: -45.60570000000001
+  - arm_joint_4: 166.2769014084507
+  - arm_joint_5: 162.1850704225352
 ---
 CARGO_3_OVERHEAD:
-  - arm_joint_1: 182
-  - arm_joint_2: 33.1
-  - arm_joint_3: -202.6
-  - arm_joint_4: 18.4
-  - arm_joint_5: 172
+  - arm_joint_1: 181.9494230769231
+  - arm_joint_2: 26.49865384615384
+  - arm_joint_3: -203.2686
+  - arm_joint_4: 20.7456338028169
+  - arm_joint_5: 160.7678873239437
 ---
 CARGO_3_OVERHEAD_ABOVE:
-  - arm_joint_1: 182
-  - arm_joint_2: 52.6
-  - arm_joint_3: -202.6
-  - arm_joint_4: 18.4
-  - arm_joint_5: 172
+  - arm_joint_1: 181.9073076923077
+  - arm_joint_2: 36.36692307692307
+  - arm_joint_3: -192.8781
+  - arm_joint_4: 20.64676056338028
+  - arm_joint_5: 161.4498591549296
 ---
 CARGO_3_PLACE:
-  - arm_joint_1: 2.499999999999997
-  - arm_joint_2: 71.2
-  - arm_joint_3: -56.2
-  - arm_joint_4: 183.3
-  - arm_joint_5: 169
+  - arm_joint_1: 1.276730769230781
+  - arm_joint_2: 75.99692307692308
+  - arm_joint_3: -47.63430000000001
+  - arm_joint_4: 170.4092957746479
+  - arm_joint_5: 159.3177464788733
 ---
 CARGO_3_PLACE_OVERHEAD:
-  - arm_joint_1: 182
-  - arm_joint_2: 30.9
-  - arm_joint_3: -195.8
-  - arm_joint_4: 12.1
-  - arm_joint_5: 172
+  - arm_joint_1: 182.1080769230769
+  - arm_joint_2: 27.53711538461539
+  - arm_joint_3: -202.032
+  - arm_joint_4: 17.30154929577465
+  - arm_joint_5: 164.6315492957747
 ---
 DUMP_1:
   - arm_joint_1: 165.6
@@ -271,6 +292,20 @@ MOVEMENT_DEMO_UP:
   - arm_joint_3: -44.14950000000001
   - arm_joint_4: 95.4481690140845
   - arm_joint_5: 171.996338028169
+---
+SEARCH_BARRIER:
+  - arm_joint_1: 28.8825
+  - arm_joint_2: 107.7790384615385
+  - arm_joint_3: -223.7121
+  - arm_joint_4: 3.327464788732391
+  - arm_joint_5: 8.737605633802806
+---
+SEARCH_BARRIER_2:
+  - arm_joint_1: 28.88653846153847
+  - arm_joint_2: 108.2780769230769
+  - arm_joint_3: -223.7049
+  - arm_joint_4: 7.177183098591551
+  - arm_joint_5: 8.745211267605622
 ---
 SEARCH_CENTER:
   - arm_joint_1: 202
