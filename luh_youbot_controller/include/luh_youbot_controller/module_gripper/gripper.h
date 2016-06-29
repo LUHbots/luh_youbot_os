@@ -27,6 +27,7 @@
 #include "luh_youbot_msgs/GripObjectAction.h"
 #include <luh_youbot_msgs/SetGripperAction.h>
 #include <std_msgs/Float32.h>
+#include "luh_youbot_msgs/GripCheck.h"
 
 class ModuleGripper : public ControllerModule
 {
@@ -43,6 +44,8 @@ protected:
     bool gripping_object_;
     bool first_call_;
     bool publish_only_once_;
+    double static_grip_force_;
+
 
     double gripping_duration_;
 
@@ -52,6 +55,8 @@ protected:
     std::map<std::string, double> object_width_;
     GripObjectServer* grip_object_server_;
     SetGripperServer* set_gripper_server_;
+    ros::ServiceServer grip_check_server_;
+
     ros::Subscriber gripper_subscriber_;
     double goal_width_;
     double min_gripper_width_;
@@ -67,6 +72,7 @@ protected:
     bool loadObjectWidth();
     void gripObjectCallback();
     void setGripperCallback();
+    bool gripCheckCallback(luh_youbot_msgs::GripCheck::Request &req, luh_youbot_msgs::GripCheck::Response &res);
 
     void gripperMsgCallback(const std_msgs::Float32::ConstPtr &msg);
 };

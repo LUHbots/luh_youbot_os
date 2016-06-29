@@ -42,9 +42,12 @@ ControllerNode::ControllerNode(ros::NodeHandle &node):
     node_->param("luh_youbot_controller/use_standard_gripper", use_standard_gripper_, true);
     node_->param("luh_youbot_controller/use_vrep_simulation", use_vrep_simulation_, false);
     node_->param("luh_youbot_controller/use_gazebo_simulation", use_gazebo_simulation_, false);
+    node_->param("luh_youbot_controller/use_luh_gripper_v3", use_luh_gripper_v3_, false);
 
     if(use_standard_gripper_)
         ROS_INFO("Using standard gripper.");
+    else if(use_luh_gripper_v3_)
+        ROS_INFO("Using LUH-Gripper Version 3.0");
     else
         ROS_INFO("Using external gripper.");
 
@@ -63,7 +66,7 @@ ControllerNode::ControllerNode(ros::NodeHandle &node):
     else
         youbot_ = new YoubotInterface(node);
 
-    youbot_->initialise(use_standard_gripper_);
+    youbot_->initialise(use_standard_gripper_,use_luh_gripper_v3_);
 
     // === TIMER ===
     arm_timer_ = node_->createTimer(ros::Duration(1.0/arm_frequency_),
@@ -102,7 +105,7 @@ ControllerNode::ControllerNode(ros::NodeHandle &node):
         arm_modules_.push_back(new ModuleJointTrajectory());
         arm_modules_.push_back(new ModuleGravityCompensation());
 
-        if(use_standard_gripper_)
+        if(use_standard_gripper_ || use_luh_gripper_v3_)
             arm_modules_.push_back(new ModuleGripper());
 
         // other modules can be added here

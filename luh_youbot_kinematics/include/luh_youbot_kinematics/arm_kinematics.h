@@ -105,7 +105,7 @@ const double L2 = 0.155;
 const double L3 = 0.135;
 
 /// length of third arm segment including gripper
-const double L4 = 0.230;
+const double L4 = 0.199;
 
 /// distance between arm_link_0 origin and axis of joint 1
 const double ARM_LINK_0_X_OFFSET = 0.024;

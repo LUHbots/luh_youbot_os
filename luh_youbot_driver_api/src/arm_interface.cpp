@@ -82,7 +82,7 @@ YoubotArmInterface::~YoubotArmInterface()
 }
 
 //########## INITIALISE ################################################################################################
-void YoubotArmInterface::initialise(bool use_standard_gripper)
+void YoubotArmInterface::initialise(bool use_standard_gripper, bool use_luh_gripper_v3)
 {
     // === PARAMETERS ===
     config_->node_handle->param("youbot_oodl_driver/disable_ramp", ramp_is_disabled_, false);
@@ -105,6 +105,7 @@ void YoubotArmInterface::initialise(bool use_standard_gripper)
     effort_watchdog_time_.assign(ykin::N_JOINTS, ros::Time(0));
 
     use_standard_gripper_ = use_standard_gripper;
+    use_luh_gripper_v3_=use_luh_gripper_v3;
 
     try
     {
@@ -150,11 +151,35 @@ void YoubotArmInterface::initialise(bool use_standard_gripper)
 
             arm_->calibrateGripper();
         }
+        if(use_luh_gripper_v3_)
+        {
+            int slaveNumber=9; //Erstmal hardgecoded TODO
+            std::string gripper_bar_name;
+            gripper_bar_name="gripper_finger_joint_l";
+            gripper_finger_names_[LEFT_FINGER_INDEX] = gripper_bar_name;
+            ROS_INFO("Joint %i for gripper of arm %s has name: %s", 1, name_.c_str(), gripper_bar_name.c_str());
+            gripper_bar_name="gripper_finger_joint_r";
+            gripper_finger_names_[RIGHT_FINGER_INDEX] = gripper_bar_name;
+            ROS_INFO("Joint %i for gripper of arm %s has name: %s", 2, name_.c_str(), gripper_bar_name.c_str());
+
+
+            luh_gripper_v3_=new arduino_gripper();
+            luh_gripper_v3_->initAdruinoGripper(slaveNumber,config_->config_path); //TODO Slave Number
+            luh_gripper_v3_read_state_counter_=0;
+            ROS_INFO("Kalibrating Gripper...");
+            sleep(3);
+            luh_gripper_v3_->setPosition(0.03);
+            sleep(3);
+            luh_gripper_v3_->setPosition(0.06);
+            sleep(3);
+        }
     }
     catch (std::exception& e)
     {
         delete arm_;
         arm_ = NULL;
+        delete luh_gripper_v3_;
+        luh_gripper_v3_= NULL;
         std::string errorMessage = e.what();
         ROS_FATAL("Cannot open youBot driver: \n %s ", errorMessage.c_str());
         ROS_ERROR("Arm \"%s\" could not be initialized.", name_.c_str());
@@ -200,12 +225,26 @@ void YoubotArmInterface::initialise(bool use_standard_gripper)
         joint_state_.velocity.resize(7);
         joint_state_.effort.resize(7);
     }
+    else if(use_luh_gripper_v3_)
+    {
+        joint_state_.name.push_back(gripper_finger_names_[LEFT_FINGER_INDEX]);
+        joint_state_.name.push_back(gripper_finger_names_[RIGHT_FINGER_INDEX]);
+
+        joint_state_.position.resize(7);
+        joint_state_.velocity.resize(7);
+        joint_state_.effort.resize(7);
+
+    }
     else
     {
         joint_state_.position.resize(5);
         joint_state_.velocity.resize(5);
         joint_state_.effort.resize(5);
     }
+    gripper_position_=0;
+    gripper_velocity_=0;
+    gripper_effort_=0;
+
     // === MOVE TO VALID INITIAL POSE ===
 
     readState();
@@ -307,6 +346,50 @@ void YoubotArmInterface::readState()
 
     // ensure that all joint values will be sent at the same time
     youbot::EthercatMaster::getInstance().AutomaticReceiveOn(true);
+
+    luh_gripper_v3_read_state_counter_++;
+
+    if(use_luh_gripper_v3_ && luh_gripper_v3_read_state_counter_>20)
+    {
+        luh_gripper_v3_read_state_counter_=0;
+
+        std::vector<bool> JointReachedPosition(5);
+        unsigned int StatusFlags;
+        for (int i=0;i<5;i++)
+        {
+
+            arm_->getArmJoint(i+1).getStatus(StatusFlags);
+            if(StatusFlags & POSITION_REACHED)
+            {
+                JointReachedPosition[i]=true;
+            }else{
+                JointReachedPosition[i]=false;
+            }
+        }
+
+        if(JointReachedPosition[0] && JointReachedPosition[1] && JointReachedPosition[2] && JointReachedPosition[3] && JointReachedPosition[4])
+        {
+            float currentPosition=0.0;
+            float currentVelocity=0.0;
+            float currentEffort=0.0;
+            luh_gripper_v3_->getPosition(currentPosition);
+//            ROS_INFO("Gripper_Position= %f",currentPosition);
+            luh_gripper_v3_->getVelocity(currentVelocity);
+//            ROS_INFO("Gripper_Velocity= %f",currentVelocity);
+            luh_gripper_v3_->getEffort(currentEffort);
+//            ROS_INFO("Gripper_Effort= %f",currentEffort);
+            joint_state_.position[5] = currentPosition/2;
+            joint_state_.position[6] = currentPosition/2;
+            joint_state_.velocity[5] = currentVelocity/2;
+            joint_state_.velocity[6] = currentVelocity/2;
+            joint_state_.effort[5]= currentEffort;
+            joint_state_.effort[6]= currentEffort;
+            gripper_position_=currentPosition;
+            gripper_velocity_=currentVelocity;
+            gripper_effort_=currentEffort;
+        }
+
+    }
 
     joint_position_.setValues(joint_state_.position);
     joint_position_.addOffset();
@@ -450,6 +533,23 @@ bool YoubotArmInterface::writeCommands()
         joint_state_.position[5] = gripper_command_[LEFT_FINGER_INDEX];
         joint_state_.position[6] = gripper_command_[RIGHT_FINGER_INDEX];
     }
+    if(has_new_gripper_command_ && use_luh_gripper_v3_)
+    {
+        try{
+            luh_gripper_v3_->setPosition(luh_gripper_v3_position_command_);
+        }catch(std::exception& e)
+        {
+            std::string errorMessage = e.what();
+            ROS_WARN("Cannot set the right gripper finger: \n %s", errorMessage.c_str());
+            has_succeeded = false;
+        }
+        has_new_gripper_command_ = false;
+
+        // set command as jointstat since gripper doesn't have sensors
+//        joint_state_.position[5] = luh_gripper_v3_position_command_/2;
+//        joint_state_.position[6] = luh_gripper_v3_position_command_/2;
+
+    }
 
     return has_succeeded;
 }
@@ -517,6 +617,11 @@ void YoubotArmInterface::setGripperPosition(double left, double right)
 
         has_new_gripper_command_ = true;
     }
+    if(use_luh_gripper_v3_)
+    {
+        luh_gripper_v3_position_command_=fabs(left)+fabs(right);
+        has_new_gripper_command_ = true;
+    }
 }
 
 //########## SET GRIPPER WIDTH #########################################################################################
@@ -527,6 +632,12 @@ void YoubotArmInterface::setGripperPosition(double width)
         gripper_command_[LEFT_FINGER_INDEX] = width / 2;
         gripper_command_[RIGHT_FINGER_INDEX] = width / 2;
 
+        has_new_gripper_command_ = true;
+    }
+
+    if(use_luh_gripper_v3_)
+    {
+        luh_gripper_v3_position_command_=width;
         has_new_gripper_command_ = true;
     }
 }

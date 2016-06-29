@@ -40,6 +40,7 @@ protected:
 
     ros::Timer arm_timer_;
     ros::Timer base_timer_;
+    ros::Timer luh_gripper_v3_timer_;
 
     tf::TransformListener tf_listener_;
 
@@ -61,6 +62,7 @@ protected:
     YoubotInterface *youbot_;
 
     bool use_standard_gripper_;
+    bool use_luh_gripper_v3_;
     bool use_vrep_simulation_;
     bool use_gazebo_simulation_;
 
