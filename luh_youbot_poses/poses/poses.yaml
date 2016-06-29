@@ -41,19 +41,12 @@ CARGO_1_ABOVE:
   - arm_joint_4: 169.5485915492958
   - arm_joint_5: 168.5154929577465
 ---
-CARGO_1_OLD:
-  - arm_joint_1: 41.66653846153846
-  - arm_joint_2: 77.57134615384614
-  - arm_joint_3: -47.62889999999999
-  - arm_joint_4: 169.5498591549296
-  - arm_joint_5: 168.5192957746479
----
 CARGO_1_OVERHEAD:
-  - arm_joint_1: 221.5269230769231
-  - arm_joint_2: 26.33480769230769
-  - arm_joint_3: -204.4098
-  - arm_joint_4: 21.55943661971831
-  - arm_joint_5: 170.8681690140845
+  - arm_joint_1: 221.5298076923077
+  - arm_joint_2: 37.53
+  - arm_joint_3: -220.5081
+  - arm_joint_4: 33.1225352112676
+  - arm_joint_5: 170.9404225352113
 ---
 CARGO_1_OVERHEAD_ABOVE:
   - arm_joint_1: 221.5263461538461
@@ -89,13 +82,6 @@ CARGO_2_ABOVE:
   - arm_joint_3: -55.2546
   - arm_joint_4: 170.5981690140845
   - arm_joint_5: 165.9245070422535
----
-CARGO_2_OLD:
-  - arm_joint_1: 21.77999999999999
-  - arm_joint_2: 76.20057692307691
-  - arm_joint_3: -47.81339999999999
-  - arm_joint_4: 170.6121126760563
-  - arm_joint_5: 165.9866197183098
 ---
 CARGO_2_OVERHEAD:
   - arm_joint_1: 201.5353846153846
@@ -139,13 +125,6 @@ CARGO_3_ABOVE:
   - arm_joint_4: 168.6042253521127
   - arm_joint_5: 159.5154929577465
 ---
-CARGO_3_OLD:
-  - arm_joint_1: 2.442692307692314
-  - arm_joint_2: 75.72
-  - arm_joint_3: -45.60570000000001
-  - arm_joint_4: 166.2769014084507
-  - arm_joint_5: 162.1850704225352
----
 CARGO_3_OVERHEAD:
   - arm_joint_1: 181.9494230769231
   - arm_joint_2: 26.49865384615384
@@ -163,7 +142,7 @@ CARGO_3_OVERHEAD_ABOVE:
 CARGO_3_PLACE:
   - arm_joint_1: 1.276730769230781
   - arm_joint_2: 75.99692307692308
-  - arm_joint_3: -47.63430000000001
+  - arm_joint_3: -47.63430000000002
   - arm_joint_4: 170.4092957746479
   - arm_joint_5: 159.3177464788733
 ---
