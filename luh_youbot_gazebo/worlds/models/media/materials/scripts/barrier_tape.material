@@ -1,0 +1,57 @@
+material barrier_tape/Red
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+			ambient 0.5 0.5 0.5 1.000000
+
+      texture_unit
+      {
+        texture barrier_tape_red.jpg
+        scale 1.0 1.0
+      }
+    }
+  }
+}
+
+material barrier_tape/Blue
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+			ambient 0.5 0.5 0.5 1.000000
+
+      texture_unit
+      {
+        texture barrier_tape_blue.jpg
+        scale 1.0 1.0
+      }
+    }
+  }
+}
+
+material barrier_tape/Yellow
+{
+  receive_shadows on
+  technique
+  {
+    pass
+    {
+			ambient 0.5 0.5 0.5 1.000000
+
+      texture_unit
+      {
+        texture barrier_tape_yellow.jpg
+        scale 1.0 1.0
+      }
+    }
+  }
+}
+
+

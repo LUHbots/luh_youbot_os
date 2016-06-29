@@ -68,13 +68,14 @@
 #include <sensor_msgs/JointState.h>
 #include <std_srvs/Empty.h>
 #include <luh_youbot_kinematics/arm_kinematics.h>
+#include "luh_youbot_driver_api/arduino_gripper.h"
 
 class YoubotArmInterface
 {
 public:
     YoubotArmInterface(std::string name, YoubotConfiguration &config);
     ~YoubotArmInterface();
-    virtual void initialise(bool use_standard_gripper=true);
+    virtual void initialise(bool use_standard_gripper=true, bool use_luh_gripper_v3=false);
     virtual void readState();
     virtual bool writeCommands();
     virtual void stop();
@@ -87,6 +88,9 @@ public:
     luh_youbot_kinematics::JointPosition getJointPosition();
     luh_youbot_kinematics::JointVelocity getJointVelocity();
     luh_youbot_kinematics::JointVector getJointTorque();
+    double getGripperEffort(){return gripper_effort_;}
+    double getGripperVelocity(){return gripper_velocity_;}
+    double getGripperPosition(){return gripper_position_;}
 
     virtual bool isInitialised(){return arm_ != NULL;}
 
@@ -108,11 +112,16 @@ protected:
     luh_youbot_kinematics::JointPosition joint_position_;
     luh_youbot_kinematics::JointVelocity joint_velocity_;
     luh_youbot_kinematics::JointVector joint_torque_;
+    double gripper_position_;
+    double gripper_velocity_;
+    double gripper_effort_;
 
     bool ramp_is_disabled_;
     std::string name_;
 
     youbot::YouBotManipulator *arm_;
+    arduino_gripper* luh_gripper_v3_;
+    int luh_gripper_v3_read_state_counter_;
 
     enum ControlMode{POSITION, VELOCITY, TORQUE} mode_;
 
@@ -126,6 +135,7 @@ protected:
     std::vector<double> position_command_;
 
     std::vector<double> gripper_command_;
+    float luh_gripper_v3_position_command_;
 
     bool has_new_gripper_command_;
     bool has_new_arm_command_;
@@ -142,6 +152,7 @@ protected:
     std::vector<ros::Time> effort_watchdog_time_;
 
     bool use_standard_gripper_;
+    bool use_luh_gripper_v3_;
 
     bool switchOffArmMotorsCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
     bool switchOnArmMotorsCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res);
