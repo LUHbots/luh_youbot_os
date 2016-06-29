@@ -79,7 +79,7 @@ CARGO_1_PLACE_OVERHEAD:
 CARGO_2:
   - arm_joint_1: 21.76384615384614
   - arm_joint_2: 77.3301923076923
-  - arm_joint_3: -47.36519999999999
+  - arm_joint_3: -47.36519999999998
   - arm_joint_4: 171.0659154929577
   - arm_joint_5: 166.4708450704225
 ---
@@ -163,7 +163,7 @@ CARGO_3_OVERHEAD_ABOVE:
 CARGO_3_PLACE:
   - arm_joint_1: 1.276730769230781
   - arm_joint_2: 75.99692307692308
-  - arm_joint_3: -47.6343
+  - arm_joint_3: -47.63430000000001
   - arm_joint_4: 170.4092957746479
   - arm_joint_5: 159.3177464788733
 ---
@@ -292,6 +292,20 @@ MOVEMENT_DEMO_UP:
   - arm_joint_3: -44.14950000000001
   - arm_joint_4: 95.4481690140845
   - arm_joint_5: 171.996338028169
+---
+SEARCH_BARRIER:
+  - arm_joint_1: 28.8825
+  - arm_joint_2: 107.7790384615385
+  - arm_joint_3: -223.7121
+  - arm_joint_4: 3.327464788732391
+  - arm_joint_5: 8.737605633802806
+---
+SEARCH_BARRIER_2:
+  - arm_joint_1: 28.88653846153847
+  - arm_joint_2: 108.2780769230769
+  - arm_joint_3: -223.7049
+  - arm_joint_4: 7.177183098591551
+  - arm_joint_5: 8.745211267605622
 ---
 SEARCH_CENTER:
   - arm_joint_1: 202
