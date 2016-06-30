@@ -63,11 +63,11 @@ CARGO_1_OVERHEAD_ABOVE:
   - arm_joint_5: 170.8947887323944
 ---
 CARGO_1_PLACE:
-  - arm_joint_1: 41.79057692307693
-  - arm_joint_2: 73.08057692307692
-  - arm_joint_3: -46.93859999999999
-  - arm_joint_4: 171.8467605633803
-  - arm_joint_5: 172.6707042253521
+  - arm_joint_1: 41.69480769230768
+  - arm_joint_2: 74.53788461538463
+  - arm_joint_3: -46.8738
+  - arm_joint_4: 170.8935211267606
+  - arm_joint_5: 172.8798591549296
 ---
 CARGO_1_PLACE_OVERHEAD:
   - arm_joint_1: 221.4992307692308
@@ -105,11 +105,11 @@ CARGO_2_OVERHEAD_ABOVE:
   - arm_joint_5: 171.9608450704225
 ---
 CARGO_2_PLACE:
-  - arm_joint_1: 21.59826923076922
-  - arm_joint_2: 72.72634615384615
-  - arm_joint_3: -47.8323
-  - arm_joint_4: 174.2843661971831
-  - arm_joint_5: 168.2683098591549
+  - arm_joint_1: 21.79961538461539
+  - arm_joint_2: 76.55192307692307
+  - arm_joint_3: -49.3569
+  - arm_joint_4: 173.770985915493
+  - arm_joint_5: 166.4949295774648
 ---
 CARGO_2_PLACE_OVERHEAD:
   - arm_joint_1: 201.6
@@ -147,18 +147,18 @@ CARGO_3_OVERHEAD_ABOVE:
   - arm_joint_5: 161.4498591549296
 ---
 CARGO_3_PLACE:
-  - arm_joint_1: 1.297500000000008
-  - arm_joint_2: 74.52865384615384
-  - arm_joint_3: -50.47290000000001
-  - arm_joint_4: 174.2957746478873
-  - arm_joint_5: 159.3392957746479
+  - arm_joint_1: 0.9992307692307599
+  - arm_joint_2: 71.95788461538461
+  - arm_joint_3: -43.7652
+  - arm_joint_4: 167.927323943662
+  - arm_joint_5: 162.1749295774648
 ---
 CARGO_3_PLACE_OVERHEAD:
-  - arm_joint_1: 182.1080769230769
-  - arm_joint_2: 27.53711538461539
-  - arm_joint_3: -202.032
-  - arm_joint_4: 17.30154929577465
-  - arm_joint_5: 164.6315492957747
+  - arm_joint_1: 181.905
+  - arm_joint_2: 27.32884615384615
+  - arm_joint_3: -203.9031
+  - arm_joint_4: 20.0725352112676
+  - arm_joint_5: 160.8147887323944
 ---
 DUMP_1:
   - arm_joint_1: 165.6
