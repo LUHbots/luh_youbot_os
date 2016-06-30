@@ -167,7 +167,7 @@ DUMP_1:
   - arm_joint_4: 168.8
   - arm_joint_5: 128
 ---
-DUMP_1_ABOVE:
+DUMP_4_ABOVE:
   - arm_joint_1: 165.6
   - arm_joint_2: 97.10192307692307
   - arm_joint_3: -70.18470000000001
@@ -209,7 +209,7 @@ DUMP_3:
   - arm_joint_4: 162.8
   - arm_joint_5: 176.1
 ---
-DUMP_3_ABOVE:
+DUMP_1_ABOVE:
   - arm_joint_1: 201.885
   - arm_joint_2: 97.08634615384615
   - arm_joint_3: -69.7653
@@ -230,7 +230,7 @@ DUMP_4:
   - arm_joint_4: 174.1
   - arm_joint_5: 201
 ---
-DUMP_4_ABOVE:
+DUMP_3_ABOVE:
   - arm_joint_1: 219.9980769230769
   - arm_joint_2: 97.10423076923077
   - arm_joint_3: -69.71850000000001
