@@ -383,6 +383,10 @@ void YoubotArmInterface::readState()
                 JointReachedPosition[i]=false;
             }
         }
+//        ROS_INFO("Status Flag PositioReached is: %i",StatusFlags & POSITION_REACHED);
+//        ROS_INFO("Status Flag POSITION_MODE is: %i",StatusFlags & POSITION_MODE);
+//        ROS_INFO("Status Flag TORQUE_MODE is: %i",StatusFlags & TORQUE_MODE);
+//        ROS_INFO("Status Flag VELOCITY_MODE is: %i",StatusFlags & VELOCITY_MODE);
 
         if(JointReachedPosition[0] && JointReachedPosition[1] && JointReachedPosition[2] && JointReachedPosition[3] && JointReachedPosition[4])
         {
