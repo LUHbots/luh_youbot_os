@@ -3,4 +3,4 @@ gripper_velocity: 0.02
 
 # min/max gripper opening width in meters
 min_gripper_width: 0.0
-max_gripper_width: 0.06
+max_gripper_width: 0.071
