@@ -172,6 +172,13 @@ void YoubotArmInterface::initialise(bool use_standard_gripper, bool use_luh_grip
             sleep(3);
             luh_gripper_v3_->setPosition(0.06);
             sleep(3);
+            ROS_INFO("Gripper kalibrated.");
+
+            int gripper_max_efford=100;
+            ROS_INFO("Setting the gripper efford threshhold to %i",gripper_max_efford);
+            luh_gripper_v3_->setEffort(gripper_max_efford);
+
+
         }
     }
     catch (std::exception& e)
