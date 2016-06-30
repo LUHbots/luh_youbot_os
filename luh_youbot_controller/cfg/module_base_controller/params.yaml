@@ -1,6 +1,6 @@
 max_velocity_x: 0.8 # meters/second
 max_velocity_y: 0.8 # meters/second
-max_velocity_theta: 0.8 # radians/second
+max_velocity_theta: 1.6 # radians/second
 
 max_velocity_x_approach: 0.2 # meters/second
 max_velocity_y_approach: 0.2 # meters/second
