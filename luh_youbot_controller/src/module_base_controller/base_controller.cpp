@@ -52,6 +52,11 @@ void ModuleBaseController::init()
     node_->param("module_base_controller/max_velocity_x", max_velocity_x_, 0.2);
     node_->param("module_base_controller/max_velocity_y", max_velocity_y_, 0.2);
     node_->param("module_base_controller/max_velocity_theta", max_velocity_theta_, 0.4);
+
+    node_->param("module_base_controller/max_velocity_x_approach", max_velocity_x_approach_, 0.2);
+    node_->param("module_base_controller/max_velocity_y_approach", max_velocity_y_approach_, 0.2);
+    node_->param("module_base_controller/max_velocity_theta_approach", max_velocity_theta_approach_, 0.4);
+
     node_->param("module_base_controller/velocity_p_factor_x", velocity_p_factor_x_, 2.0);
     node_->param("module_base_controller/velocity_p_factor_y", velocity_p_factor_y_, 2.0);
     node_->param("module_base_controller/velocity_p_factor_theta", velocity_p_factor_theta_, 0.7);
@@ -306,8 +311,8 @@ void ModuleBaseController::updateApproachMode()
         goal_reached = false;
         velocity_command_.linear.x = diff_x_t * velocity_p_factor_x_;
 
-        velocity_command_.linear.x = std::min(velocity_command_.linear.x, max_velocity_x_);
-        velocity_command_.linear.x = std::max(velocity_command_.linear.x, -max_velocity_x_);
+        velocity_command_.linear.x = std::min(velocity_command_.linear.x, max_velocity_x_approach_);
+        velocity_command_.linear.x = std::max(velocity_command_.linear.x, -max_velocity_x_approach_);
     }
     else
         velocity_command_.linear.x = 0;
@@ -318,8 +323,8 @@ void ModuleBaseController::updateApproachMode()
         goal_reached = false;
         velocity_command_.linear.y = diff_y_t * velocity_p_factor_y_;
 
-        velocity_command_.linear.y = std::min(velocity_command_.linear.y, max_velocity_y_);
-        velocity_command_.linear.y = std::max(velocity_command_.linear.y, -max_velocity_y_);
+        velocity_command_.linear.y = std::min(velocity_command_.linear.y, max_velocity_y_approach_);
+        velocity_command_.linear.y = std::max(velocity_command_.linear.y, -max_velocity_y_approach_);
     }
     else
         velocity_command_.linear.y = 0;
@@ -330,8 +335,8 @@ void ModuleBaseController::updateApproachMode()
         goal_reached = false;
         velocity_command_.angular.z = diff_theta * velocity_p_factor_theta_;
 
-        velocity_command_.angular.z = std::min(velocity_command_.angular.z, max_velocity_theta_);
-        velocity_command_.angular.z = std::max(velocity_command_.angular.z, -max_velocity_theta_);
+        velocity_command_.angular.z = std::min(velocity_command_.angular.z, max_velocity_theta_approach_);
+        velocity_command_.angular.z = std::max(velocity_command_.angular.z, -max_velocity_theta_approach_);
     }
     else
         velocity_command_.angular.z = 0;
