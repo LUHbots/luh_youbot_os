@@ -315,13 +315,6 @@ MOVEMENT_DEMO_UP:
   - arm_joint_5: 171.996338028169
 ---
 SEARCH_BARRIER:
-  - arm_joint_1: 28.8825
-  - arm_joint_2: 107.7790384615385
-  - arm_joint_3: -223.7121
-  - arm_joint_4: 3.327464788732391
-  - arm_joint_5: 8.737605633802806
----
-SEARCH_BARRIER_2:
   - arm_joint_1: 28.88653846153847
   - arm_joint_2: 108.2780769230769
   - arm_joint_3: -223.7049
