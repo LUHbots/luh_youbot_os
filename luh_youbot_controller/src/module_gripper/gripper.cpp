@@ -61,7 +61,7 @@ void ModuleGripper::init()
     node_->param("module_gripper/min_gripper_width", min_gripper_width_, 0.0);
     node_->param("module_gripper/max_gripper_width", max_gripper_width_, 0.06);
     node_->param("module_gripper/gripper_velocity", gripper_velocity_, 0.02);
-    node_->param("module_gripper/static_grip_force", static_grip_force_, 25.0);
+    node_->param("module_gripper/static_grip_force", static_grip_force_, 30.0);
     goal_width_ = HUGE_VAL; // huge val means unknown
 
     // === ACTION SERVERS ===
@@ -81,6 +81,7 @@ void ModuleGripper::init()
 
     //Set Gripper Update Counter
     gripper_update_counter_=0;
+    gripper_is_opening_=false;
 
     ROS_INFO("Gripper Module initialised.");
 }
@@ -150,7 +151,7 @@ void ModuleGripper::update()
             }
         }
 
-        if(delta_t > gripping_duration_ || (object_is_inside_the_gripper && gripper_update_counter_>10))
+        if(delta_t > gripping_duration_ || (object_is_inside_the_gripper && gripper_update_counter_>10 && !gripper_is_opening_))
         {
             gripping_object_ = false;
             gripper_is_busy_ = false;
@@ -221,6 +222,15 @@ void ModuleGripper::gripObjectCallback()
         {
             gripping_duration_ = fabs(goal_width_ - new_goal_width) / gripper_velocity_;
         }
+
+        if (new_goal_width>goal_width_)
+        {
+            gripper_is_opening_=true;
+        }
+        else{
+            gripper_is_opening_=false;
+        }
+
         goal_width_ = new_goal_width;
 
         ROS_INFO("Gripper command received.");
@@ -272,6 +282,15 @@ void ModuleGripper::setGripperCallback()
     {
         gripping_duration_ = fabs(goal_width_ - new_goal_width) / gripper_velocity_;
     }
+
+    if (new_goal_width>goal_width_)
+    {
+        gripper_is_opening_=true;
+    }
+    else{
+        gripper_is_opening_=false;
+    }
+
     goal_width_ = new_goal_width;
 
     ROS_INFO("Gripper command received.");
@@ -290,6 +309,16 @@ void ModuleGripper::gripperMsgCallback(const std_msgs::Float32::ConstPtr &msg)
 
     gripping_object_ = true;
     publish_only_once_ = true;
+
+    if (msg->data>goal_width_)
+    {
+        gripper_is_opening_=true;
+    }
+    else{
+        gripper_is_opening_=false;
+    }
+
+
     goal_width_ = msg->data;
 }
 
