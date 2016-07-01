@@ -132,8 +132,8 @@ void ModuleGripper::update()
         double current_force = fabs(youbot_->arm()->getGripperEffort());
 
         bool object_is_inside_the_gripper=false;
-        object_is_inside_the_gripper= current_force > static_grip_force_*4.0;
-        if(current_force>static_grip_force_*4.0)
+        object_is_inside_the_gripper= current_force > static_grip_force_*3.0;
+        if(current_force>static_grip_force_*3.0)
         {
             gripper_update_counter_++;
 //            ROS_INFO("Gripper Update, current forse is: %f", current_force);
@@ -151,7 +151,7 @@ void ModuleGripper::update()
             }
         }
 
-        if(delta_t > gripping_duration_ || (object_is_inside_the_gripper && gripper_update_counter_>10 && !gripper_is_opening_))
+        if(delta_t > gripping_duration_ || (object_is_inside_the_gripper && gripper_update_counter_>40 && !gripper_is_opening_))
         {
             gripping_object_ = false;
             gripper_is_busy_ = false;
