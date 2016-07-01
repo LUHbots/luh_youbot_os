@@ -151,7 +151,7 @@ void ModuleGripper::update()
             }
         }
 
-        if(delta_t > gripping_duration_ || (object_is_inside_the_gripper && gripper_update_counter_>40 && !gripper_is_opening_))
+        if(delta_t > gripping_duration_ || (object_is_inside_the_gripper && gripper_update_counter_>10 && !gripper_is_opening_) || (gripper_is_opening_ && delta_t*5.0 > gripping_duration_) )
         {
             gripping_object_ = false;
             gripper_is_busy_ = false;
