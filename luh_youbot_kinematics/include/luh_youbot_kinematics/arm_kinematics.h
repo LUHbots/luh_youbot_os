@@ -112,11 +112,13 @@ const double ARM_LINK_0_X_OFFSET = 0.024;
 
 /// maximum joint accelerations
 //const double MAX_JNT_ACCELERATIONS[] = {0.7, 0.7, 0.7, 0.7, 0.7};
+//const double MAX_JNT_ACCELERATIONS[] = {1.34, 1.34, 2.09, 2.94, 2.94};
 const double MAX_JNT_ACCELERATIONS[] = {2.0, 2.0, 2.0, 2.0, 2.0};
 
 /// maximum joint velocities
 //const double MAX_JNT_VELOCITIES[] = {0.8, 0.8, 0.8, 0.8, 0.8};
-const double MAX_JNT_VELOCITIES[] = {2.6, 2.6, 2.6, 2.6, 1.3};
+//const double MAX_JNT_VELOCITIES[] = {2.68, 2.68, 4.18, 5.89, 5.89};
+const double MAX_JNT_VELOCITIES[] = {2.6, 2.6, 2.6, 2.6, 2.6};
 
 /// joint angle offsets (difference between desired and actual zero positions)
 const double JOINT_OFFSETS[] =
