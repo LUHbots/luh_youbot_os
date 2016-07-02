@@ -61,7 +61,7 @@ void ModuleGripper::init()
     node_->param("module_gripper/min_gripper_width", min_gripper_width_, 0.0);
     node_->param("module_gripper/max_gripper_width", max_gripper_width_, 0.06);
     node_->param("module_gripper/gripper_velocity", gripper_velocity_, 0.02);
-    node_->param("module_gripper/static_grip_force", static_grip_force_, 30.0);
+    node_->param("module_gripper/static_grip_force", static_grip_force_, 20.0);
     goal_width_ = HUGE_VAL; // huge val means unknown
 
     // === ACTION SERVERS ===
@@ -132,8 +132,8 @@ void ModuleGripper::update()
         double current_force = fabs(youbot_->arm()->getGripperEffort());
 
         bool object_is_inside_the_gripper=false;
-        object_is_inside_the_gripper= current_force > static_grip_force_*3.0;
-        if(current_force>static_grip_force_*3.0)
+        object_is_inside_the_gripper= current_force > static_grip_force_*4.5;
+        if(current_force>static_grip_force_*4.5)
         {
             gripper_update_counter_++;
 //            ROS_INFO("Gripper Update, current forse is: %f", current_force);
