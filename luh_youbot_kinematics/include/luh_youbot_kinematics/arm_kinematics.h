@@ -118,7 +118,7 @@ const double MAX_JNT_ACCELERATIONS[] = {2.0, 2.0, 2.0, 2.0, 2.0};
 /// maximum joint velocities
 //const double MAX_JNT_VELOCITIES[] = {0.8, 0.8, 0.8, 0.8, 0.8};
 //const double MAX_JNT_VELOCITIES[] = {2.68, 2.68, 4.18, 5.89, 5.89};
-const double MAX_JNT_VELOCITIES[] = {2.6, 2.6, 2.6, 2.6, 2.6};
+const double MAX_JNT_VELOCITIES[] = {2.6, 2.6, 2.6, 2.6, 1.3};
 
 /// joint angle offsets (difference between desired and actual zero positions)
 const double JOINT_OFFSETS[] =
