@@ -1,22 +1,10 @@
 PROJECT(youbot_driver)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.3)
 
-
-
-#OPTION(USE_ROS "Enable ROS as compile tool" ON)
-
-########### ROS ###########
-#SET(ROS_ROOT_PATH $ENV{ROS_ROOT})
-#IF(DEFINED ROS_ROOT_PATH AND USE_ROS MATCHES ON)
-#  include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
-#  rosbuild_init()
-#  ADD_DEFINITIONS(-DUSE_ROS_LOGGING)
-#ENDIF(DEFINED ROS_ROOT_PATH AND USE_ROS MATCHES ON)
-
 find_package(catkin REQUIRED COMPONENTS
   roscpp  
 )
-ADD_DEFINITIONS(-DUSE_ROS_LOGGING)
+#ADD_DEFINITIONS(-DUSE_ROS_LOGGING)
 catkin_package(
   INCLUDE_DIRS ${PROJECT_SOURCE_DIR} soem/src
   LIBRARIES YouBotDriver soem

@@ -60,9 +60,9 @@
 #include <math.h>
 
 //YouBot includes
-#include <brics_actuator/JointPositions.h>
-#include <brics_actuator/JointVelocities.h>
-#include <brics_actuator/JointAccelerations.h>
+//#include <brics_actuator/JointPositions.h>
+//#include <brics_actuator/JointVelocities.h>
+//#include <brics_actuator/JointAccelerations.h>
 #include <sensor_msgs/JointState.h>
 #include <std_msgs/Bool.h>
 #include <std_msgs/Int8.h>
@@ -321,18 +321,26 @@ private:
 
     std::vector <double> gripperPosition;
     std::vector <size_t> gripperPoint;
-    std::vector <brics_actuator::JointValue> gripperJointPositions;
+    //std::vector <brics_actuator::JointValue> gripperJointPositions;
 
     /// Messagetyp der Joinstates
-    brics_actuator::JointVelocities currentVelocities;
-    brics_actuator::JointVelocities armJointVelocities;
-    brics_actuator::JointAccelerations armJointAccelerations;
-    brics_actuator::JointPositions armJointPositions;    
-    brics_actuator::JointPositions gripperPositionCommand;
+    //brics_actuator::JointVelocities currentVelocities;
+    //brics_actuator::JointVelocities armJointVelocities;
+    //brics_actuator::JointAccelerations armJointAccelerations;
+    //brics_actuator::JointPositions armJointPositions;
+    //brics_actuator::JointPositions gripperPositionCommand;
+    luh_youbot_kinematics::JointVelocity currentVelocities;
+    luh_youbot_kinematics::JointVelocity armJointVelocities;
+    luh_youbot_kinematics::JointAcceleration armJointAccelerations;
+    luh_youbot_kinematics::JointPosition armJointPositions;
+    luh_youbot_kinematics::JointPosition gripperPositionCommand;
+
     std_msgs::Bool armJointBool;
     geometry_msgs::Twist baseVelocity;
-    brics_actuator::JointPositions currentPositions;
-    brics_actuator::JointPositions regler;
+    //brics_actuator::JointPositions currentPositions;
+    //brics_actuator::JointPositions regler;
+    luh_youbot_kinematics::JointPosition currentPositions;
+    luh_youbot_kinematics::JointPosition regler;
 
     geometry_msgs::Twist cmd_vel;
 

@@ -23,10 +23,10 @@
 #define LUH_YOUBOT_CONTROLLER_CONTROLLER_MODULE_H
 
 #include "ros/ros.h"
-#include "brics_actuator/JointPositions.h"
-#include "brics_actuator/JointVelocities.h"
-#include "brics_actuator/JointAccelerations.h"
-#include "brics_actuator/JointTorques.h"
+//#include "brics_actuator/JointPositions.h"
+//#include "brics_actuator/JointVelocities.h"
+//#include "brics_actuator/JointAccelerations.h"
+//#include "brics_actuator/JointTorques.h"
 #include "luh_youbot_kinematics/arm_kinematics.h"
 #include "sensor_msgs/JointState.h"
 #include "tf/transform_listener.h"

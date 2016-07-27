@@ -62,13 +62,13 @@ motionPlanning::motionPlanning() {
     stellwert.resize(10);
 
     //Initialisierung der Vektoren
-    armJointVelocities.velocities.resize(ARMJOINTS);
-    armJointPositions.positions.resize(ARMJOINTS);
-    armJointAccelerations.accelerations.resize(ARMJOINTS);
+    armJointVelocities.resize(ARMJOINTS);
+    armJointPositions.resize(ARMJOINTS);
+    armJointAccelerations.resize(ARMJOINTS);
 
     singleAxis.arm_axis.resize(ARMJOINTS);
 
-    regler.positions.resize(15);
+    regler.resize(15);
     baseParam.resize(3);
     base.arm_axis.resize(3);
 
@@ -76,19 +76,12 @@ motionPlanning::motionPlanning() {
 
     for (unsigned int idx = 0; idx < ARMJOINTS; ++idx) {
         jointName.str("");
-        jointName << "arm_joint_" << (idx + 1);       
+        jointName << "arm_joint_" << (idx + 1);
 
-        armJointVelocities.velocities[idx].joint_uri = jointName.str();
-        armJointVelocities.velocities[idx].unit = boost::units::to_string(boost::units::si::radians_per_second);
-        armJointVelocities.velocities[idx].value = 0.0;
 
-        armJointPositions.positions[idx].joint_uri = jointName.str();
-        armJointPositions.positions[idx].unit = boost::units::to_string(boost::units::si::radians);
-        armJointPositions.positions[idx].value = 0.0;
-
-        armJointAccelerations.accelerations[idx].joint_uri = jointName.str();
-        armJointAccelerations.accelerations[idx].unit = boost::units::to_string(boost::units::si::radians_per_second / boost::units::si::seconds);
-        armJointAccelerations.accelerations[idx].value = 0.0;
+        armJointVelocities[idx] = 0.0;
+        armJointPositions[idx] = 0.0;
+        armJointAccelerations[idx] = 0.0;
 
         ePosSum[idx] = 0.0;
         ePos[idx] = 0.0;
@@ -197,31 +190,31 @@ void motionPlanning::update(JointPosition current_position)
     {
         if (index < timeIncPoint.size())
         {
-            armJointVelocities.velocities[k].value = timeIncPoint[index].arm_axis[k].velocity;
-            armJointPositions.positions[k].value = timeIncPoint[index].arm_axis[k].position;
-            armJointAccelerations.accelerations[k].value = timeIncPoint[index].arm_axis[k].acceleration;
+            armJointVelocities[k] = timeIncPoint[index].arm_axis[k].velocity;
+            armJointPositions[k] = timeIncPoint[index].arm_axis[k].position;
+            armJointAccelerations[k] = timeIncPoint[index].arm_axis[k].acceleration;
         }
 
         else
         {
-            armJointPositions.positions[k].value = timeIncPoint.back().arm_axis[k].position;
-            armJointVelocities.velocities[k].value = 0;
-            armJointAccelerations.accelerations[k].value = 0;
+            armJointPositions[k] = timeIncPoint.back().arm_axis[k].position;
+            armJointVelocities[k] = 0;
+            armJointAccelerations[k] = 0;
         }
 
         /*---------------------------------------------Regler--------------------------------------*/
 
         // Regelabweichung bestimmen
-        ePos[k] = armJointPositions.positions[k].value - current_position[k];
+        ePos[k] = armJointPositions[k] - current_position[k];
         ePosSum[k] = ePos[k] + ePosSum[k];
-        armJointVelocities.velocities[k].value = armJointVelocities.velocities[k].value +
+        armJointVelocities[k] = armJointVelocities[k] +
                 KP[k]*(ePos[k] + KI[k]*ePosSum[k]*delta_t +  KD[k]*(ePos[k] - ePosAlt[k])/delta_t);
 
         // Anti Wind-Up
-        if (armJointVelocities.velocities[k].value > windUP[k])
-            armJointVelocities.velocities[k].value = windUP[k];
-        if (armJointVelocities.velocities[k].value < (-1)*windUP[k])
-            armJointVelocities.velocities[k].value = (-1)*windUP[k];
+        if (armJointVelocities[k] > windUP[k])
+            armJointVelocities[k] = windUP[k];
+        if (armJointVelocities[k] < (-1)*windUP[k])
+            armJointVelocities[k] = (-1)*windUP[k];
 
         ePosAlt[k] = ePos[k];
 
@@ -263,9 +256,9 @@ void motionPlanning::update(JointPosition current_position)
 JointPosition motionPlanning::getPosition()
 {
     JointPosition pos;
-    for(uint i=0; i< armJointPositions.positions.size(); i++)
+    for(uint i=0; i< armJointPositions.size(); i++)
     {
-        pos[i] = armJointPositions.positions[i].value;
+        pos[i] = armJointPositions[i];
     }
 
     pos.addOffset();
@@ -275,9 +268,9 @@ JointPosition motionPlanning::getPosition()
 JointVelocity motionPlanning::getVelocity()
 {
     JointVelocity vel;
-    for(uint i=0; i< armJointVelocities.velocities.size(); i++)
+    for(uint i=0; i< armJointVelocities.size(); i++)
     {
-        vel[i] = armJointVelocities.velocities[i].value;
+        vel[i] = armJointVelocities[i];
     }
 
     return vel;
@@ -285,9 +278,9 @@ JointVelocity motionPlanning::getVelocity()
 JointAcceleration motionPlanning::getAcceleration()
 {
     JointAcceleration acc;
-    for(uint i=0; i< armJointAccelerations.accelerations.size(); i++)
+    for(uint i=0; i< armJointAccelerations.size(); i++)
     {
-        acc[i] = armJointAccelerations.accelerations[i].value;
+        acc[i] = armJointAccelerations[i];
     }
 
     return acc;

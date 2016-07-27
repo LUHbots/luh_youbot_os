@@ -142,8 +142,8 @@ ArmControlWindow::ArmControlWindow(QWidget *parent) :
     table_jointstate_->resizeRowsToContents();
     table_jointstate_->setFixedHeight(table_jointstate_->rowHeight(0)*3);
     table_jointstate_->setFixedWidth(table_jointstate_->columnWidth(5)*7);
-    table_jointstate_->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-    table_jointstate_->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+    //table_jointstate_->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+    //table_jointstate_->verticalHeader()->setResizeMode(QHeaderView::Stretch);
     table_jointstate_->setCornerButtonEnabled(false);
     for(int i=0; i<6; i++)
     {
