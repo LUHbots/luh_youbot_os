@@ -112,7 +112,8 @@ void YoubotGripperController::UpdateChild()
         }
         else
         {
-            left_joint_->SetAngle(0, math::Angle(0.5 * pos_cmd_));
+            //left_joint_->SetAngle(0, math::Angle(0.5 * pos_cmd_));
+            left_joint_->SetPosition(0, 0.5 * pos_cmd_);
         }
     }
 
@@ -129,7 +130,8 @@ void YoubotGripperController::UpdateChild()
         }
         else
         {
-            right_joint_->SetAngle(0, math::Angle(0.5 * pos_cmd_));
+            //right_joint_->SetAngle(0, math::Angle(0.5 * pos_cmd_));
+            right_joint_->SetPosition(0, 0.5);
         }
     }
 

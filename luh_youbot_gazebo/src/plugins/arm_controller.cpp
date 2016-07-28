@@ -112,7 +112,8 @@ namespace gazebo
     arm_joints_.push_back(parent_->GetJoint("arm_joint_5"));
 
     for(uint i=0; i<arm_joints_.size(); i++)
-        arm_joints_[i]->SetMaxForce(0, 100);
+        //arm_joints_[i]->SetMaxForce(0, 100);
+        arm_joints_[i]->SetEffortLimit(0, 100);
   }
 
   // Update the controller
@@ -122,11 +123,16 @@ namespace gazebo
 
     if(cmd_mode_ == CMD_POSITION)
     {
-        arm_joints_[0]->SetAngle(0, math::Angle(cmd_.q1));
-        arm_joints_[1]->SetAngle(0, math::Angle(cmd_.q2));
-        arm_joints_[2]->SetAngle(0, math::Angle(cmd_.q3));
-        arm_joints_[3]->SetAngle(0, math::Angle(cmd_.q4));
-        arm_joints_[4]->SetAngle(0, math::Angle(cmd_.q5));
+//        arm_joints_[0]->SetAngle(0, math::Angle(cmd_.q1));
+//        arm_joints_[1]->SetAngle(0, math::Angle(cmd_.q2));
+//        arm_joints_[2]->SetAngle(0, math::Angle(cmd_.q3));
+//        arm_joints_[3]->SetAngle(0, math::Angle(cmd_.q4));
+//        arm_joints_[4]->SetAngle(0, math::Angle(cmd_.q5));
+        arm_joints_[0]->SetPosition(0, cmd_.q1);
+        arm_joints_[1]->SetPosition(0, cmd_.q2);
+        arm_joints_[2]->SetPosition(0, cmd_.q3);
+        arm_joints_[3]->SetPosition(0, cmd_.q4);
+        arm_joints_[4]->SetPosition(0, cmd_.q5);
     }
     else if(cmd_mode_ == CMD_VELOCITY)
     {

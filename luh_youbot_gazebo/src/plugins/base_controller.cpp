@@ -163,7 +163,9 @@ namespace gazebo
 
     // disable force limits to allow velocity control
     for(uint i=0; i<wheel_joints_.size(); i++)
-        wheel_joints_[i]->SetMaxForce(0, HUGE_VAL);
+        //wheel_joints_[i]->SetMaxForce(0, HUGE_VAL);
+        wheel_joints_[i]->SetEffortLimit(0, HUGE_VAL);
+
 
     // base kinematics
     double r = 0.0475;
