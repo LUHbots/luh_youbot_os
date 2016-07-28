@@ -197,11 +197,11 @@ namespace gazebo
     float roll = pose.rot.GetRoll();
     float pitch = pose.rot.GetPitch();
 
-    if(fabs(roll) < 0.001 && fabs(pitch) < 0.001)
+    //if(fabs(roll) < 0.001 && fabs(pitch) < 0.001)
     {
         float yaw = pose.rot.GetYaw();
         double xt = x_ * cosf(yaw) - y_ * sinf(yaw);
-        double yt = y_ * cosf(yaw) + x_ * sinf(yaw);
+        double yt = y_ * cosf(yaw) + x_ * sinf(yaw);        
         base_link_->SetLinearVel(math::Vector3(xt, yt, 0));
         base_link_->SetAngularVel(math::Vector3(0, 0, rot_));
     }
