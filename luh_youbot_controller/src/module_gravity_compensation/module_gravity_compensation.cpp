@@ -174,7 +174,10 @@ bool ModuleGravityCompensation::deactivateCallback(std_srvs::Empty::Request &req
     boost::mutex::scoped_lock lock(arm_mutex_);
 
     do_compensation_ = false;
-    youbot_->arm()->setJointVelocities(JointVelocity());
+    //youbot_->arm()->setJointVelocities(JointVelocity());
+    luh_youbot_kinematics::JointPosition position_now;
+    position_now=youbot_->arm()->getJointPosition();
+    youbot_->arm()->setJointPositions(position_now);
     return true;
 }
 

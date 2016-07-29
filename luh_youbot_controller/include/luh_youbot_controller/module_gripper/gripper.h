@@ -46,6 +46,10 @@ protected:
     bool publish_only_once_;
     double static_grip_force_;
 
+    bool gripper_is_opening_;
+
+    int gripper_update_counter_;
+
 
     double gripping_duration_;
 

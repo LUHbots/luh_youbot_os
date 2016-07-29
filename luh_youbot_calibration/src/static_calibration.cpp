@@ -177,8 +177,8 @@ void evaluate()
     ROS_INFO("Evaluating...");
 
     // === INITIALIZE OPTIMIZER ===
-    nlopt::opt opt(nlopt::GN_ESCH , n_params);
-//    nlopt::opt opt(nlopt::LN_COBYLA, n_params);
+//    nlopt::opt opt(nlopt::GN_ESCH , n_params);
+    nlopt::opt opt(nlopt::LN_COBYLA, n_params);
 
     // initial values
     ykin::StaticParameters init_params;
@@ -413,13 +413,13 @@ int main(int argc, char** argv)
             if(ans[0] != 's')
                 continue;
 
-            // get 40 messages
+            // get 120 messages
             data.push_back(State());
             msg_counter = 0;
             save_data = true;
             std::cout << "Saving joint states..." << std::endl;
 
-            while(msg_counter < 40)
+            while(msg_counter < 120)
             {
                 r.sleep();
             }
@@ -532,7 +532,7 @@ int main(int argc, char** argv)
                 arm.waitForCurrentAction();
                 ros::Duration(0.9).sleep(); // sleep for half a second
 
-                // get 40 messages
+                // get 120 messages
                 data.push_back(State());
                 msg_counter = 0;
                 save_data = true;

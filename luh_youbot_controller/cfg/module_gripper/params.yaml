@@ -1,6 +1,6 @@
 # needed to estimate the gripping duration
-gripper_velocity: 0.02
+gripper_velocity: 0.03
 
 # min/max gripper opening width in meters
-min_gripper_width: 0.0
-max_gripper_width: 0.06
+min_gripper_width: 0.00
+max_gripper_width: 0.066

@@ -172,6 +172,23 @@ void YoubotArmInterface::initialise(bool use_standard_gripper, bool use_luh_grip
             sleep(3);
             luh_gripper_v3_->setPosition(0.06);
             sleep(3);
+            ROS_INFO("Gripper kalibrated.");
+
+
+
+
+
+            int gripper_max_effort=100;
+
+            if(ros::param::get("luh_youbot_controller/gripper_max_effort", gripper_max_effort))
+            {
+                ROS_INFO("Successfull got gripper max_effort");
+            }
+
+            ROS_INFO("Setting the gripper efford threshhold to %i",gripper_max_effort);
+            luh_gripper_v3_->setEffort(gripper_max_effort);
+
+
         }
     }
     catch (std::exception& e)
@@ -366,6 +383,10 @@ void YoubotArmInterface::readState()
                 JointReachedPosition[i]=false;
             }
         }
+//        ROS_INFO("Status Flag PositioReached is: %i",StatusFlags & POSITION_REACHED);
+//        ROS_INFO("Status Flag POSITION_MODE is: %i",StatusFlags & POSITION_MODE);
+//        ROS_INFO("Status Flag TORQUE_MODE is: %i",StatusFlags & TORQUE_MODE);
+//        ROS_INFO("Status Flag VELOCITY_MODE is: %i",StatusFlags & VELOCITY_MODE);
 
         if(JointReachedPosition[0] && JointReachedPosition[1] && JointReachedPosition[2] && JointReachedPosition[3] && JointReachedPosition[4])
         {

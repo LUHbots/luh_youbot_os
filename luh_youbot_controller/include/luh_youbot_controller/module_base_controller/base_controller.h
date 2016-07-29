@@ -84,6 +84,11 @@ protected:
     double max_velocity_x_;
     double max_velocity_y_;
     double max_velocity_theta_;
+
+    double max_velocity_x_approach_;
+    double max_velocity_y_approach_;
+    double max_velocity_theta_approach_;
+
     double velocity_p_factor_x_;
     double velocity_p_factor_y_;
     double velocity_p_factor_theta_;
