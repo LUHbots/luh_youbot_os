@@ -44,8 +44,8 @@
       			</collision>
     		</link>
 
-    		<joint name="${name}_footprint_joint" type="fixed">
-      			<origin xyz="0 0 0.083" rpy="0 0 0" />
+    		<joint name="${name}_footprint_joint" type="fixed">      			
+      			<origin xyz="0 0 0" rpy="0 0 0" />
       			<child link="${name}_link" />
       			<parent link="${name}_footprint"/>
     		</joint>
