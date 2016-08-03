@@ -1,3 +1,4 @@
+
 /* *****************************************************************
  *
  * luh_youbot_driver_api
@@ -137,7 +138,7 @@ void YoubotBaseGazeboInterface::stop()
 //########## PUBLISH MESSAGES ##########################################################################################
 void YoubotBaseGazeboInterface::publishMessages()
 {
-    joint_state_msg_.header.stamp=current_sample_time_;
+    joint_state_msg_.header.stamp = current_sample_time_;
     joint_state_publisher_.publish(joint_state_msg_);
 }
 

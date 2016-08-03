@@ -79,7 +79,7 @@ YoubotArmGazeboInterface::~YoubotArmGazeboInterface()
 }
 
 //########## INITIALISE ################################################################################################
-void YoubotArmGazeboInterface::initialise(bool use_standard_gripper)
+void YoubotArmGazeboInterface::initialise(bool use_standard_gripper, bool use_luh_gripper_v3)
 {
     ROS_INFO("Initialising %s...", name_.c_str());
 

@@ -66,7 +66,6 @@
 YoubotGazeboInterface::YoubotGazeboInterface(ros::NodeHandle &node):
     YoubotInterface(node)
 {
-
 }
 
 //########## DESTRUCTOR ################################################################################################
@@ -76,7 +75,7 @@ YoubotGazeboInterface::~YoubotGazeboInterface()
 }
 
 //########## INITIALISE ################################################################################################
-void YoubotGazeboInterface::initialise(bool use_standard_gripper)
+void YoubotGazeboInterface::initialise(bool use_standard_gripper, bool use_luh_gripper_v3_)
 {
     // === GET PARAMETERS ===
     config_.node_handle->param("youBotHasBase", config_.has_base, true);
@@ -121,7 +120,7 @@ void YoubotGazeboInterface::initialise(bool use_standard_gripper)
 
     for(uint i=0; i<arms_.size(); i++)
     {
-        arms_[i]->initialise(use_standard_gripper);
+        arms_[i]->initialise(use_standard_gripper, false);
         ROS_ASSERT(arms_[i]->isInitialised());
     }
 }
