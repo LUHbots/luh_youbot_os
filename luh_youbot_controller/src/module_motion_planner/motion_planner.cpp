@@ -268,7 +268,7 @@ void ModuleMotionPlanner::update()
     {
         // === SET END POSE ===
         JointPosition end_pose = end_pose_;
-        end_pose.addOffset();
+        //end_pose.addOffset();
         youbot_->arm()->setJointPositions(end_pose);
 
         if(goalReached())
@@ -404,6 +404,7 @@ bool ModuleMotionPlanner::load(std::string posefile, std::string neighborfile)
                     pose.joint_position.setQ5(joint_value);
             }
 
+            pose.joint_position.addOffset();
             poses_.push_back(pose);
         }
 
@@ -482,13 +483,24 @@ bool ModuleMotionPlanner::load(std::string posefile, std::string neighborfile)
 }
 
 //############### START MOVEMENT #######################################################################################
-void ModuleMotionPlanner::startMovement(const Path &path)
+bool ModuleMotionPlanner::startMovement(const Path &path)
 {
     if(path.empty())
     {
         ROS_ERROR("MMP: Pose is unreachable from current pose.");
         (this->*endAction)(false);
-        return;
+        return false;
+    }
+
+    // === CHECK PATH ===
+    for(uint i=0; i<path.size(); ++i)
+    {
+        if(!path[i].isReachable())
+        {
+            ROS_ERROR("Path point is unreachable.");
+            path[i].printValues("Unreachable path point:");
+            return false;
+        }
     }
 
     // === CALCULATE TRAJECTORY ===
@@ -504,7 +516,10 @@ void ModuleMotionPlanner::startMovement(const Path &path)
     }
 
     ROS_INFO("MMP: Calculating path...");
-    controller_->offlineMotionPlanning();
+    if(!controller_->offlineMotionPlanning())
+    {
+        return false;
+    }
 
     status_ = STATUS_ACTIVE;
 
@@ -514,6 +529,8 @@ void ModuleMotionPlanner::startMovement(const Path &path)
 
     last_update_time_ = ros::Time::now();
     last_velocity_ = JointVelocity();
+
+    return true;
 }
 
 //############### END MOVEMENT #########################################################################################
@@ -715,7 +732,7 @@ bool ModuleMotionPlanner::isReady()
 bool ModuleMotionPlanner::goalReached()
 {
     luh_youbot_kinematics::JointPosition end_pose = end_pose_;
-    end_pose.addOffset();
+    //end_pose.addOffset();
     luh_youbot_kinematics::JointPosition goal_pose = youbot_->arm()->getJointPosition();
     luh_youbot_kinematics::JointVelocity velocity = youbot_->arm()->getJointVelocity();
     luh_youbot_kinematics::JointPosition pose_diff = (goal_pose - end_pose).abs();

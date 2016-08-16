@@ -29,19 +29,45 @@
 #include "luh_youbot_controller/module_motion_planner/motion_control.hpp"
 
 using namespace std;
-using namespace luh_youbot_kinematics;
+//using namespace luh_youbot_kinematics;
+namespace ykin = luh_youbot_kinematics;
 
 motionPlanning::motionPlanning() {
 
     LOOPRATE = 0.002;
 
     //Initialisieren der max. Geschwindigkeiten und Beschleunigungen
-    JointProp.max_acc = MAX_JNT_ACCELERATIONS[0];    JointProp.max_vel = MAX_JNT_VELOCITIES[0];    JointProp.minAngle = MINANGLE1;     JointProp.maxAngle = MAXANGLE1;     initParamValues.push_back(JointProp);
-    JointProp.max_acc = MAX_JNT_ACCELERATIONS[1];    JointProp.max_vel = MAX_JNT_VELOCITIES[1];    JointProp.minAngle = MINANGLE2;     JointProp.maxAngle = MAXANGLE2;     initParamValues.push_back(JointProp);
-    JointProp.max_acc = MAX_JNT_ACCELERATIONS[2];    JointProp.max_vel = MAX_JNT_VELOCITIES[2];    JointProp.minAngle = MINANGLE3;     JointProp.maxAngle = MAXANGLE3;     initParamValues.push_back(JointProp);
-    JointProp.max_acc = MAX_JNT_ACCELERATIONS[3];    JointProp.max_vel = MAX_JNT_VELOCITIES[3];    JointProp.minAngle = MINANGLE4;     JointProp.maxAngle = MAXANGLE4;     initParamValues.push_back(JointProp);
-    JointProp.max_acc = MAX_JNT_ACCELERATIONS[4];    JointProp.max_vel = MAX_JNT_VELOCITIES[4];    JointProp.minAngle = MINANGLE5;     JointProp.maxAngle = MAXANGLE5;     initParamValues.push_back(JointProp);
+    /*
+    JointProp.minAngle = MINANGLE1;
+    JointProp.minAngle = MINANGLE2;
+    JointProp.minAngle = MINANGLE3;
+    JointProp.minAngle = MINANGLE4;
+    JointProp.minAngle = MINANGLE5;
 
+    JointProp.maxAngle = MAXANGLE1;
+    JointProp.maxAngle = MAXANGLE2;
+    JointProp.maxAngle = MAXANGLE3;
+    JointProp.maxAngle = MAXANGLE4;
+    JointProp.maxAngle = MAXANGLE5;
+
+    JointProp.max_acc = MAX_JNT_ACCELERATIONS[0];
+    JointProp.max_acc = MAX_JNT_ACCELERATIONS[1];
+    JointProp.max_acc = MAX_JNT_ACCELERATIONS[2];
+    JointProp.max_acc = MAX_JNT_ACCELERATIONS[3];
+    JointProp.max_acc = MAX_JNT_ACCELERATIONS[4];
+
+    JointProp.max_vel = MAX_JNT_VELOCITIES[0];
+    JointProp.max_vel = MAX_JNT_VELOCITIES[1];
+    JointProp.max_vel = MAX_JNT_VELOCITIES[2];
+    JointProp.max_vel = MAX_JNT_VELOCITIES[3];
+    JointProp.max_vel = MAX_JNT_VELOCITIES[4];
+
+    initParamValues.push_back(JointProp);
+    initParamValues.push_back(JointProp);
+    initParamValues.push_back(JointProp);
+    initParamValues.push_back(JointProp);
+    initParamValues.push_back(JointProp);
+*/
     ePosSum = new double[JOINTSPACE];
     ePos = new double[JOINTSPACE];
     ePosAlt = new double[JOINTSPACE];
@@ -62,19 +88,20 @@ motionPlanning::motionPlanning() {
     stellwert.resize(10);
 
     //Initialisierung der Vektoren
-    armJointVelocities.velocities.resize(ARMJOINTS);
-    armJointPositions.positions.resize(ARMJOINTS);
-    armJointAccelerations.accelerations.resize(ARMJOINTS);
+    //armJointVelocities.velocities.resize(ARMJOINTS);
+    //armJointPositions.positions.resize(ARMJOINTS);
+    //armJointAccelerations.accelerations.resize(ARMJOINTS);
 
     singleAxis.arm_axis.resize(ARMJOINTS);
 
-    regler.positions.resize(15);
+    //regler.positions.resize(15);
     baseParam.resize(3);
     base.arm_axis.resize(3);
 
-    stringstream jointName;
+    //stringstream jointName;
 
     for (unsigned int idx = 0; idx < ARMJOINTS; ++idx) {
+        /*
         jointName.str("");
         jointName << "arm_joint_" << (idx + 1);       
 
@@ -89,7 +116,7 @@ motionPlanning::motionPlanning() {
         armJointAccelerations.accelerations[idx].joint_uri = jointName.str();
         armJointAccelerations.accelerations[idx].unit = boost::units::to_string(boost::units::si::radians_per_second / boost::units::si::seconds);
         armJointAccelerations.accelerations[idx].value = 0.0;
-
+        */
         ePosSum[idx] = 0.0;
         ePos[idx] = 0.0;
         ePosAlt[idx] = 0.0;
@@ -131,11 +158,11 @@ void motionPlanning::init()
 //    KP[3] = 0.125;  KI[3] = 0.0;    KD[0] = 0.000;    windUP[3] = MAX_JNT_VELOCITIES[3];
 //    KP[4] = 0.1;    KI[4] = 0.0;    KD[0] = 0.000;    windUP[4] = MAX_JNT_VELOCITIES[4];
 
-    KP[0] = 0.1;    KI[0] = 0.0;   KD[0] = 0.000;    windUP[0] = MAX_JNT_VELOCITIES[0];
-    KP[1] = 0.1;    KI[1] = 0.0;   KD[0] = 0.000;    windUP[1] = MAX_JNT_VELOCITIES[1];
-    KP[2] = 0.1;    KI[2] = 0.0;   KD[0] = 0.000;    windUP[2] = MAX_JNT_VELOCITIES[2];
-    KP[3] = 0.1;    KI[3] = 0.0;   KD[0] = 0.000;    windUP[3] = MAX_JNT_VELOCITIES[3];
-    KP[4] = 0.1;    KI[4] = 0.0;   KD[0] = 0.000;    windUP[4] = MAX_JNT_VELOCITIES[4];
+    KP[0] = 0.1;    KI[0] = 0.0;   KD[0] = 0.000;    windUP[0] = ykin::MAX_JNT_VELOCITIES[0];
+    KP[1] = 0.1;    KI[1] = 0.0;   KD[0] = 0.000;    windUP[1] = ykin::MAX_JNT_VELOCITIES[1];
+    KP[2] = 0.1;    KI[2] = 0.0;   KD[0] = 0.000;    windUP[2] = ykin::MAX_JNT_VELOCITIES[2];
+    KP[3] = 0.1;    KI[3] = 0.0;   KD[0] = 0.000;    windUP[3] = ykin::MAX_JNT_VELOCITIES[3];
+    KP[4] = 0.1;    KI[4] = 0.0;   KD[0] = 0.000;    windUP[4] = ykin::MAX_JNT_VELOCITIES[4];
 
 //    GAIN = 5.0;
     fehlerQ = 0.0;
@@ -174,15 +201,15 @@ void motionPlanning::init()
     baseCoeffs.clear();
 }
 
-void motionPlanning::newTrajectory(JointPosition current_position)
+void motionPlanning::newTrajectory(ykin::JointPosition current_position)
 {
     init();
     setcurrentJointPosition(current_position);
 }
 
-void motionPlanning::update(JointPosition current_position)
+void motionPlanning::update(ykin::JointPosition current_position)
 {
-    current_position.subtractOffset();
+    //current_position.subtractOffset();
 
     ros::Time timeNow = ros::Time::now();
     double passedTime = (timeNow - startTime).toSec();
@@ -197,31 +224,31 @@ void motionPlanning::update(JointPosition current_position)
     {
         if (index < timeIncPoint.size())
         {
-            armJointVelocities.velocities[k].value = timeIncPoint[index].arm_axis[k].velocity;
-            armJointPositions.positions[k].value = timeIncPoint[index].arm_axis[k].position;
-            armJointAccelerations.accelerations[k].value = timeIncPoint[index].arm_axis[k].acceleration;
+            armJointVelocities[k] = timeIncPoint[index].arm_axis[k].velocity;
+            armJointPositions[k] = timeIncPoint[index].arm_axis[k].position;
+            armJointAccelerations[k] = timeIncPoint[index].arm_axis[k].acceleration;
         }
 
         else
         {
-            armJointPositions.positions[k].value = timeIncPoint.back().arm_axis[k].position;
-            armJointVelocities.velocities[k].value = 0;
-            armJointAccelerations.accelerations[k].value = 0;
+            armJointPositions[k] = timeIncPoint.back().arm_axis[k].position;
+            armJointVelocities[k] = 0;
+            armJointAccelerations[k] = 0;
         }
 
         /*---------------------------------------------Regler--------------------------------------*/
 
         // Regelabweichung bestimmen
-        ePos[k] = armJointPositions.positions[k].value - current_position[k];
+        ePos[k] = armJointPositions[k] - current_position[k];
         ePosSum[k] = ePos[k] + ePosSum[k];
-        armJointVelocities.velocities[k].value = armJointVelocities.velocities[k].value +
+        armJointVelocities[k] = armJointVelocities[k] +
                 KP[k]*(ePos[k] + KI[k]*ePosSum[k]*delta_t +  KD[k]*(ePos[k] - ePosAlt[k])/delta_t);
 
         // Anti Wind-Up
-        if (armJointVelocities.velocities[k].value > windUP[k])
-            armJointVelocities.velocities[k].value = windUP[k];
-        if (armJointVelocities.velocities[k].value < (-1)*windUP[k])
-            armJointVelocities.velocities[k].value = (-1)*windUP[k];
+        if (armJointVelocities[k] > windUP[k])
+            armJointVelocities[k] = windUP[k];
+        if (armJointVelocities[k] < (-1)*windUP[k])
+            armJointVelocities[k] = (-1)*windUP[k];
 
         ePosAlt[k] = ePos[k];
 
@@ -260,42 +287,42 @@ void motionPlanning::update(JointPosition current_position)
     }
 }
 
-JointPosition motionPlanning::getPosition()
+ykin::JointPosition motionPlanning::getPosition()
 {
-    JointPosition pos;
-    for(uint i=0; i< armJointPositions.positions.size(); i++)
-    {
-        pos[i] = armJointPositions.positions[i].value;
-    }
+//    JointPosition pos;
+//    for(uint i=0; i< armJointPositions.positions.size(); i++)
+//    {
+//        pos[i] = armJointPositions.positions[i].value;
+//    }
 
-    pos.addOffset();
+//    pos.addOffset();
 
-    return pos;
+    return armJointPositions;
 }
-JointVelocity motionPlanning::getVelocity()
+ykin::JointVelocity motionPlanning::getVelocity()
 {
-    JointVelocity vel;
-    for(uint i=0; i< armJointVelocities.velocities.size(); i++)
-    {
-        vel[i] = armJointVelocities.velocities[i].value;
-    }
+//    JointVelocity vel;
+//    for(uint i=0; i< armJointVelocities.velocities.size(); i++)
+//    {
+//        vel[i] = armJointVelocities.velocities[i].value;
+//    }
 
-    return vel;
+    return armJointVelocities;
 }
-JointAcceleration motionPlanning::getAcceleration()
+ykin::JointAcceleration motionPlanning::getAcceleration()
 {
-    JointAcceleration acc;
-    for(uint i=0; i< armJointAccelerations.accelerations.size(); i++)
-    {
-        acc[i] = armJointAccelerations.accelerations[i].value;
-    }
+//    JointAcceleration acc;
+//    for(uint i=0; i< armJointAccelerations.accelerations.size(); i++)
+//    {
+//        acc[i] = armJointAccelerations.accelerations[i].value;
+//    }
 
-    return acc;
+    return armJointAccelerations;
 }
 
-void motionPlanning::setcurrentJointPosition(JointPosition current_position)
+void motionPlanning::setcurrentJointPosition(ykin::JointPosition current_position)
 {
-    current_position.subtractOffset();
+    //current_position.subtractOffset();
 
     for (size_t k = 0; k < JOINTSPACE; k++)
         pointParam[k].position = current_position[k];
@@ -405,6 +432,7 @@ int motionPlanning::setPathPoint(double JointPos[5])
     return 1;
 }
 
+/*
 int motionPlanning::checkPositionRange(double JointPos1, double JointPos2, double JointPos3, double JointPos4, double JointPos5)
 {
     // Prüfe, ob Winkel im Arbeitsbereich vo Gelenk 1 liegt
@@ -435,38 +463,39 @@ int motionPlanning::checkPositionRange(double JointPos1, double JointPos2, doubl
 
     return 1;
 }
+*/
 
 void motionPlanning::setTargetJointVelocity(double JointVel1, double JointVel2, double JointVel3, double JointVel4, double JointVel5)
 {
 
     // Geschwindigkeit für Gelenk 1 setzen
-    if (JointVel1 < initParamValues[JOINT1].max_vel) {
+    if (JointVel1 < ykin::MAX_JNT_VELOCITIES[JOINT1]) {
         maxJointParamValue[JOINT1].max_vel = JointVel1;
-        maxJointParamValue[JOINT1].max_acc = initParamValues[JOINT1].max_acc;
+        maxJointParamValue[JOINT1].max_acc = ykin::MAX_JNT_ACCELERATIONS[JOINT1];
     }
 
     // Geschwindigkeit für Gelenk 2 setzen
-    if (JointVel2 < initParamValues[JOINT2].max_vel) {
+    if (JointVel2 < ykin::MAX_JNT_VELOCITIES[JOINT2]) {
         maxJointParamValue[JOINT2].max_vel = JointVel2;
-        maxJointParamValue[JOINT2].max_acc = initParamValues[JOINT2].max_acc;
+        maxJointParamValue[JOINT2].max_acc = ykin::MAX_JNT_ACCELERATIONS[JOINT2];
     }
 
     // Geschwindigkeit für Gelenk 3 setzen
-    if (JointVel3 < initParamValues[JOINT3].max_vel) {
+    if (JointVel3 < ykin::MAX_JNT_VELOCITIES[JOINT3]) {
         maxJointParamValue[JOINT3].max_vel = JointVel3;
-        maxJointParamValue[JOINT3].max_acc = initParamValues[JOINT3].max_acc;
+        maxJointParamValue[JOINT3].max_acc = ykin::MAX_JNT_ACCELERATIONS[JOINT3];
     }
 
     // Geschwindigkeit für Gelenk 4 setzen
-    if (JointVel4 < initParamValues[JOINT4].max_vel) {
+    if (JointVel4 < ykin::MAX_JNT_VELOCITIES[JOINT4]) {
         maxJointParamValue[JOINT4].max_vel = JointVel4;
-        maxJointParamValue[JOINT4].max_acc = initParamValues[JOINT4].max_acc;
+        maxJointParamValue[JOINT4].max_acc = ykin::MAX_JNT_ACCELERATIONS[JOINT4];
     }
 
     // Geschwindigkeit für Gelenk 5 setzen
-    if (JointVel5 < initParamValues[JOINT5].max_vel) {
+    if (JointVel5 < ykin::MAX_JNT_VELOCITIES[JOINT5]) {
         maxJointParamValue[JOINT5].max_vel = JointVel5;
-        maxJointParamValue[JOINT5].max_acc = initParamValues[JOINT5].max_acc;
+        maxJointParamValue[JOINT5].max_acc = ykin::MAX_JNT_ACCELERATIONS[JOINT5];
     }
 
     // Geschwindigkeite zur Liste hinzufügen
@@ -484,11 +513,11 @@ void motionPlanning::setTargetJointVelocity(vector <double> JointVel)
     // Geschwindigkeiten für Gelenk 1-5 setzen
     for (size_t k = 0; k < ARMJOINTS; k++)
     {
-        if (JointVel[k] < initParamValues[k].max_vel)
+        if (JointVel[k] < ykin::MAX_JNT_VELOCITIES[k])
             maxJointParamValue[k].max_vel = JointVel[k];
         else
-            maxJointParamValue[k].max_vel = initParamValues[k].max_vel;
-        maxJointParamValue[k].max_acc = initParamValues[k].max_acc;
+            maxJointParamValue[k].max_vel = ykin::MAX_JNT_VELOCITIES[k];
+        maxJointParamValue[k].max_acc = ykin::MAX_JNT_ACCELERATIONS[k];
     }
 
     // Geschwindigkeite zur Liste hinzufügen
@@ -499,14 +528,14 @@ void motionPlanning::setTargetJointVelocity(vector <double> JointVel)
 void motionPlanning::setTargetJointVelocity(double velfactor)
 {
     if (velfactor < 0.0) {
-        ROS_ERROR("Velocity musst be bigger than 0");
+        ROS_ERROR("Velocity musst be greater than 0");
         velfactor = 0.1;
     }
 
     for (size_t k = 0; k < ARMJOINTS; k++)
     {
-        maxJointParamValue[k].max_vel = initParamValues[k].max_vel*velfactor;
-        maxJointParamValue[k].max_acc = initParamValues[k].max_acc;
+        maxJointParamValue[k].max_vel = ykin::MAX_JNT_VELOCITIES[k]*velfactor;
+        maxJointParamValue[k].max_acc = ykin::MAX_JNT_ACCELERATIONS[k];
     }
 
     // Geschwindigkeite zur Liste hinzufügen
@@ -522,6 +551,8 @@ void motionPlanning::calculatePathProperties()
     double t_max = 0.0;
     double t_f = 0.0;
     COEFFS coefficientsJoint;
+
+    DiffPath.clear();
 
     //Winkeldifferenz zweier Bahnpunkte bestimmen --> Diff = q_z - q-s
     for (size_t l = 0; l < points; l++) {
@@ -627,9 +658,8 @@ void motionPlanning::setPolynomCoefficients(PARAM _paramInit, PARAM _paramGoal, 
 
 }
 
-void motionPlanning::offlineMotionPlanning()
+bool motionPlanning::offlineMotionPlanning()
 {
-
     // Timer definieren
     double wrappedTime;
     gripperIt = 0;
@@ -671,17 +701,27 @@ void motionPlanning::offlineMotionPlanning()
                 singleAxis.arm_axis[k].velocity = degreeOfFreedom[k].velocity;
                 // ...Beschleunigung
                 singleAxis.arm_axis[k].acceleration = degreeOfFreedom[k].acceleration;
+
+                if(degreeOfFreedom[k].position > ykin::MAX_JNT_POSITIONS[k] ||
+                        degreeOfFreedom[k].position < ykin::MIN_JNT_POSITIONS[k])
+                {
+                    ROS_ERROR("Error in motion planning class. This known bug can occur if path points are too close to joint limits.");
+                    ROS_ERROR("Trajectory point at %f sec: Position of joint %d is beyond limits (q = %f).", wrappedTime, (int)(k+1), degreeOfFreedom[k].position);
+                    return false;
+                }
             }
 
             // Zeitschritt inkrementieren
             wrappedTime = wrappedTime + LOOPRATE / 10; // 10-fache Auflösung, um bei Frequenzschwankungen kein Sprünge zu haben
             // Interpolierte Werte in Vektor ablegen
             timeIncPoint.push_back(singleAxis);
+
         }
         totalTime += wrappedTime;
     }
     gripperIt = 0;
     ROS_INFO("Berechnung abgeschlossen");
+    return true;
 }
 
 void motionPlanning::setPolynomFunction(COEFFS _coeff, double _time, PARAM &_param)
@@ -723,9 +763,9 @@ bool motionPlanning::isBusy() {
 }
 
 
-luh_youbot_kinematics::JointPosition motionPlanning::getPositionError()
+ykin::JointPosition motionPlanning::getPositionError()
 {
-    JointPosition pos_error;
+    ykin::JointPosition pos_error;
     for(uint i=0; i<pos_error.size(); i++)
     {
         pos_error[i] = ePos[i];
