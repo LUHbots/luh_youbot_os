@@ -490,7 +490,7 @@ CartesianVelocity CartesianVelocity::fromMsg(const luh_youbot_msgs::CartesianVec
 }
 
 // ######################## VERIFICATION ###############################################################################
-bool CartesianPosition::isReachable()
+bool CartesianPosition::isReachable() const
 {
     return (this->toCylindric(true).isReachable() || this->toCylindric(false).isReachable());
 }
