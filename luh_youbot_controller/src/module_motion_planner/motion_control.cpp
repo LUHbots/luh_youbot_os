@@ -702,12 +702,22 @@ bool motionPlanning::offlineMotionPlanning()
                 // ...Beschleunigung
                 singleAxis.arm_axis[k].acceleration = degreeOfFreedom[k].acceleration;
 
-                if(degreeOfFreedom[k].position > ykin::MAX_JNT_POSITIONS[k] ||
-                        degreeOfFreedom[k].position < ykin::MIN_JNT_POSITIONS[k])
+                // Quick and dirty solution to prevent overshooting at joint limits
+                if(degreeOfFreedom[k].position > ykin::MAX_JNT_POSITIONS[k])
+                {                    
+                    singleAxis.arm_axis[k].position = ykin::MAX_JNT_POSITIONS[k]-0.001;
+                    if(singleAxis.arm_axis[k].velocity > 0)
+                        singleAxis.arm_axis[k].velocity = 0;
+                    if(singleAxis.arm_axis[k].acceleration > 0)
+                        singleAxis.arm_axis[k].acceleration = 0;
+                }
+                if(degreeOfFreedom[k].position < ykin::MIN_JNT_POSITIONS[k])
                 {
-                    ROS_ERROR("Error in motion planning class. This known bug can occur if path points are too close to joint limits.");
-                    ROS_ERROR("Trajectory point at %f sec: Position of joint %d is beyond limits (q = %f).", wrappedTime, (int)(k+1), degreeOfFreedom[k].position);
-                    return false;
+                    singleAxis.arm_axis[k].position = ykin::MIN_JNT_POSITIONS[k]+0.001;
+                    if(singleAxis.arm_axis[k].velocity < 0)
+                        singleAxis.arm_axis[k].velocity = 0;
+                    if(singleAxis.arm_axis[k].acceleration < 0)
+                        singleAxis.arm_axis[k].acceleration = 0;
                 }
             }
 
