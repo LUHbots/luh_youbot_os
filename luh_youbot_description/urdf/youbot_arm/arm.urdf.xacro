@@ -15,6 +15,15 @@
 			<dynamics damping="1" friction="1" />			
 		</joint>
 
+                <joint name="${name}_joint_origin" type="fixed" >
+                        <origin xyz="0.024 0 0.0" rpy="0 0 0"/>
+			<parent link="${name}_link_0" />
+			<child link="${name}_origin" />            
+		</joint>
+
+		<link name="${name}_origin"/>
+			
+
 		<link name="${name}_link_0">
 			<inertial>
 				<origin xyz="0 0 0" rpy="0 0 0"/>
