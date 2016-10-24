@@ -130,7 +130,7 @@ CartesianVelocity JointVelocity::toCartesian(const JointPosition &joint_position
 }
 
 // ########## IS REACHABLE #############################################################################################
-bool JointPosition::isReachable()
+bool JointPosition::isReachable() const
 {
     for(uint i=0; i<N_JOINTS; i++)
     {

@@ -158,7 +158,7 @@ protected:
 
     bool isReady();
 
-    void startMovement(const Path &path);
+    bool startMovement(const Path &path);
 
     void (ModuleMotionPlanner::*endAction)(bool);
 

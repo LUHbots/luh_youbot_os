@@ -81,8 +81,14 @@ public:
     /**
      * @brief Initialises the action clients.
      * @param node Node handle.
+     * @param async Don't wait for servers to connect.
      */
-    void init(ros::NodeHandle &node);
+    void init(ros::NodeHandle &node, bool async=false);
+
+    /**
+     * @brief Return true if all action clients are connected.
+     */
+    bool isInitialised();
 
     /**
      * @brief Grips a known object.

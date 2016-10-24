@@ -251,7 +251,7 @@ CartesianAcceleration CylindricAcceleration::toCartesian(const CylindricVelocity
 }
 
 //###################### VERIFICATION ##################################################################################
-bool CylindricPosition::isReachable()
+bool CylindricPosition::isReachable() const
 {
     double rs = this->r() - L1 - L4 * sin(this->theta());
     double zs = this->z() - L0 - L4 * cos(this->theta());

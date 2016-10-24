@@ -60,23 +60,11 @@
 #include <math.h>
 
 //YouBot includes
-#include <brics_actuator/JointPositions.h>
-#include <brics_actuator/JointVelocities.h>
-#include <brics_actuator/JointAccelerations.h>
 #include <sensor_msgs/JointState.h>
 #include <std_msgs/Bool.h>
 #include <std_msgs/Int8.h>
 #include <geometry_msgs/Twist.h>
 #include <nav_msgs/Odometry.h>
-
-//#include "signalslib.hpp"
-#include <boost/units/io.hpp>
-#include <boost/units/conversion.hpp>
-#include <boost/units/systems/angle/degrees.hpp>
-#include <boost/units/systems/si/length.hpp>
-#include <boost/units/systems/si/plane_angle.hpp>
-#include <boost/math/constants/constants.hpp>
-#include <boost/units/systems/si.hpp>
 
 #include <luh_youbot_driver_api/youbot_interface.h>
 #include <luh_youbot_kinematics/arm_kinematics.h>
@@ -189,7 +177,7 @@ public:
       *@brief Generierung von Bahnpunkten entlang einer Strecke zwischen Ziel und Endpunkt im Kartesischen Raum.
       *       Die Bahnpunkte werden über die IK in Gelenkwinkelkoordinaten umgerechnet und in einer neuen Bahnplannung im Gelenkwinkelraum überschliffen.
       */
-    void offlineMotionPlanning();
+    bool offlineMotionPlanning();
 
     /**
       *@brief Update Funktion, die die Jointstates aus 'youbot' bezieht, und keine Messages publisht
@@ -293,6 +281,7 @@ private:
 
 
 
+
     /**
      * @brief checkPositionRange
      * @param JointPos1
@@ -302,7 +291,7 @@ private:
      * @param JointPos5
      * @return 1 = alles in Ordnung, 0 = Fehler bei der Berechnung
      */
-    int checkPositionRange(double JointPos1, double JointPos2, double JointPos3, double JointPos4, double JointPos5);
+//    int checkPositionRange(double JointPos1, double JointPos2, double JointPos3, double JointPos4, double JointPos5);
 
 
 //    ros::NodeHandle n;
@@ -321,18 +310,24 @@ private:
 
     std::vector <double> gripperPosition;
     std::vector <size_t> gripperPoint;
-    std::vector <brics_actuator::JointValue> gripperJointPositions;
+    //std::vector <brics_actuator::JointValue> gripperJointPositions;
 
     /// Messagetyp der Joinstates
-    brics_actuator::JointVelocities currentVelocities;
-    brics_actuator::JointVelocities armJointVelocities;
-    brics_actuator::JointAccelerations armJointAccelerations;
-    brics_actuator::JointPositions armJointPositions;    
-    brics_actuator::JointPositions gripperPositionCommand;
+    //brics_actuator::JointVelocities currentVelocities;
+    //brics_actuator::JointVelocities armJointVelocities;
+    //brics_actuator::JointAccelerations armJointAccelerations;
+    //brics_actuator::JointPositions armJointPositions;
+    //luh_youbot_kinematics::JointVelocity currentVelocities;
+    luh_youbot_kinematics::JointVector armJointVelocities;
+    luh_youbot_kinematics::JointAcceleration armJointAccelerations;
+    luh_youbot_kinematics::JointPosition armJointPositions;
+    //brics_actuator::JointPositions gripperPositionCommand;
     std_msgs::Bool armJointBool;
-    geometry_msgs::Twist baseVelocity;
-    brics_actuator::JointPositions currentPositions;
-    brics_actuator::JointPositions regler;
+    geometry_msgs::Twist baseVelocity;    
+    //brics_actuator::JointPositions currentPositions;
+    //brics_actuator::JointPositions regler;
+    //luh_youbot_kinematics::JointPosition currentPositions;
+    //luh_youbot_kinematics::JointPosition regler;
 
     geometry_msgs::Twist cmd_vel;
 
@@ -372,7 +367,7 @@ private:
     std::vector <std::vector <PROPERTIES> > maxParamValue;
 
     /// Vektor mit maximalen Beschleunigungs- und Geschwindigkeitswerten für jeden Joint
-    std::vector<PROPERTIES> initParamValues;
+    //std::vector<PROPERTIES> initParamValues;
 
     /// Vektor mit Beschreibung eines Bahnpunkts für jeden Joint
     std::vector< PARAM > pointParam;
@@ -453,7 +448,7 @@ private:
 //    static const double MAXANGLE5 = 323.241 * M_PI/180;
 //    static const double MAXPOSGRIPPER = 0.060 * M_PI/180;
 
-    static const double MINANGLE1 = -2.9395372288 + 2.949606436;
+    /*static const double MINANGLE1 = -2.9395372288 + 2.949606436;
     static const double MINANGLE2 = -1.124398163 + 1.1344673701987218;
     static const double MINANGLE3 =  -2.4783710285 - 2.5481772172532176;
     static const double MINANGLE4 = -1.7668361332 + 1.7889600250839740;
@@ -466,6 +461,7 @@ private:
     static const double MAXANGLE4 = 1.6402432236 + 1.7889600250839740;
     static const double MAXANGLE5 = 2.6396457936 + 3.0019466477485340;
     static const double MAXPOSGRIPPER = 0.060 * M_PI/180;
+*/
 
 //    static const double VMAX1 = 1.3;
 //    static const double VMAX2 = 1.3;

@@ -109,6 +109,7 @@ add_library(luh_youbot_kinematics
 add_library(luh_youbot_dynamics
             src/arm_dynamics.cpp
             include/luh_youbot_kinematics/arm_dynamics.h
+            include/luh_youbot_kinematics/constants.h
 )
 
 ## Declare a cpp executable

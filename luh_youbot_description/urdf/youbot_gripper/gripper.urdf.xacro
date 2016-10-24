@@ -104,7 +104,7 @@
 		
 		<!-- coordinate frame on the tip of the robot's gripper -->
 		<joint name="${name}_tip_joint" type="fixed">
-			<origin xyz="0.004 0 0.1" rpy="0.0 ${-M_PI / 2} 0.0" />
+			<origin xyz="0.000 0 0.09" rpy="0.0 ${-M_PI / 2} 0.0" />
 			<parent link="${name}_palm_link" />
 			<child link="${name}_tip"/>
 		</joint>

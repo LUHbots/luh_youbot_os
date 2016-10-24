@@ -175,8 +175,8 @@ void ModuleJointTrajectory::update()
     // === SEND FEEDBACK ===
     ykin::JointPosition desired = desired_position_;
     ykin::JointPosition actual = actual_position_;
-    desired.subtractOffset();
-    actual.subtractOffset();
+    //desired.subtractOffset();
+    //actual.subtractOffset();
     feedback_.actual.time_from_start = passed_time;
     feedback_.desired.time_from_start = passed_time;
     feedback_.error.time_from_start = passed_time;
@@ -246,7 +246,7 @@ void ModuleJointTrajectory::goalCallback()
             traj_point.position[j] = goal_point.positions[j];
         }
 
-        traj_point.position.addOffset();
+        //traj_point.position.addOffset();
 
         if(traj_point.position.isReachable())
             trajectory_.push_back(traj_point);
