@@ -139,9 +139,9 @@ void YoubotArmGazeboInterface::initialise(bool use_standard_gripper, bool use_lu
 }
 
 //########## SECURITY CHECK ############################################################################################
-bool YoubotArmGazeboInterface::securityCheck()
+int YoubotArmGazeboInterface::securityCheck()
 {
-    return true;
+    return 0;
 }
 
 //########## READ STATE ################################################################################################
