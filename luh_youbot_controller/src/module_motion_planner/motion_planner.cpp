@@ -493,7 +493,7 @@ bool ModuleMotionPlanner::startMovement(const Path &path)
     }
 
     // === CHECK PATH ===
-    for(uint i=0; i<path.size(); ++i)
+    for(uint i=1; i<path.size(); ++i)
     {
         if(!path[i].isReachable())
         {
