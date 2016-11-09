@@ -24,5 +24,6 @@
         <param name="luh_youbot_controller/base_controller_frequency" value="10.0" />
 
        	<!-- LAUNCH DRIVER NODE -->
+	<param name="luh_youbot_controller/use_luh_gripper_v3" value="false" />
 	<node name="controller_node" pkg="luh_youbot_controller" type="controller_node" output="screen" />
 </launch>
