@@ -76,7 +76,7 @@ YoubotGazeboInterface::~YoubotGazeboInterface()
 }
 
 //########## INITIALISE ################################################################################################
-void YoubotGazeboInterface::initialise(bool use_standard_gripper)
+void YoubotGazeboInterface::initialise(bool use_standard_gripper, bool use_luh_gripper_v3)
 {
     // === GET PARAMETERS ===
     config_.node_handle->param("youBotHasBase", config_.has_base, true);
@@ -86,7 +86,7 @@ void YoubotGazeboInterface::initialise(bool use_standard_gripper)
     config_.config_path = ros::package::getPath("youbot_driver");
     config_.config_path.append("/config");
     config_.node_handle->param<std::string>("youBotConfigurationFilePath", config_.config_path, config_.config_path);
-
+	//ROS_INFO("Config File Path: %s",_node)
     // === CREATE ARMS ===
     if(youbot_has_arms)
     {

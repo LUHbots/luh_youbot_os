@@ -73,7 +73,7 @@ class YoubotArmGazeboInterface : public YoubotArmInterface
 public:
     YoubotArmGazeboInterface(std::string name, YoubotConfiguration &config);
     ~YoubotArmGazeboInterface();
-    virtual void initialise(bool use_standard_gripper=true);
+    virtual void initialise(bool use_standard_gripper=true,bool use_luh_gripper_v3=false);
     virtual void readState();
     virtual bool writeCommands();
     virtual void stop();

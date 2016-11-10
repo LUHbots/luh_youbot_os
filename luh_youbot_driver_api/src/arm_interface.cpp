@@ -84,6 +84,8 @@ YoubotArmInterface::~YoubotArmInterface()
 //########## INITIALISE ################################################################################################
 void YoubotArmInterface::initialise(bool use_standard_gripper, bool use_luh_gripper_v3)
 {
+	ROS_INFO("Nicht Gazebo!!");
+
     // === PARAMETERS ===
     config_->node_handle->param("youbot_oodl_driver/disable_ramp", ramp_is_disabled_, false);
     config_->node_handle->param("youbot_oodl_driver/max_effort_max_duration", max_effort_max_duration_, 0.5);

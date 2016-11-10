@@ -63,8 +63,9 @@ ControllerNode::ControllerNode(ros::NodeHandle &node):
         ROS_WARN("Running in VREP simulation mode.");
         youbot_ = new YoubotVrepInterface(node);
     }    
-    else
+    else if(!use_gazebo_simulation_ && !use_vrep_simulation_)
         youbot_ = new YoubotInterface(node);
+
 
     youbot_->initialise(use_standard_gripper_,use_luh_gripper_v3_);
 

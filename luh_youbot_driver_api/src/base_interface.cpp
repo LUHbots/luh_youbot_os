@@ -81,6 +81,7 @@ YoubotBaseInterface::~YoubotBaseInterface()
 //########## INITIALISE ################################################################################################
 void YoubotBaseInterface::initialise()
 {
+    ROS_INFO("NICHT GAZEBO BASE!");
     // === PARAMETERS ===
     config_->node_handle->param("youbot_oodl_driver/controller_enabled", controller_.is_enabled, false);
     config_->node_handle->param("youbot_oodl_driver/maxLinearVel", this->max_linear_vel_, 0.7);
