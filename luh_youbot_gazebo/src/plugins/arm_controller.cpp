@@ -96,14 +96,6 @@ namespace gazebo
       event::Events::ConnectWorldUpdateBegin(
           boost::bind(&YoubotArmController::UpdateChild, this));
 
-    // initialise command (start with zero velocity)
-    cmd_.q1 = 0;
-    cmd_.q2 = 0;
-    cmd_.q3 = 0;
-    cmd_.q4 = 0;
-    cmd_.q5 = 0;
-    cmd_mode_ = CMD_VELOCITY;
-
     // get arm joints
     arm_joints_.push_back(parent_->GetJoint("arm_joint_1"));
     arm_joints_.push_back(parent_->GetJoint("arm_joint_2"));
@@ -113,6 +105,14 @@ namespace gazebo
 
     for(uint i=0; i<arm_joints_.size(); i++)
         arm_joints_[i]->SetMaxForce(0, 100);
+
+    // initialise command (start with zero velocity)
+    cmd_.q1 = arm_joints_[0]->GetAngle(0).Radian();
+    cmd_.q2 = arm_joints_[1]->GetAngle(0).Radian();
+    cmd_.q3 = arm_joints_[2]->GetAngle(0).Radian();
+    cmd_.q4 = arm_joints_[3]->GetAngle(0).Radian();
+    cmd_.q5 = arm_joints_[4]->GetAngle(0).Radian();
+    cmd_mode_ = CMD_POSITION;
   }
 
   // Update the controller

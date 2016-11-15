@@ -312,7 +312,7 @@ void YoubotArmInterface::initialise(bool use_standard_gripper, bool use_luh_grip
 }
 
 //########## SECURITY CHECK ############################################################################################
-bool YoubotArmInterface::securityCheck()
+int YoubotArmInterface::securityCheck()
 {
     ros::Time time_now = ros::Time::now();
     for(uint i=0; i<ykin::N_JOINTS; i++)
@@ -323,10 +323,10 @@ bool YoubotArmInterface::securityCheck()
         }
         else if((time_now - effort_watchdog_time_[i]).toSec() > max_effort_max_duration_)
         {
-                return false;
+                return i+1;
         }
     }
-    return true;
+    return 0;
 }
 
 //########## READ STATE ################################################################################################

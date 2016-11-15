@@ -81,7 +81,7 @@ public:
 
     virtual bool isInitialised(){return is_initialised_;}
 
-    virtual bool securityCheck();
+    virtual int securityCheck();
 
 protected:
 

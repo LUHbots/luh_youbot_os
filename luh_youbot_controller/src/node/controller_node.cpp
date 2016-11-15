@@ -184,8 +184,12 @@ void ControllerNode::armTimerCallback(const ros::TimerEvent &evt)
     }
 
     // === SECURITY CHECK ===
-    if(!youbot_->arm()->securityCheck())
+    int error_joint = youbot_->arm()->securityCheck();
+    if(error_joint > 0)
+    {
+        ROS_INFO("Overcurrent in joint %d", error_joint);
         stopArm();
+    }
 
     // === WRITE ARM COMMANDS ===
     else

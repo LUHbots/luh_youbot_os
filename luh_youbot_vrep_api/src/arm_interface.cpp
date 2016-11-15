@@ -151,9 +151,9 @@ void YoubotArmVrepInterface::initialise(bool use_standard_gripper)
 }
 
 //########## SECURITY CHECK ############################################################################################
-bool YoubotArmVrepInterface::securityCheck()
+int YoubotArmVrepInterface::securityCheck()
 {
-    return true;
+    return 0;
 }
 
 //########## READ STATE ################################################################################################

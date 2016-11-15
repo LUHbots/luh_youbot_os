@@ -292,6 +292,7 @@ void YoubotBaseInterface::readState()
             joint_states_[i].velocity = joint_state_msg_.velocity[i];
             joint_states_[i].current = current_current[i].current.value();
             joint_states_[i].torque = current_torque[i].torque.value();
+            joint_state_msg_.effort[i] = joint_states_[i].torque;
         }
 
         // save position as Pose2D
