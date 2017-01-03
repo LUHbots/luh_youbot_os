@@ -18,8 +18,8 @@
         <height>480</height>
       </image>
       <clip>
-        <near>0.1</near>
-        <far>5</far>
+        <near>0.05</near>
+        <far>3</far>
       </clip>
     </camera>
     <plugin name="${name}_depth_frame_controller" filename="libgazebo_ros_openni_kinect.so">
@@ -27,8 +27,11 @@
       <alwaysOn>true</alwaysOn>
       <updateRate>20.0</updateRate>
       <cameraName>${name}_depth</cameraName>
-      <imageTopicName>/${name}/ir/image_raw</imageTopicName>
-      <cameraInfoTopicName>/${name}/ir/camera_info</cameraInfoTopicName>
+      <cameraName>${name}_rgb</cameraName>
+      <imageTopicName>/${name}/rgb/image_raw</imageTopicName>
+      <cameraInfoTopicName>/${name}/rgb/camera_info</cameraInfoTopicName>
+      <!--imageTopicName>/${name}/ir/image_raw</imageTopicName>
+      <cameraInfoTopicName>/${name}/ir/camera_info</cameraInfoTopicName-->
       <depthImageTopicName>/${name}/depth/image_raw</depthImageTopicName>
       <depthImageCameraInfoTopicName>/${name}/depth/camera_info</depthImageCameraInfoTopicName>
       <pointCloudTopicName>/${name}/depth/points</pointCloudTopicName>
@@ -46,7 +49,7 @@
       <hackBaseline>0</hackBaseline>
     </plugin>
   </sensor>
-
+<!--
   <sensor type="depth" name="${name}_rgb_frame_sensor">    
     <always_on>true</always_on>
     <update_rate>20.0</update_rate>
@@ -86,7 +89,7 @@
       <hackBaseline>0</hackBaseline>
     </plugin>
   </sensor>
-
+-->
   </gazebo>
 
 </xacro:macro>

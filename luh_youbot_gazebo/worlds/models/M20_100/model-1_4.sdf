@@ -17,18 +17,12 @@
             <uri>model://M20_100/meshes/M20_100.dae</uri>
           </mesh>
         </geometry>
-        <!-- 
-        <material>
-          <script>
-            <uri>model://gas_station/materials/scripts</uri>
-            <uri>model://gas_station/materials/textures</uri>
-            <name>GasStation/Diffuse</name>
-          </script>
-          <shader type="normal_map_object_space">
-            <normal_map>GasStation_Normal.png</normal_map>
-          </shader>
-        </material>
-        -->
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Black</name>
+            </script>
+          </material>
       </visual>
     </link>
   </model>
