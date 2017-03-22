@@ -227,7 +227,7 @@
 			</collision>
 		</link>
                 
-                <xacro:youbot_arm_controller namespace="${namespace}"/>
+                <xacro:youbot_arm_controller namespace="gazebo"/>
 
 	</xacro:macro>
 </robot>

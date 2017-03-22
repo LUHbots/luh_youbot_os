@@ -92,9 +92,11 @@ protected:
     ros::Subscriber odom_subscriber_;
     ros::Publisher cmd_vel_publisher_;
     ros::Subscriber joint_state_subscriber_;
+    std::vector<std::string> joint_names_;
 
     bool is_initialised_;
 
     void odomCallback(const nav_msgs::Odometry::ConstPtr &odom);
+    void jointStateCallback(const sensor_msgs::JointState::ConstPtr &joint_state);
 };
 #endif // LUH_YOUBOT_GAZEBO_BASE_INTERFACE_H
