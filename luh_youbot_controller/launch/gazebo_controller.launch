@@ -23,6 +23,12 @@
         <param name="luh_youbot_controller/arm_controller_frequency" value="50.0" />
         <param name="luh_youbot_controller/base_controller_frequency" value="10.0" />
 
-       	<!-- LAUNCH DRIVER NODE -->
+    <!-- LAUNCH DRIVER NODE -->
 	<node name="controller_node" pkg="luh_youbot_controller" type="controller_node" output="screen" />
+
+    <!-- LAUNCH STATE PUBLISHER -->
+    <include file="$(find luh_youbot_controller)/launch/youbot_state_publisher.launch">
+        <arg name="youBotHasArm" value="$(arg youBotHasArm)"/>
+        <arg name="youBotHasBase" value="$(arg youBotHasBase)"/>
+    </include>
 </launch>
