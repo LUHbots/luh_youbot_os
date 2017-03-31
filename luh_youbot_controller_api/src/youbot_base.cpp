@@ -49,18 +49,18 @@ YoubotBase::~YoubotBase()
 }
 
 //########## INIT ######################################################################################################
-void YoubotBase::init(ros::NodeHandle &node)
+void YoubotBase::init(ros::NodeHandle &node, bool async)
 {
     // save pointer to node handle
     node_ = &node;
 
-    ROS_INFO("Waiting for base action servers...");
+    if(!async) ROS_INFO("Waiting for base action servers...");
 
     // create action clients
     move_base_client_  = new MoveBaseClient("youbot_base/move", true);
-    move_base_client_->waitForServer();
+    if(!async) move_base_client_->waitForServer();
     approach_client_ = new ApproachClient("youbot_base/approach", true);
-    approach_client_->waitForServer();
+    if(!async) approach_client_->waitForServer();
 
     // service client
     get_pose_client_ = node.serviceClient<luh_youbot_msgs::GetBasePose>("youbot_base/get_pose");
@@ -70,7 +70,13 @@ void YoubotBase::init(ros::NodeHandle &node)
     traveled_distance_.y = 0;
     traveled_distance_.theta = 0;
 
-    ROS_INFO("Base action clients initialised.");
+    if(!async) ROS_INFO("Base action clients initialised.");
+}
+
+//########## IS INITIALISED ############################################################################################
+bool YoubotBase::isInitialised()
+{
+    return move_base_client_->isServerConnected() && approach_client_->isServerConnected();
 }
 
 //########## MOVE BASE #################################################################################################

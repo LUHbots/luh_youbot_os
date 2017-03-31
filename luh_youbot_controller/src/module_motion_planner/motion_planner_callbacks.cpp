@@ -46,14 +46,14 @@ bool ModuleMotionPlanner::predefPoseCallback(luh_youbot_msgs::ToPredefinedPose::
     if(pose_map_.find(req.pose_name) == pose_map_.end())
     {
         end_pose_ = predefined_poses_[req.pose_name];
-        end_pose_.subtractOffset();
+        //end_pose_.subtractOffset();
     }
     else
         end_pose_ = pose_map_[req.pose_name]->joint_position;
 
     // === PLAN PATH ===
     JointPosition current_position = youbot_->arm()->getJointPosition();
-    current_position.subtractOffset();
+    //current_position.subtractOffset();
     Path path = getPath(current_position, end_pose_);
 
     // === START MOVEMENT ===
@@ -132,8 +132,8 @@ void ModuleMotionPlanner::jointPoseCallback()
 
     // === PLAN PATH ===
     JointPosition current_position = youbot_->arm()->getJointPosition();
-    current_position.subtractOffset();
-    end_pose_.subtractOffset();
+    //current_position.subtractOffset();
+    //end_pose_.subtractOffset();
     Path path = getPath(current_position, end_pose_);
 
     // === START MOVEMENT ===
@@ -184,8 +184,8 @@ void ModuleMotionPlanner::cartesianPoseCallback()
 
     // === PLAN PATH ===
     JointPosition current_position = youbot_->arm()->getJointPosition();
-    current_position.subtractOffset();
-    end_pose_.subtractOffset();
+    //current_position.subtractOffset();
+    //end_pose_.subtractOffset();
     Path path = getPath(current_position, end_pose_);
 
     // === START MOVEMENT ===
@@ -248,8 +248,8 @@ void ModuleMotionPlanner::cylindricPoseCallback()
 
     // === PLAN PATH ===
     JointPosition current_position = youbot_->arm()->getJointPosition();
-    current_position.subtractOffset();
-    end_pose_.subtractOffset();
+    //current_position.subtractOffset();
+    //end_pose_.subtractOffset();
     Path path = getPath(current_position, end_pose_);
 
     // === START MOVEMENT ===
@@ -285,7 +285,7 @@ void ModuleMotionPlanner::namedPoseCallback()
     if(pose_map_.find(goal->pose_name) == pose_map_.end())
     {
         end_pose_ = predefined_poses_[goal->pose_name];
-        end_pose_.subtractOffset();
+        //end_pose_.subtractOffset();
     }
     else
     {
@@ -295,7 +295,7 @@ void ModuleMotionPlanner::namedPoseCallback()
 
     // === PLAN PATH ===
     JointPosition current_position = youbot_->arm()->getJointPosition();
-    current_position.subtractOffset();
+    //current_position.subtractOffset();
     Path path = getPath(current_position, end_pose_);
 
     // === START MOVEMENT ===
@@ -339,13 +339,16 @@ void ModuleMotionPlanner::jointPathCallback()
             return;
         }
 
-        path[i+1].subtractOffset();
+        //path[i+1].subtractOffset();
     }
 
     end_pose_ = path.back();
 
     // === START MOVEMENT ===
-    startMovement(path);
+    if(!startMovement(path))
+    {
+        joint_path_server_->setAborted();
+    }
 }
 
 //############### CALLBACK: CARTESIAN PATH #######################################################################
@@ -388,7 +391,7 @@ void ModuleMotionPlanner::cartesianPathCallback()
                 return;
             }
 
-            path[i+1].subtractOffset();
+            //path[i+1].subtractOffset();
         }
     }
     catch (tf::TransformException ex)
@@ -445,7 +448,7 @@ void ModuleMotionPlanner::cylindricPathCallback()
             return;
         }
 
-        path[i+1].subtractOffset();
+        //path[i+1].subtractOffset();
     }
     end_pose_ = path.back();
 
@@ -487,7 +490,7 @@ void ModuleMotionPlanner::namedPathCallback()
         if(pose_map_.find(goal->path.poses[i]) == pose_map_.end())
         {
             path[i+1] = predefined_poses_[goal->path.poses[i]];
-            path[i+1].subtractOffset();
+            //path[i+1].subtractOffset();
         }
         else
             path[i+1] = pose_map_[goal->path.poses[i]]->joint_position;

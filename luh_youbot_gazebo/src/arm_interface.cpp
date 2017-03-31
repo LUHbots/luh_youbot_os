@@ -79,7 +79,7 @@ YoubotArmGazeboInterface::~YoubotArmGazeboInterface()
 }
 
 //########## INITIALISE ################################################################################################
-void YoubotArmGazeboInterface::initialise(bool use_standard_gripper,bool use_luh_gripper_v3)
+void YoubotArmGazeboInterface::initialise(bool use_standard_gripper, bool use_luh_gripper_v3)
 {
     ROS_INFO("Initialising %s...", name_.c_str());
 
@@ -112,12 +112,12 @@ void YoubotArmGazeboInterface::initialise(bool use_standard_gripper,bool use_luh
 
     // === GAZEBO STUFF ===
     position_command_publisher_ = config_->node_handle->advertise<luh_youbot_msgs::JointVector>(
-                "joint_position_command", 1);
+                "gazebo/joint_position_command", 1);
     velocity_command_publisher_ = config_->node_handle->advertise<luh_youbot_msgs::JointVector>(
-                "joint_velocity_command", 1);
+                "gazebo/joint_velocity_command", 1);
     torque_command_publisher_ = config_->node_handle->advertise<luh_youbot_msgs::JointVector>(
-                "joint_torque_command", 1);
-    joint_state_subscriber_ = config_->node_handle->subscribe("joint_states", 1,
+                "gazebo/joint_torque_command", 1);
+    joint_state_subscriber_ = config_->node_handle->subscribe("gazebo/joint_states", 1,
                                                               &YoubotArmGazeboInterface::jointStateCallback, this);
 
     // === INIT JOINT STATE MESSAGE ===
@@ -139,9 +139,9 @@ void YoubotArmGazeboInterface::initialise(bool use_standard_gripper,bool use_luh
 }
 
 //########## SECURITY CHECK ############################################################################################
-bool YoubotArmGazeboInterface::securityCheck()
+int YoubotArmGazeboInterface::securityCheck()
 {
-    return true;
+    return 0;
 }
 
 //########## READ STATE ################################################################################################

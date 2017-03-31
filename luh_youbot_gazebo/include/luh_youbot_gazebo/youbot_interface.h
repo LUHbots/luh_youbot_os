@@ -73,7 +73,7 @@ class YoubotGazeboInterface : public YoubotInterface
 public:
     YoubotGazeboInterface(ros::NodeHandle &node);
     ~YoubotGazeboInterface();
-    virtual void initialise(bool use_standard_gripper=true, bool use_luh_gripper_v3=false);
+    virtual void initialise(bool use_standard_gripper=true, bool use_luh_gripper_v3_=false);
     virtual void readState();
     virtual void writeCommands();
     virtual void publishMessages();

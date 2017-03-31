@@ -99,100 +99,172 @@ YoubotArm::~YoubotArm()
 }
 
 //########## INIT ######################################################################################################
-void YoubotArm::init(ros::NodeHandle &node)
+void YoubotArm::init(ros::NodeHandle &node, bool async)
 {
     // save pointer to node handle
     node_ = &node;
 
-    ROS_INFO("Waiting for arm action servers...");
+    if(!async) ROS_INFO("Waiting for arm action servers...");
 
     // create action clients
     if(is_enabled_[ActionClient::CART_DIRECT])
     {
         cart_client_direct_  = new CartesianPoseClient("arm_1/to_cartesian_pose/direct", true);
-        cart_client_direct_->waitForServer();
+        if(!async) cart_client_direct_->waitForServer();
     }
     if(is_enabled_[ActionClient::CART_INTER])
     {
         cart_client_inter_   = new CartesianPoseClient("arm_1/to_cartesian_pose/inter", true);
-        cart_client_inter_->waitForServer();
+        if(!async) cart_client_inter_->waitForServer();
     }
     if(is_enabled_[ActionClient::CART_PLAN])
     {
         cart_client_plan_ = new CartesianPoseClient("arm_1/to_cartesian_pose/plan", true);
-        cart_client_plan_->waitForServer();
+        if(!async) cart_client_plan_->waitForServer();
     }
     if(is_enabled_[ActionClient::CYL_DIRECT])
     {
         cyl_client_direct_  = new CylindricPoseClient("arm_1/to_cylindric_pose/direct", true);
-        cyl_client_direct_->waitForServer();
+        if(!async) cyl_client_direct_->waitForServer();
     }
     if(is_enabled_[ActionClient::CYL_INTER])
     {
         cyl_client_inter_   = new CylindricPoseClient("arm_1/to_cylindric_pose/inter", true);
-        cyl_client_inter_->waitForServer();
+        if(!async) cyl_client_inter_->waitForServer();
     }
     if(is_enabled_[ActionClient::CYL_PLAN])
     {
         cyl_client_plan_ = new CylindricPoseClient("arm_1/to_cylindric_pose/plan", true);
-        cyl_client_plan_->waitForServer();
+        if(!async) cyl_client_plan_->waitForServer();
     }
     if(is_enabled_[ActionClient::JOINT_DIRECT])
     {
         jnt_client_direct_  = new JointPoseClient("arm_1/to_joint_pose/direct", true);
-        jnt_client_direct_->waitForServer();
+        if(!async) jnt_client_direct_->waitForServer();
     }
     if(is_enabled_[ActionClient::JOINT_INTER])
     {
         jnt_client_inter_   = new JointPoseClient("arm_1/to_joint_pose/inter", true);
-        jnt_client_inter_->waitForServer();
+        if(!async) jnt_client_inter_->waitForServer();
     }
     if(is_enabled_[ActionClient::JOINT_PLAN])
     {
         jnt_client_plan_ = new JointPoseClient("arm_1/to_joint_pose/plan", true);
-        jnt_client_plan_->waitForServer();
+        if(!async) jnt_client_plan_->waitForServer();
     }
     if(is_enabled_[ActionClient::NAME_DIRECT])
     {
         name_client_direct_  = new NamedPoseClient("arm_1/to_named_pose/direct", true);
-        name_client_direct_->waitForServer();
+        if(!async) name_client_direct_->waitForServer();
     }
     if(is_enabled_[ActionClient::NAME_INTER])
     {
         name_client_inter_   = new NamedPoseClient("arm_1/to_named_pose/inter", true);
-        name_client_inter_->waitForServer();
+        if(!async) name_client_inter_->waitForServer();
     }
     if(is_enabled_[ActionClient::NAME_PLAN])
     {
         name_client_plan_ = new NamedPoseClient("arm_1/to_named_pose/plan", true);
-        name_client_plan_->waitForServer();
+        if(!async) name_client_plan_->waitForServer();
     }
     if(is_enabled_[ActionClient::CART_PATH])
     {
         cart_traj_client_ = new CartesianPathClient("arm_1/cartesian_path", true);
-        cart_traj_client_->waitForServer();
+        if(!async) cart_traj_client_->waitForServer();
     }
     if(is_enabled_[ActionClient::CYL_PATH])
     {
         cyl_traj_client_ = new CylindricPathClient("arm_1/cylindric_path", true);
-        cyl_traj_client_->waitForServer();
+        if(!async) cyl_traj_client_->waitForServer();
     }
     if(is_enabled_[ActionClient::JOINT_PATH])
     {
         jnt_traj_client_ = new JointPathClient("arm_1/joint_path", true);
-        jnt_traj_client_->waitForServer();
+        if(!async) jnt_traj_client_->waitForServer();
     }
     if(is_enabled_[ActionClient::NAME_PATH])
     {
         name_traj_client_ = new NamedPathClient("arm_1/named_path", true);
-        name_traj_client_->waitForServer();
+        if(!async) name_traj_client_->waitForServer();
     }
 
     set_cart_vel_client_ = node.serviceClient<luh_youbot_msgs::SetCartesianVelocity>("arm_1/set_cartesian_velocity");
     set_cyl_vel_client_ = node.serviceClient<luh_youbot_msgs::SetCylindricVelocity>("arm_1/set_cylindirc_velocity");
     set_jnt_vel_client_ = node.serviceClient<luh_youbot_msgs::SetJointVelocity>("arm_1/set_joint_velocity");
 
-    ROS_INFO("Arm action clients initialised.");
+    if(!async) ROS_INFO("Arm action clients initialised.");
+}
+
+//########## IS INITIALISED ############################################################################################
+bool YoubotArm::isInitialised()
+{
+    // create action clients
+    if(is_enabled_[ActionClient::CART_DIRECT])
+    {
+        if(!cart_client_direct_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::CART_INTER])
+    {
+        if(!cart_client_inter_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::CART_PLAN])
+    {
+        if(!cart_client_plan_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::CYL_DIRECT])
+    {
+        if(!cyl_client_direct_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::CYL_INTER])
+    {
+        if(!cyl_client_inter_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::CYL_PLAN])
+    {
+        if(!cyl_client_plan_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::JOINT_DIRECT])
+    {
+        if(!jnt_client_direct_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::JOINT_INTER])
+    {
+        if(!jnt_client_inter_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::JOINT_PLAN])
+    {
+        if(!jnt_client_plan_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::NAME_DIRECT])
+    {
+        if(!name_client_direct_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::NAME_INTER])
+    {
+        if(!name_client_inter_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::NAME_PLAN])
+    {
+        if(!name_client_plan_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::CART_PATH])
+    {
+        if(!cart_traj_client_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::CYL_PATH])
+    {
+        if(!cyl_traj_client_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::JOINT_PATH])
+    {
+        if(!jnt_traj_client_->isServerConnected()) return false;
+    }
+    if(is_enabled_[ActionClient::NAME_PATH])
+    {
+        if(!name_traj_client_->isServerConnected()) return false;
+    }
+
+    return true;
 }
 
 //########## MOVE TO POSE (JOINTSPACE) #################################################################################

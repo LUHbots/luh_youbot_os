@@ -1,3 +1,4 @@
+
 /* *****************************************************************
  *
  * luh_youbot_driver_api
@@ -81,13 +82,32 @@ void YoubotBaseGazeboInterface::initialise()
     config_->node_handle->param("youbot_oodl_driver/maxAngularVel", this->max_angular_vel_, 0.7);
 
     // === PUBLISHERS ===
-    odometry_publisher_ = config_->node_handle->advertise<nav_msgs::Odometry>("odom", 1);
+    //odometry_publisher_ = config_->node_handle->advertise<nav_msgs::Odometry>("odom", 1);
     joint_state_publisher_ = config_->node_handle->advertise<sensor_msgs::JointState>("base/joint_states", 1);
 
     // === GAZEBO STUFF ===
     cmd_vel_publisher_ = config_->node_handle->advertise<geometry_msgs::Twist>("gazebo/cmd_vel",1);
     odom_subscriber_ = config_->node_handle->subscribe<nav_msgs::Odometry>(
                 "odom", 1, &YoubotBaseGazeboInterface::odomCallback, this);
+    joint_state_subscriber_ = config_->node_handle->subscribe("gazebo/joint_states", 1,
+                                                              &YoubotBaseGazeboInterface::jointStateCallback, this);
+
+
+    // === INIT JOINT STATE MESSAGE ===
+    joint_names_.resize(4);
+    joint_names_[0] = "wheel_joint_bl";
+    joint_names_[1] = "wheel_joint_br";
+    joint_names_[2] = "wheel_joint_fl";
+    joint_names_[3] = "wheel_joint_fr";
+
+    for(uint i=0; i<joint_names_.size(); i++)
+    {
+        joint_state_msg_.name.push_back(joint_names_[i]);
+    }
+
+    joint_state_msg_.position.resize(4);
+    joint_state_msg_.velocity.resize(4);
+    joint_state_msg_.effort.resize(4);
 
     ROS_INFO("%s is initialised.", name_.c_str());
 
@@ -137,7 +157,7 @@ void YoubotBaseGazeboInterface::stop()
 //########## PUBLISH MESSAGES ##########################################################################################
 void YoubotBaseGazeboInterface::publishMessages()
 {
-    joint_state_msg_.header.stamp=current_sample_time_;
+    joint_state_msg_.header.stamp = current_sample_time_;
     joint_state_publisher_.publish(joint_state_msg_);
 }
 
@@ -145,4 +165,24 @@ void YoubotBaseGazeboInterface::publishMessages()
 void YoubotBaseGazeboInterface::odomCallback(const nav_msgs::Odometry::ConstPtr &odom)
 {
     odom_msg_ = *odom;
+}
+
+//########## CALLBACK: JOINT STATE #####################################################################################
+void YoubotBaseGazeboInterface::jointStateCallback(const sensor_msgs::JointState::ConstPtr &joint_state)
+{
+    for(uint i=0; i<joint_state->name.size(); i++)
+    {
+        std::string name = joint_state->name[i];
+
+        int j;
+        if(name.compare("wheel_joint_bl") == 0) j = 0;
+        else if(name.compare("wheel_joint_br") == 0) j = 1;
+        else if(name.compare("wheel_joint_fl") == 0) j = 2;
+        else if(name.compare("wheel_joint_fr") == 0) j = 3;
+        else continue;
+
+        joint_state_msg_.position[j] = joint_state->position[i];
+        joint_state_msg_.velocity[j] = joint_state->velocity[i];
+        joint_state_msg_.effort[j]   = joint_state->effort[i];
+    }
 }

@@ -26,8 +26,8 @@
 
   <xacro:youbot_plate name="plate" parent="base_link">
     <origin xyz="-0.039 0 0.064" rpy="0 0 0" />
-    <!--Default inertia to see if jittering stops-->
-    <!--<inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />-->
+    <!--Default inertia to see if  stops-->
+    <!--<inertia ixx="0.1" ixy="0" ijitteringxz="0" iyy="0.1" iyz="0" izz="0.1" />-->
   </xacro:youbot_plate>
 
   <xacro:youbot_arm name="arm" parent="base_link" namespace="">
@@ -43,14 +43,16 @@
   </xacro:youbot_gripper>
 
 
-  <!-- Kamera 
-  <xacro:include filename="$(find luh_youbot_description)/urdf/sensors/asus_xtion_camera.urdf.xacro" />
+  <!-- Kamera -->
+  <!--xacro:include filename="$(find luh_youbot_description)/urdf/sensors/asus_xtion_camera.urdf.xacro" />
 
   <xacro:asus_xtion_camera name="camera" parent="arm_link_5" tilt="0.0">
     <origin xyz="-0.02 0 -0.04" rpy="0 -1.60 0" />
 
     <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
-  </xacro:asus_xtion_camera>-->
+
+  </xacro:asus_xtion_camera-->
+
 
   <xacro:joint_state_publisher namespace="gazebo"/>
 

@@ -63,9 +63,8 @@ ControllerNode::ControllerNode(ros::NodeHandle &node):
         ROS_WARN("Running in VREP simulation mode.");
         youbot_ = new YoubotVrepInterface(node);
     }    
-    else if(!use_gazebo_simulation_ && !use_vrep_simulation_)
+    else
         youbot_ = new YoubotInterface(node);
-
 
     youbot_->initialise(use_standard_gripper_,use_luh_gripper_v3_);
 
@@ -185,8 +184,12 @@ void ControllerNode::armTimerCallback(const ros::TimerEvent &evt)
     }
 
     // === SECURITY CHECK ===
-    if(!youbot_->arm()->securityCheck())
+    int error_joint = youbot_->arm()->securityCheck();
+    if(error_joint > 0)
+    {
+        ROS_INFO("Overcurrent in joint %d", error_joint);
         stopArm();
+    }
 
     // === WRITE ARM COMMANDS ===
     else

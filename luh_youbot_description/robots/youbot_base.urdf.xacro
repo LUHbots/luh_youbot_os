@@ -14,6 +14,6 @@
   <!-- Now we can start using the macros included above to define the actual youbot -->
   <xacro:youbot_base name="base" namespace=""/>  
 
-  <xacro:joint_state_publisher namespace=""/>
+  <xacro:joint_state_publisher namespace="gazebo"/>
 
 </robot>

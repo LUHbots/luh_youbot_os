@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<launch>
+
+    <arg name="output" default="screen"/>
+    <arg name="sim" default="true"/>
+    <arg name="gui" default="true"/>
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+    <arg name="gui" default="$(arg gui)"/>
+    <arg name="world_name" value="$(find luh_youbot_gazebo)/worlds/layout_leipzig2.world"/>
+  </include>
+    
+    <!-- Not sure if the following param is necessary \('_')/ -->
+    <!-- send world urdf to param server -->
+	<param name="world_description" command="$(find xacro)/xacro.py $(find luh_youbot_gazebo)/worlds/layout_leipzig2.world" />
+
+   <!--spawn uploaded world model -->
+	<node pkg="gazebo_ros" type="spawn_model" name="gazebo_world_model" args="-u -param world_description -model world -x 0.0 -y 0.0 -z 0.2" respawn="false" output="$(arg output)" /> 
+
+  <!-- Convert an xacro and put on parameter server -->
+  <param name="robot_description" command="$(find xacro)/xacro.py $(find luh_youbot_description)/robots/youbot.urdf.xacro" />
+
+  <!-- Spawn a robot into Gazebo -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x -5.2 -y 0.5 -z 1 -model youbot" />
+
+    <!--Load Locations -->
+    <arg name="location_file" default="$(find luh_navigation_launcher)/map/map_leipzig1_simuliert_locations.yaml"/>
+    <arg name = "model_path1" default="$(find luh_youbot_gazebo)/worlds/models/F20_20/model.sdf"/>
+    <arg name = "model_path2" default="$(find luh_youbot_gazebo)/worlds/models/M20/model.sdf"/>
+    <arg name = "model_path3" default="$(find luh_youbot_gazebo)/worlds/models/M20_100/model.sdf"/>
+    <arg name = "model_path4" default="$(find luh_youbot_gazebo)/worlds/models/M30/model.sdf"/>
+    <arg name = "model_path5" default="$(find luh_youbot_gazebo)/worlds/models/R20/model.sdf"/>
+    <arg name = "model_path6" default="$(find luh_youbot_gazebo)/worlds/models/S40_40/model.sdf"/>
+    <arg name = "model_path7" default="$(find luh_youbot_gazebo)/worlds/models/V20/model.sdf"/>
+	<arg name = "number" default="10"/>
+    
+	<node name="luh_model_spawn" pkg="luh_model_spawn" type="luh_model_spawn" args="$(arg  location_file) $(arg model_path1) $(arg model_path2) $(arg model_path3) $(arg model_path4) $(arg model_path5) $(arg model_path6) $(arg model_path7) $(arg number)" respawn="true"/>
+
+  <!--node pkg="robot_state_publisher" type="robot_state_publisher" name="youbot_state_publisher" output="$(arg output)">
+  </node-->
+
+</launch>

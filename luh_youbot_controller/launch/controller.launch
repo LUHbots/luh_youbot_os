@@ -21,6 +21,5 @@
 
        	<!-- LAUNCH DRIVER NODE -->
 	<param name="luh_youbot_controller/use_luh_gripper_v3" value="true" />
-	<!--<param name="luh_youbot_controller/use_standard_gripper" value="true" />-->
 	<node name="controller_node" pkg="luh_youbot_controller" type="controller_node" output="screen" />
 </launch>

@@ -94,7 +94,7 @@ public:
 
     virtual bool isInitialised(){return arm_ != NULL;}
 
-    virtual bool securityCheck();
+    virtual int securityCheck();
 
     void enableRampGenerator(bool enable);
 

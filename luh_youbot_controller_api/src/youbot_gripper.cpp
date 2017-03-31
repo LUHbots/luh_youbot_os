@@ -48,21 +48,27 @@ YoubotGripper::~YoubotGripper()
 }
 
 //########## INIT ######################################################################################################
-void YoubotGripper::init(ros::NodeHandle &node)
+void YoubotGripper::init(ros::NodeHandle &node, bool async)
 {
     // save pointer to node handle
     node_ = &node;
 
-    ROS_INFO("Waiting for gripper clients...");
+    if(!async) ROS_INFO("Waiting for gripper clients...");
 
     // create action clients
     grip_object_client_ = new GripObjectClient("arm_1/grip_object", true);
-    grip_object_client_->waitForServer();
+    if(!async) grip_object_client_->waitForServer();
 
     set_gripper_client_ = new SetGripperClient("arm_1/set_gripper", true);
-    set_gripper_client_->waitForServer();
+    if(!async) set_gripper_client_->waitForServer();
 
-    ROS_INFO("Gripper action clients initialised.");
+    if(!async) ROS_INFO("Gripper action clients initialised.");
+}
+
+//########## IS INITIALISED ############################################################################################
+bool YoubotGripper::isInitialised()
+{
+    return grip_object_client_->isServerConnected() && set_gripper_client_->isServerConnected();
 }
 
 //########## SET GRIPPER ###############################################################################################

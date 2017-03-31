@@ -1,30 +1,30 @@
 <?xml version="1.0"?>
-<robot  xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot  xmlns:xacro="http://ros.org/wiki/xacro">
 
 	<!-- sensors -->
 	<xacro:include filename="$(find luh_youbot_description)/urdf/sensors/hokuyo_urg04_laser.urdf.xacro"/>
-  	<xacro:include filename="$(find luh_youbot_description)/urdf/youbot_base/base.gazebo.xacro" />
-  	<xacro:include filename="$(find luh_youbot_description)/urdf/youbot_base/bumper.gazebo.xacro" />
+  <xacro:include filename="$(find luh_youbot_description)/urdf/youbot_base/base.gazebo.xacro" />
+  <xacro:include filename="$(find luh_youbot_description)/urdf/youbot_base/bumper.gazebo.xacro" />
         
  	<!-- simplified box collision geometry for base -->
-  	<xacro:property name="base_size_x" value="0.570" />
-  	<xacro:property name="base_size_y" value="0.40" />
-  	<xacro:property name="base_size_z" value="0.100" />
-	<xacro:property name="base_mass" value="22.0" />
+  	<property name="base_size_x" value="0.570" />
+  	<property name="base_size_y" value="0.40" />
+  	<property name="base_size_z" value="0.100" />
+	  <property name="base_mass" value="22.0" />
 
-	<xacro:property name="wheel_offset_x" value="0.228"  />  
-  	<xacro:property name="wheel_offset_y" value="0.158"  />  
-  	<xacro:property name="wheel_offset_z" value="-0.034" />
-	<xacro:property name="wheel_mass" value="0.4" />
+	<property name="wheel_offset_x" value="0.228"  />  
+  	<property name="wheel_offset_y" value="0.158"  />  
+  	<property name="wheel_offset_z" value="-0.034" />
+	<property name="wheel_mass" value="0.4" />
 
-	<xacro:property name="wheel_radius" value="0.05" />
-	<xacro:property name="wheel_length" value="0.07" />
+	<property name="wheel_radius" value="0.05" />
+	<property name="wheel_length" value="0.07" />
 
-	<xacro:property name="wheel_joint_damping" value="0.0" />
-	<xacro:property name="wheel_joint_friction" value="0.0" />
-	<xacro:property name="wheel_joint_effort" value="30" />
-	<xacro:property name="wheel_joint_velocity" value="10" />
-	<xacro:property name="wheel_joint_safety_k_velocity" value="10.0" />
+	<property name="wheel_joint_damping" value="0.0" />
+	<property name="wheel_joint_friction" value="0.0" />
+	<property name="wheel_joint_effort" value="30" />
+	<property name="wheel_joint_velocity" value="10" />
+	<property name="wheel_joint_safety_k_velocity" value="10.0" />
 
 	<xacro:macro name="youbot_base" params="name namespace">
 		
@@ -37,16 +37,15 @@
                			<material name="Red" />
       			</visual>
       			<collision>
-				<!--<origin xyz="0 0 ${-base_size_z / 2.0}" rpy="0 0 0" />-->        			
-				<origin xyz="0 0 0.1" rpy="0 0 0" />
+        			<origin xyz="0 0 ${-base_size_z / 2.0}" rpy="0 0 0" />
         			<geometry>
           				<box size="0.001 0.001 0.001" />
         			</geometry>
       			</collision>
     		</link>
 
-    		<joint name="${name}_footprint_joint" type="fixed">
-      			<origin xyz="0 0 0.083" rpy="0 0 0" />
+    		<joint name="${name}_footprint_joint" type="fixed">      			
+      			<origin xyz="0 0 0" rpy="0 0 0" />
       			<child link="${name}_link" />
       			<parent link="${name}_footprint"/>
     		</joint>
@@ -215,7 +214,7 @@
       			</collision>
     		</link>
 	
-        <xacro:youbot_base_controller namespace="${namespace}"/>
+        <xacro:youbot_base_controller namespace="gazebo"/>
         <xacro:youbot_base_bumper namespace="${namespace}"/>
 
 
