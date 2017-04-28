@@ -196,15 +196,15 @@ namespace gazebo
     math::Pose pose = base_link_->GetWorldPose();
     float roll = pose.rot.GetRoll();
     float pitch = pose.rot.GetPitch();
+    float yaw = pose.rot.GetYaw();
 
-    //if(fabs(roll) < 0.001 && fabs(pitch) < 0.001)
-    {
-        float yaw = pose.rot.GetYaw();
-        double xt = x_ * cosf(yaw) - y_ * sinf(yaw);
-        double yt = y_ * cosf(yaw) + x_ * sinf(yaw);        
-        base_link_->SetLinearVel(math::Vector3(xt, yt, 0));
-        base_link_->SetAngularVel(math::Vector3(0, 0, rot_));
-    }
+    double xt = x_ * cosf(yaw) - y_ * sinf(yaw);
+    double yt = y_ * cosf(yaw) + x_ * sinf(yaw);
+    double vel_factor = 1.0;
+
+    base_link_->SetAngularVel(math::Vector3(-vel_factor*roll, -vel_factor*pitch, rot_));
+    base_link_->SetLinearVel(math::Vector3(xt, yt, 0));
+
 
     // set wheel velocity
     wheel_joints_[0]->SetVelocity(0, base_kin_inv_[0] * x_ + base_kin_inv_[1]  * y_ + base_kin_inv_[2]  * rot_);
