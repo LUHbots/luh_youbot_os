@@ -5,7 +5,7 @@
      Drivers for the KUKA youBot robot
   </description>  
   <author>Jan Paulus/jan.paulus@h-brs.de</author>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   
   <!-- catkinized by Simon Aden (Leibniz Unitverstät Hannover)-->
   <maintainer email="info@luhbots.de">Simon Aden</maintainer>
