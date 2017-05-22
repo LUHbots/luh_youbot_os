@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>luh_youbot_description</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>Contains the youBot model with URDF files and meshes (based on the original youbot_description by Alexey Zakharov and Sebastian Blumenthal)</description>
   <author>Simon Aden</author>
   <maintainer email="info@luhbots.de">LUHbots</maintainer>

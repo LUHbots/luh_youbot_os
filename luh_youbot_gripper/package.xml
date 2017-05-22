@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>luh_youbot_gripper</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>Node for the arduino-controlled gripper version 2.0.</description>
 
   <maintainer email="info@luhbots.de">Simon Aden</maintainer>

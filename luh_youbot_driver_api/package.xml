@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>luh_youbot_driver_api</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>The Youbot Driver API is a wrapper for the youbot driver. It communicates with the motor controllers.</description>
 
   <maintainer email="info@luhbots.de">Simon Aden</maintainer>

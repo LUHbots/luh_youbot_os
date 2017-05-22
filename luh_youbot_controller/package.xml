@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>luh_youbot_controller</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>The Controller Node is the central component of the SDK. It is responsible for trajectory planning and motion execution. It provides various subscribers, service servers and action servers for different kinds of motion commands for the manipulator, the gripper and the base.</description>
 
   <maintainer email="info@luhbots.de">Simon Aden</maintainer>

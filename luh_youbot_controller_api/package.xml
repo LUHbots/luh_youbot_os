@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>luh_youbot_controller_api</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>The Controller API provides a user friendly programming interface for the motion commands of the Controller Node. This is the most important package for application developers.</description>
   <maintainer email="info@luhbots.de">Simon Aden</maintainer>
   

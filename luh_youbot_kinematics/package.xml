@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>luh_youbot_kinematics</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>The Youbot Kinematics provides tools to calculate forward kinematics, inverse kinematics and statics of the youbot manipulator. </description>
 
   <maintainer email="info@luhbots.de">Simon Aden</maintainer>

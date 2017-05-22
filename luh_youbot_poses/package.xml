@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>luh_youbot_poses</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>This package contains some predefined poses and a library with which pose definition files can be read.</description>
 
   <maintainer email="info@luhbots.de">Simon Aden</maintainer>
