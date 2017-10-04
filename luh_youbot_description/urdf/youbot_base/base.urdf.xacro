@@ -1,224 +1,222 @@
 <?xml version="1.0"?>
 <robot  xmlns:xacro="http://ros.org/wiki/xacro">
 
-	<!-- sensors -->
-	<xacro:include filename="$(find luh_youbot_description)/urdf/sensors/hokuyo_urg04_laser.urdf.xacro"/>
+    <!-- sensors -->
+    <xacro:include filename="$(find luh_youbot_description)/urdf/sensors/hokuyo_urg04_laser.urdf.xacro"/>
   <xacro:include filename="$(find luh_youbot_description)/urdf/youbot_base/base.gazebo.xacro" />
   <xacro:include filename="$(find luh_youbot_description)/urdf/youbot_base/bumper.gazebo.xacro" />
         
- 	<!-- simplified box collision geometry for base -->
-  	<property name="base_size_x" value="0.570" />
-  	<property name="base_size_y" value="0.40" />
-  	<property name="base_size_z" value="0.100" />
-	  <property name="base_mass" value="22.0" />
+     <!-- simplified box collision geometry for base -->
+      <property name="base_size_x" value="0.570" />
+      <property name="base_size_y" value="0.40" />
+      <property name="base_size_z" value="0.100" />
+      <property name="base_mass" value="22.0" />
 
-	<property name="wheel_offset_x" value="0.228"  />  
-  	<property name="wheel_offset_y" value="0.158"  />  
-  	<property name="wheel_offset_z" value="-0.034" />
-	<property name="wheel_mass" value="0.4" />
+    <property name="wheel_offset_x" value="0.228"  />  
+      <property name="wheel_offset_y" value="0.158"  />  
+      <property name="wheel_offset_z" value="-0.034" />
+    <property name="wheel_mass" value="0.4" />
 
-	<property name="wheel_radius" value="0.05" />
-	<property name="wheel_length" value="0.07" />
+    <property name="wheel_radius" value="0.05" />
+    <property name="wheel_length" value="0.07" />
 
-	<property name="wheel_joint_damping" value="0.0" />
-	<property name="wheel_joint_friction" value="0.0" />
-	<property name="wheel_joint_effort" value="30" />
-	<property name="wheel_joint_velocity" value="10" />
-	<property name="wheel_joint_safety_k_velocity" value="10.0" />
+    <property name="wheel_joint_damping" value="0.0" />
+    <property name="wheel_joint_friction" value="0.0" />
+    <property name="wheel_joint_effort" value="30" />
+    <property name="wheel_joint_velocity" value="10" />
+    <property name="wheel_joint_safety_k_velocity" value="10.0" />
 
-	<xacro:macro name="youbot_base" params="name namespace">
-		
-		<link name="${name}_footprint">
-      			<visual>
-        			<origin xyz="0 0 0" rpy="0 0 0" />
-        			<geometry>
-          				<box size="0.001 0.001 0.001" />
-        			</geometry>
-               			<material name="Red" />
-      			</visual>
-      			<collision>
-        			<origin xyz="0 0 ${-base_size_z / 2.0}" rpy="0 0 0" />
-        			<geometry>
-          				<box size="0.001 0.001 0.001" />
-        			</geometry>
-      			</collision>
-    		</link>
+    <xacro:macro name="youbot_base" params="name namespace">
+        
+        <link name="${name}_footprint">
+                  <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                          <box size="0.1 0.1 0.1" />
+                    </geometry>
+                           <material name="Red" />
+                  </visual>
+                  <collision>
+                    <origin xyz="0 0 ${-base_size_z / 2.0}" rpy="0 0 0" />
+                    <geometry>
+                          <box size="0.0001 0.0001 0.0001" />
+                    </geometry>
+                  </collision>
+            </link>
 
-    		<joint name="${name}_footprint_joint" type="fixed">      			
-      			<origin xyz="0 0 0" rpy="0 0 0" />
-      			<child link="${name}_link" />
-      			<parent link="${name}_footprint"/>
-    		</joint>
+            <joint name="${name}_footprint_joint" type="fixed">                  
+                  <origin xyz="0 0 0" rpy="0 0 0" />
+                  <child link="${name}_link" />
+                  <parent link="${name}_footprint"/>
+            </joint>
 
-		<link name="${name}_link">
-      			<inertial>
-        			<mass value="${base_mass}" />
-        			<origin xyz="0 0 0" />
-        			<inertia ixx="5.652232699207" ixy="-0.009719934438" ixz="1.293988226423"
-                 			iyy="5.669473158652" iyz="-0.007379583694" izz="3.683196351726" />
-      				</inertial>
-      			<visual>
-        			<origin xyz="0 0 0" rpy="0 0 0" />  
-        			<geometry>
-          				<mesh filename="package://luh_youbot_description/meshes/youbot_base/base.dae"/>
-        			</geometry> 
-        			<material name="Black"/>
-      			</visual>
-      			<collision>
-        			<origin xyz="0 0 0" rpy="0 0 0" />
-        			<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_base/base_convex.dae"/>   
-	       			</geometry>
-      			</collision>
-    		</link>
+        <link name="${name}_link">
+                  <inertial>
+                    <mass value="${base_mass}" />
+                    <origin xyz="0 0 0" />
+                    <inertia ixx="0.000656" ixy="0.0" ixz="0.0"
+                             iyy="0.001635" iyz="0.0" izz="0.002178" />
+                      </inertial>
+                  <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />  
+                    <geometry>
+                          <mesh filename="package://luh_youbot_description/meshes/youbot_base/base.dae"/>
+                    </geometry> 
+                    <material name="Black"/>
+                  </visual>
+                  <collision>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                    <mesh filename="package://luh_youbot_description/meshes/youbot_base/base_convex.dae"/>   
+                       </geometry>
+                  </collision>
+            </link>
                
-		<!-- base laser front -->
-    		<xacro:hokuyo_urg04_laser name="${name}_laser_front" parent="${name}" ros_topic="scan" update_rate="10" min_angle="-1.57" max_angle="1.57" >
-     			 <origin xyz="0.309 0 -0.03" rpy="0 0 0" />
-    		</xacro:hokuyo_urg04_laser>
+        <!-- base laser front -->
+            <xacro:hokuyo_urg04_laser name="${name}_laser_front" parent="${name}" ros_topic="scan" update_rate="10" min_angle="-1.57" max_angle="1.57" >
+                  <origin xyz="0.309 0 -0.03" rpy="0 0 0" />
+            </xacro:hokuyo_urg04_laser>
 
-		<!-- base laser back -->
-    		<xacro:hokuyo_urg04_laser  name="${name}_laser_back" parent="${name}" ros_topic="scan_back" update_rate="10" min_angle="1.57" max_angle="-1.57" >
-     			 <origin xyz="-0.309 0 -0.03" rpy="0 0 ${M_PI}" />
-    		</xacro:hokuyo_urg04_laser>
-		
+        <!-- base laser back -->
+            <xacro:hokuyo_urg04_laser  name="${name}_laser_back" parent="${name}" ros_topic="scan_back" update_rate="10" min_angle="1.57" max_angle="-1.57" >
+                  <origin xyz="-0.309 0 -0.03" rpy="0 0 ${M_PI}" />
+            </xacro:hokuyo_urg04_laser>
+        
 
-	        <!-- front left wheel -->		
-		<joint name="wheel_joint_fl" type="continuous">
-			<origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0" />
-      			<axis xyz="0 1 0" />
-      			<limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/> 
-      			<dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}" />
-			<safety_controller k_velocity="${wheel_joint_safety_k_velocity}" />
-			<parent link="${name}_link"/>
-      			<child link="wheel_link_fl" />
-    		</joint>
+            <!-- front left wheel -->        
+        <joint name="wheel_joint_fl" type="continuous">
+            <origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0" />
+                  <axis xyz="0 1 0" />
+                  <limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/> 
+                  <dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}" />
+            <safety_controller k_velocity="${wheel_joint_safety_k_velocity}" />
+            <parent link="${name}_link"/>
+                  <child link="wheel_link_fl" />
+            </joint>
 
-    		<link name="wheel_link_fl">
-      			<inertial>
-        		<mass value="${wheel_mass}" />
-        		<origin xyz="0 0 0" />
-       			<inertia  ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983"
-                  		iyy="0.015218160428" iyz="-0.000004273467" izz="0.011763977943" />
-      			</inertial>
-      			<visual>
-        			<origin xyz="0 0 0" rpy="0 0 0" />
+            <link name="wheel_link_fl">
+                  <inertial>
+                <mass value="${wheel_mass}" />
+                <origin xyz="0 0 0" />
+                   <inertia  ixx="0.0012411765597" ixy="-0.000711733678" ixz="0.00050272983"
+                          iyy="0.0015218160428" iyz="-0.000004273467" izz="0.0011763977943" />
+                  </inertial>
+                  <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
                                 <geometry>
-				        <mesh filename="package://luh_youbot_description/meshes/youbot_base/wheel1.dae" />
+                        <mesh filename="package://luh_youbot_description/meshes/youbot_base/wheel1.dae" />
                                 </geometry>
-      			</visual>
-      			<collision>
-        			<origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
-        			<geometry>
-        		       		<cylinder radius="${wheel_radius}" length="${wheel_length}"/>
-        	       		</geometry>
-      			</collision>
-    		</link>
+                  </visual>
+                  <collision>
+                    <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
+                    <geometry>
+                               <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+                           </geometry>
+                  </collision>
+            </link>
 
 
-	<!-- front right wheel -->
-		<joint name="wheel_joint_fr" type="continuous">
-			<origin xyz="${wheel_offset_x} ${-wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0" />
-      			<axis xyz="0 1 0" />
-      			<limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/> 
-      			<dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}" />
-			<safety_controller k_velocity="${wheel_joint_safety_k_velocity}" />
-			<parent link="${name}_link"/>
-      			<child link="wheel_link_fr" />
-    		</joint>
+    <!-- front right wheel -->
+        <joint name="wheel_joint_fr" type="continuous">
+            <origin xyz="${wheel_offset_x} ${-wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0" />
+                  <axis xyz="0 1 0" />
+                  <limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/> 
+                  <dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}" />
+            <safety_controller k_velocity="${wheel_joint_safety_k_velocity}" />
+            <parent link="${name}_link"/>
+                  <child link="wheel_link_fr" />
+            </joint>
 
-    		<link name="wheel_link_fr">
-      			<inertial>
-        		<mass value="${wheel_mass}" />
-        		<origin xyz="0 0 0" />
-       			<inertia  ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983"
-                  		iyy="0.015218160428" iyz="-0.000004273467" izz="0.011763977943" />
-      			</inertial>
-      			<visual>
-        			<origin xyz="0 0 0" rpy="0 0 0" />
-				<geometry>
-          				<mesh filename="package://luh_youbot_description/meshes/youbot_base/wheel2.dae" />
-        			</geometry>
-      			</visual>
-      			<collision>
-        			<origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
-        			<geometry>
-        		       		<cylinder radius="${wheel_radius}" length="${wheel_length}"/>
-        	       		</geometry>
-      			</collision>
-    		</link>
+            <link name="wheel_link_fr">
+                  <inertial>
+                <mass value="${wheel_mass}" />
+                <origin xyz="0 0 0" />
+                   <inertia  ixx="0.0012411765597" ixy="-0.000711733678" ixz="0.00050272983"
+                          iyy="0.0015218160428" iyz="-0.000004273467" izz="0.0011763977943" />
+                  </inertial>
+                  <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                          <mesh filename="package://luh_youbot_description/meshes/youbot_base/wheel2.dae" />
+                    </geometry>
+                  </visual>
+                  <collision>
+                    <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
+                    <geometry>
+                               <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+                           </geometry>
+                  </collision>
+            </link>
 
 
 
-	        <!-- back left wheel -->
-		<joint name="wheel_joint_bl" type="continuous">
-			<origin xyz="${-wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0" />
-      			<axis xyz="0 1 0" />
-      			<limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/>  
-      			<dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}" />
-			<safety_controller k_velocity="${wheel_joint_safety_k_velocity}" />
-			<parent link="${name}_link"/>
-      			<child link="wheel_link_bl" />
-    		</joint>
+            <!-- back left wheel -->
+        <joint name="wheel_joint_bl" type="continuous">
+            <origin xyz="${-wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0" />
+            <axis xyz="0 1 0" />
+            <limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/>  
+            <dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}" />
+            <safety_controller k_velocity="${wheel_joint_safety_k_velocity}" />
+            <parent link="${name}_link"/>
+                  <child link="wheel_link_bl" />
+        </joint>
 
-    		<link name="wheel_link_bl">
-      			<inertial>
-        		<mass value="${wheel_mass}" />
-        		<origin xyz="0 0 0" />
-       			<inertia  ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983"
-                  		iyy="0.015218160428" iyz="-0.000004273467" izz="0.011763977943" />
-      			</inertial>
-      			<visual>
-        			<origin xyz="0 0 0" rpy="0 0 0" />
-				<geometry>
-          				<mesh filename="package://luh_youbot_description/meshes/youbot_base/wheel2.dae" />
-        			</geometry>
-      			</visual>
-      			<collision>
-        			<origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
-        			<geometry>
-        		       		<cylinder radius="${wheel_radius}" length="${wheel_length}"/>
-        	       		</geometry>
-      			</collision>
-    		</link>
+            <link name="wheel_link_bl">
+                <inertial>
+                    <mass value="${wheel_mass}" />
+                    <origin xyz="0 0 0" />
+                    <inertia  ixx="0.0012411765597" ixy="-0.000711733678" ixz="0.00050272983"
+                          iyy="0.0015218160428" iyz="-0.000004273467" izz="0.0011763977943" />
+                </inertial>
+                <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                          <mesh filename="package://luh_youbot_description/meshes/youbot_base/wheel2.dae" />
+                    </geometry>
+                  </visual>
+                  <collision>
+                    <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
+                    <geometry>
+                               <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+                    </geometry>
+                  </collision>
+            </link>
 
-	<!-- back right wheel -->
-		<joint name="wheel_joint_br" type="continuous">
-			<origin xyz="${-wheel_offset_x} ${-wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0" />
-      			<axis xyz="0 1 0" />
-      			<limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/>  
-      			<dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}" />
-			<safety_controller k_velocity="${wheel_joint_safety_k_velocity}" />
-			<parent link="${name}_link"/>
-      			<child link="wheel_link_br" />
-    		</joint>
+    <!-- back right wheel -->
+        <joint name="wheel_joint_br" type="continuous">
+            <origin xyz="${-wheel_offset_x} ${-wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0" />
+                  <axis xyz="0 1 0" />
+                  <limit effort="${wheel_joint_effort}" velocity="${wheel_joint_velocity}"/>  
+                  <dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}" />
+            <safety_controller k_velocity="${wheel_joint_safety_k_velocity}" />
+            <parent link="${name}_link"/>
+                  <child link="wheel_link_br" />
+            </joint>
 
-    		<link name="wheel_link_br">
-      			<inertial>
-        		<mass value="${wheel_mass}" />
-        		<origin xyz="0 0 0" />
-       			<inertia  ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983"
-                  		iyy="0.015218160428" iyz="-0.000004273467" izz="0.011763977943" />
-      			</inertial>
-      			<visual>
-        			<origin xyz="0 0 0" rpy="0 0 0" />
-				<geometry>
-          				<mesh filename="package://luh_youbot_description/meshes/youbot_base/wheel1.dae" />
-        			</geometry>
-      			</visual>
-      			<collision>
-        			<origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
-        			<geometry>
-        		       		<cylinder radius="${wheel_radius}" length="${wheel_length}"/>
-        	       		</geometry>
-      			</collision>
-    		</link>
-	
+            <link name="wheel_link_br">
+                  <inertial>
+                <mass value="${wheel_mass}" />
+                <origin xyz="0 0 0" />
+                   <inertia  ixx="0.0012411765597" ixy="-0.000711733678" ixz="0.00050272983"
+                          iyy="0.0015218160428" iyz="-0.000004273467" izz="0.0011763977943" />
+                  </inertial>
+                  <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                          <mesh filename="package://luh_youbot_description/meshes/youbot_base/wheel1.dae" />
+                    </geometry>
+                  </visual>
+                  <collision>
+                    <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
+                    <geometry>
+                               <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+                           </geometry>
+                  </collision>
+            </link>
+    
         <xacro:youbot_base_controller namespace="gazebo"/>
         <xacro:youbot_base_bumper namespace="${namespace}"/>
 
-
-
-	</xacro:macro>
+    </xacro:macro>
 
 </robot>

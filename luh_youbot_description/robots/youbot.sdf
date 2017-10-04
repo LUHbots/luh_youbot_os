@@ -1,0 +1,855 @@
+<sdf version='1.6'>
+  <model name='youbot'>
+    <link name='base_footprint'>
+      <pose frame=''>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0.007408 0 0.004559 0 -0 0</pose>
+        <mass>24.165</mass>
+        <inertia>
+          <ixx>0.219219</ixx>
+          <ixy>0</ixy>
+          <ixz>-0.0110765</ixz>
+          <iyy>0.307193</iyy>
+          <iyz>0</iyz>
+          <izz>0.300173</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_footprint_collision'>
+        <pose frame=''>0 0 -0.05 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.0001 0.0001 0.0001</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__base_link_collision_1'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_base/base_convex.dae</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__arm_link_0_collision_2'>
+        <pose frame=''>0.258 0 0.066 0 -0 0.576</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_arm/arm0_convex.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__base_laser_back_link_collision_3'>
+        <pose frame=''>-0.309 0 -0.03 0 -0 -3.14159</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/sensors/hokuyo_convex.dae</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__base_laser_front_link_collision_4'>
+        <pose frame=''>0.309 0 -0.03 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/sensors/hokuyo_convex.dae</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__plate_link_collision_5'>
+        <pose frame=''>-0.039 0 0.064 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_plate/plate_convex.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='base_footprint_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.1</size>
+          </box>
+        </geometry>
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__base_link_visual_1'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_base/base.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>__default__</uri>
+            <name>__default__</name>
+          </script>
+        </material>
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__arm_link_0_visual_2'>
+        <pose frame=''>0.258 0 0.066 0 -0 0.576</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_arm/arm0.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__base_laser_back_link_visual_3'>
+        <pose frame=''>-0.309 0 -0.03 0 -0 -3.14159</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/sensors/hokuyo.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>__default__</uri>
+            <name>__default__</name>
+          </script>
+        </material>
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__base_laser_front_link_visual_4'>
+        <pose frame=''>0.309 0 -0.03 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/sensors/hokuyo.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>__default__</uri>
+            <name>__default__</name>
+          </script>
+        </material>
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__plate_link_visual_5'>
+        <pose frame=''>-0.039 0 0.064 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_plate/plate.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <velocity_decay/>
+      <sensor name='youbot_base_bumper' type='contact'>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <contact>
+          <collision>base_footprint_collision_base_link</collision>
+          <topic>__default_topic__</topic>
+        </contact>
+        <plugin name='gripper_bumper' filename='libgazebo_ros_bumper.so'>
+          <bumperTopicName>youbot_base_bumper</bumperTopicName>
+          <frameName>base_link</frameName>
+        </plugin>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+      </sensor>
+      <velocity_decay/>
+      <sensor name='base_laser_back' type='ray'>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>640</samples>
+              <resolution>1</resolution>
+              <min_angle>-1.57</min_angle>
+              <max_angle>1.57</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.05</min>
+            <max>5.6</max>
+            <resolution>0.36</resolution>
+          </range>
+        </ray>
+        <always_on>1</always_on>
+        <update_rate>10</update_rate>
+        <visualize>0</visualize>
+        <plugin name='gazebo_ros_laser' filename='libgazebo_ros_laser.so'>
+          <gaussianNoise>0.02</gaussianNoise>
+          <alwaysOn>true</alwaysOn>
+          <hokuyoMinIntensity>101</hokuyoMinIntensity>
+          <updateRate>10</updateRate>
+          <topicName>scan_back</topicName>
+          <frameName>/base_laser_back_link</frameName>
+        </plugin>
+        <pose frame=''>-0.309 0 -0.03 0 -0 -3.14159</pose>
+      </sensor>
+      <gravity>1</gravity>
+      <velocity_decay/>
+      <self_collide>0</self_collide>
+      <sensor name='base_laser_front' type='ray'>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>640</samples>
+              <resolution>1</resolution>
+              <min_angle>-1.57</min_angle>
+              <max_angle>1.57</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.05</min>
+            <max>5.6</max>
+            <resolution>0.36</resolution>
+          </range>
+        </ray>
+        <always_on>1</always_on>
+        <update_rate>10</update_rate>
+        <visualize>0</visualize>
+        <plugin name='gazebo_ros_laser' filename='libgazebo_ros_laser.so'>
+          <gaussianNoise>0.02</gaussianNoise>
+          <alwaysOn>true</alwaysOn>
+          <hokuyoMinIntensity>101</hokuyoMinIntensity>
+          <updateRate>10</updateRate>
+          <topicName>scan</topicName>
+          <frameName>/base_laser_front_link</frameName>
+        </plugin>
+        <pose frame=''>0.309 0 -0.03 0 -0 0</pose>
+      </sensor>
+    </link>
+    <link name='arm_link_1'>
+      <pose frame=''>0.278128 0.013072 0.162 0 -0 -2.74013</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>2.412</mass>
+        <inertia>
+          <ixx>0.003863</ixx>
+          <ixy>-0.000979</ixy>
+          <ixz>0</ixz>
+          <iyy>0.006196</iyy>
+          <iyz>0</iyz>
+          <izz>0.006369</izz>
+        </inertia>
+      </inertial>
+      <collision name='arm_link_1_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_arm/arm1_convex.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='arm_link_1_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_arm/arm1.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='arm_joint_1' type='revolute'>
+      <child>arm_link_1</child>
+      <parent>base_footprint</parent>
+      <axis>
+        <xyz>0 -0 -1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>5.89921</upper>
+          <effort>9.5</effort>
+          <velocity>1.5708</velocity>
+        </limit>
+        <dynamics>
+          <damping>1</damping>
+          <friction>1</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='arm_link_2'>
+      <pose frame=''>0.247751 0.000177 0.181 0 -1.13446 -2.74013</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>1.155</mass>
+        <inertia>
+          <ixx>0.000823</ixx>
+          <ixy>0</ixy>
+          <ixz>-0</ixz>
+          <iyy>0.004447</iyy>
+          <iyz>0</iyz>
+          <izz>0.004439</izz>
+        </inertia>
+      </inertial>
+      <collision name='arm_link_2_collision'>
+        <pose frame=''>0 -0.032 0.078 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_arm/arm2_convex.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='arm_link_2_visual'>
+        <pose frame=''>0 -0.032 0.078 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_arm/arm2.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='arm_joint_2' type='revolute'>
+      <child>arm_link_2</child>
+      <parent>arm_link_1</parent>
+      <axis>
+        <xyz>0.390769 -0.920489 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>2.70526</upper>
+          <effort>9.5</effort>
+          <velocity>1.5708</velocity>
+        </limit>
+        <dynamics>
+          <damping>1</damping>
+          <friction>1</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='arm_link_3'>
+      <pose frame=''>0.37706 0.055071 0.246506 -0 1.41372 -2.74013</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>0.934</mass>
+        <inertia>
+          <ixx>0.002459</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.002571</iyy>
+          <iyz>-0</iyz>
+          <izz>0.000535</izz>
+        </inertia>
+      </inertial>
+      <collision name='arm_link_3_collision'>
+        <pose frame=''>0 0.028 0.079 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_arm/arm3_convex.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='arm_link_3_visual'>
+        <pose frame=''>0 0.028 0.079 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_arm/arm3.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='arm_joint_3' type='revolute'>
+      <child>arm_link_3</child>
+      <parent>arm_link_2</parent>
+      <axis>
+        <xyz>0.390769 -0.920489 -0</xyz>
+        <limit>
+          <lower>-5.18363</lower>
+          <upper>0</upper>
+          <effort>6</effort>
+          <velocity>1.5708</velocity>
+        </limit>
+        <dynamics>
+          <damping>1</damping>
+          <friction>1</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='arm_link_4'>
+      <pose frame=''>0.254324 0.002967 0.267624 -0 -0.375246 -2.74013</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>0.877</mass>
+        <inertia>
+          <ixx>0.000869</ixx>
+          <ixy>0</ixy>
+          <ixz>-0</ixz>
+          <iyy>0.001173</iyy>
+          <iyz>-0.000231</iyz>
+          <izz>0.001091</izz>
+        </inertia>
+      </inertial>
+      <collision name='arm_link_4_collision'>
+        <pose frame=''>0 -0.01 0.029 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_arm/arm4_convex.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='arm_link_4_visual'>
+        <pose frame=''>0 -0.01 0.029 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_arm/arm4.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='arm_joint_4' type='revolute'>
+      <child>arm_link_4</child>
+      <parent>arm_link_3</parent>
+      <axis>
+        <xyz>0.390769 -0.920489 -0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>3.57792</upper>
+          <effort>2</effort>
+          <velocity>1.5708</velocity>
+        </limit>
+        <dynamics>
+          <damping>1</damping>
+          <friction>1</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='arm_link_5'>
+      <pose frame=''>0.299893 0.022312 0.387846 -0.085052 0.365926 0.167554</pose>
+      <inertial>
+        <pose frame=''>0 0 0.000256 0 -0 0</pose>
+        <mass>0.352</mass>
+        <inertia>
+          <ixx>0.000389077</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.000448077</iyy>
+          <iyz>0</iyz>
+          <izz>0.00022</izz>
+        </inertia>
+      </inertial>
+      <collision name='arm_link_5_collision'>
+        <pose frame=''>0.003 0 -0.034 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_arm/arm5_new_convex.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='arm_link_5_fixed_joint_lump__gripper_palm_link_collision_1'>
+        <pose frame=''>0.003 0 0.01 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_gripper/palm_convex.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='arm_link_5_visual'>
+        <pose frame=''>0.003 0 -0.034 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_arm/arm5_new.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='arm_link_5_fixed_joint_lump__gripper_palm_link_visual_1'>
+        <pose frame=''>0 0 -0.0139 -3.14159 -1.57079 -1.57079</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_gripper/palm.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='arm_joint_5' type='revolute'>
+      <child>arm_link_5</child>
+      <parent>arm_link_4</parent>
+      <axis>
+        <xyz>-0.33736 -0.143217 -0.930418</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>5.84685</upper>
+          <effort>1</effort>
+          <velocity>1.5708</velocity>
+        </limit>
+        <dynamics>
+          <damping>1</damping>
+          <friction>1</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='gripper_finger_link_l'>
+      <pose frame=''>0.306083 0.031424 0.396559 0.085052 -0.365926 -2.97404</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>1e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1e-05</iyy>
+          <iyz>0</iyz>
+          <izz>1e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name='gripper_finger_link_l_collision'>
+        <pose frame=''>0 0 0 3.14159 -1.57079 3.14159</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_gripper/finger_convex.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='gripper_finger_link_l_visual'>
+        <pose frame=''>0 0 0 3.14159 -1.57079 3.14159</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_gripper/finger.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='gripper_finger_joint_l' type='prismatic'>
+      <child>gripper_finger_link_l</child>
+      <parent>arm_link_5</parent>
+      <axis>
+        <xyz>-0.196139 0.977362 -0.079325</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0.03</upper>
+          <effort>1</effort>
+          <velocity>0.1</velocity>
+        </limit>
+        <dynamics>
+          <damping>1</damping>
+          <friction>1</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='gripper_finger_link_r'>
+      <pose frame=''>0.308829 0.017741 0.39767 -0.085052 0.365926 0.167554</pose>
+      <inertial>
+        <pose frame=''>0 -0.001 0 0 -0 0</pose>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>1e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0001</iyy>
+          <iyz>0</iyz>
+          <izz>1e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name='gripper_finger_link_r_collision'>
+        <pose frame=''>0 0 0 3.14159 -1.57079 3.14159</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_gripper/finger_convex.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='gripper_finger_link_r_visual'>
+        <pose frame=''>0 0 0 3.14159 -1.57079 3.14159</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_gripper/finger.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='gripper_finger_joint_r' type='prismatic'>
+      <child>gripper_finger_link_r</child>
+      <parent>arm_link_5</parent>
+      <axis>
+        <xyz>0.196139 -0.977362 0.079325</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0.03</upper>
+          <effort>1</effort>
+          <velocity>0.1</velocity>
+        </limit>
+        <dynamics>
+          <damping>1</damping>
+          <friction>1</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='wheel_link_bl'>
+      <pose frame=''>-0.228 0.158 -0.034 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>0.4</mass>
+        <inertia>
+          <ixx>0.00124118</ixx>
+          <ixy>-0.000711734</ixy>
+          <ixz>0.00050273</ixz>
+          <iyy>0.00152182</iyy>
+          <iyz>-4.27347e-06</iyz>
+          <izz>0.0011764</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel_link_bl_collision'>
+        <pose frame=''>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='wheel_link_bl_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_base/wheel2.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='wheel_joint_bl' type='revolute'>
+      <child>wheel_link_bl</child>
+      <parent>base_footprint</parent>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>0</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='wheel_link_br'>
+      <pose frame=''>-0.228 -0.158 -0.034 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>0.4</mass>
+        <inertia>
+          <ixx>0.00124118</ixx>
+          <ixy>-0.000711734</ixy>
+          <ixz>0.00050273</ixz>
+          <iyy>0.00152182</iyy>
+          <iyz>-4.27347e-06</iyz>
+          <izz>0.0011764</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel_link_br_collision'>
+        <pose frame=''>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='wheel_link_br_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_base/wheel1.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='wheel_joint_br' type='revolute'>
+      <child>wheel_link_br</child>
+      <parent>base_footprint</parent>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>0</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='wheel_link_fl'>
+      <pose frame=''>0.228 0.158 -0.034 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>0.4</mass>
+        <inertia>
+          <ixx>0.00124118</ixx>
+          <ixy>-0.000711734</ixy>
+          <ixz>0.00050273</ixz>
+          <iyy>0.00152182</iyy>
+          <iyz>-4.27347e-06</iyz>
+          <izz>0.0011764</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel_link_fl_collision'>
+        <pose frame=''>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='wheel_link_fl_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_base/wheel1.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='wheel_joint_fl' type='revolute'>
+      <child>wheel_link_fl</child>
+      <parent>base_footprint</parent>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>0</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='wheel_link_fr'>
+      <pose frame=''>0.228 -0.158 -0.034 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>0.4</mass>
+        <inertia>
+          <ixx>0.00124118</ixx>
+          <ixy>-0.000711734</ixy>
+          <ixz>0.00050273</ixz>
+          <iyy>0.00152182</iyy>
+          <iyz>-4.27347e-06</iyz>
+          <izz>0.0011764</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel_link_fr_collision'>
+        <pose frame=''>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='wheel_link_fr_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://luh_youbot_description/meshes/youbot_base/wheel2.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='wheel_joint_fr' type='revolute'>
+      <child>wheel_link_fr</child>
+      <parent>base_footprint</parent>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>0</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <plugin name='base_controller' filename='libyoubot_base_controller.so'>
+      <commandTopic>gazebo/cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometryRate>20.0</odometryRate>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+    </plugin>
+    <plugin name='arm_controller' filename='libyoubot_arm_controller.so'>
+      <namespace>gazebo</namespace>
+    </plugin>
+    <plugin name='gripper_controller' filename='libyoubot_gripper_controller.so'>
+      <namespace/>
+    </plugin>
+    <static>0</static>
+    <plugin name='youbot_joint_state_publisher' filename='libyoubot_joint_state_publisher.so'>
+      <robotNamespace>gazebo</robotNamespace>
+      <updateRate>100.0</updateRate>
+      <alwaysOn>true</alwaysOn>
+    </plugin>
+  </model>
+</sdf>

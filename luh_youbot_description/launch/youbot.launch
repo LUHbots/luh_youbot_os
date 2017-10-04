@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<launch>
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="gui" default="true" />
+  </include>
+
+  <arg name="sdf" default="false"/>
+  <arg name="ros" default="true"/>
+
+  
+  <!-- Convert an xacro and put on parameter server -->
+  <param name="robot_description" command="$(find xacro)/xacro.py $(find luh_youbot_description)/robots/youbot.urdf.xacro" />
+  
+  <!--Dummy to conver package: to model: -->
+  <param name="dummy_to_generate_gazebo_urdf_file" command="rosrun xacro xacro.py -o /tmp/robot.gazebo.urdf $(find luh_youbot_description)/robots/youbot.urdf.xacro" />
+  <param name="dummy_to_convert_package_to_model" command="sed -i s@package://@model://@g /tmp/robot.gazebo.urdf" />
+
+  
+  <group if="$(arg sdf)">
+    <!--dummy to convert urdf to sdf-->
+    <param name="dummy_to_convert_sdf" command="gz sdf -p /tmp/robot.gazebo.urdf > /tmp/robot.sdf" />
+  </group>
+
+  <group unless="$(arg ros)">
+    <!--dummy to comment out all ros plugins in the sdf-->
+    <!-- &#60; == <   -->
+    <param name="dummy1_to_disable_ros" command="sed -i 's/&#60;plugin/&#60;\!--plugin/g' /tmp/robot.sdf" />
+    <param name="dummy2_to_disable_ros" command="sed -i 's/&#60;\/plugin>/&#60;\/plugin--\>/g' /tmp/robot.sdf" />
+    <param name="dummy3_to_disable_ros" command="sed -i 's/&#60;\!--.*-->/\ /g' /tmp/robot.sdf" />
+  </group>
+
+  <!-- Spawn a robot into Gazebo -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file /tmp/robot.gazebo.urdf -urdf -x 0 -y 0 -z 0.1 -model youbot" />
+  
+  <!-- Spawn a robot SDF into Gazebo -->
+  <!--node name="spawn_sdf" pkg="gazebo_ros" type="spawn_model" args="-file /tmp/robot.sdf -sdf -x 0 -y 0 -z 0.4 -model youbot" /-->
+  
+  <!--node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x 1 -y 1 -z 0.1 -model youbot" /-->
+  
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="youbot_state_publisher" output="screen">
+    <remap from="joint_states" to="gazebo/joint_states"/>
+  </node>
+
+</launch>
+
+

@@ -1,233 +1,215 @@
 <?xml version="1.0"?>
 <robot  xmlns:xacro="http://ros.org/wiki/xacro">
 
-	<xacro:include filename="$(find luh_youbot_description)/urdf/youbot_arm/limits.urdf.xacro" />
-	<xacro:include filename="$(find luh_youbot_description)/urdf/youbot_arm/arm.gazebo.xacro" />
+    <xacro:include filename="$(find luh_youbot_description)/urdf/youbot_arm/limits.urdf.xacro" />
+    <xacro:include filename="$(find luh_youbot_description)/urdf/youbot_arm/arm.gazebo.xacro" />
 
-	<xacro:macro name="youbot_arm" params="parent name namespace *origin">
+    <xacro:macro name="youbot_arm" params="parent name namespace *origin">
 
-		<!-- joint between base_link and arm_0_link -->
-		<joint name="${name}_joint_0" type="fixed" >
-			<insert_block name="origin" />
-			<parent link="${parent}" />
-			<child link="${name}_link_0" />
-            <!--without Dynamics maybe causes jittering-->
-			<dynamics damping="1" friction="1" />			
-		</joint>
+        <!-- joint between base_link and arm_0_link -->
+        <joint name="${name}_joint_0" type="fixed" >
+            <insert_block name="origin" />
+            <parent link="${parent}" />
+            <child link="${name}_link_0" />
+            <dynamics damping="1" friction="1" />            
+        </joint>
 
                 <joint name="${name}_joint_origin" type="fixed" >
                         <origin xyz="0.024 0 0.0" rpy="0 0 0"/>
-			<parent link="${name}_link_0" />
-			<child link="${name}_origin" />            
-		</joint>
+            <parent link="${name}_link_0" />
+            <child link="${name}_origin" />            
+        </joint>
 
-		<link name="${name}_origin"/>
-			
+        <link name="${name}_origin"/>
+            
 
-		<link name="${name}_link_0">
-			<inertial>
-				<origin xyz="0 0 0" rpy="0 0 0"/>
-				<!--<mass value="${link_0_mass}"/>-->
-				<mass value="0.845"/>
-				<inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
-			</inertial>
+        <link name="${name}_link_0">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="${link_0_mass}"/>
+                <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+            </inertial>
 
-			<visual>
-				<origin xyz="0 0 0" rpy="0 0 0" />
-				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm0.dae" />
-				</geometry>
-			</visual>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm0.dae" />
+                </geometry>
+            </visual>
 
-			<collision>
-				<origin xyz="0 0 0" rpy="0 0 0"/>
-				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm0_convex.dae" />
-				</geometry>
-			</collision>			
-			
-		</link>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm0_convex.dae" />
+                </geometry>
+            </collision>            
+            
+        </link>
 
-		<!-- joint between arm_0_link and arm_1_link -->
-		<joint name="${name}_joint_1" type="revolute">
-			<origin xyz="0.024 0 0.096" rpy="0 0 ${170 * M_PI / 180}"/>
-			<parent link="${name}_link_0"/>
-			<child link="${name}_link_1"/>
-			<axis xyz="0 0 -1"/>
-			<dynamics damping="1" friction="1" />	
-			<limit effort="${9.5}" velocity="${M_PI / 2.0}" lower="0" upper="${joint_1_limit}"/>
-			<safety_controller k_position="20" k_velocity="${9.5/M_PI / 2.0}" soft_lower_limit="${threshold}" soft_upper_limit="${joint_1_limit_soft}" />
-		</joint>
+        <!-- joint between arm_0_link and arm_1_link -->
+        <joint name="${name}_joint_1" type="revolute">
+            <origin xyz="0.024 0 0.096" rpy="0 0 ${170 * M_PI / 180}"/>
+            <parent link="${name}_link_0"/>
+            <child link="${name}_link_1"/>
+            <axis xyz="0 0 -1"/>
+            <dynamics damping="1" friction="1" />    
+            <limit effort="${9.5}" velocity="${M_PI / 2.0}" lower="0" upper="${joint_1_limit}"/>
+            <safety_controller k_position="20" k_velocity="${9.5/M_PI / 2.0}" soft_lower_limit="${threshold}" soft_upper_limit="${joint_1_limit_soft}" />
+        </joint>
 
-		<link name="${name}_link_1">
-			<inertial>
-                <!--See if this cause arm-jittering -->
-				<!--<mass value="${link_1_mass}"/>-->
-				<mass value="2.412"/>
-                <!-- looks like this is not loaded try with default-->
-				<!--<xacro:link_1_inertia_tensor />-->
-                <inertia ixx="0.003863" ixy="-0.000979" ixz="0.000000" iyy="0.006196" iyz="0.000000" izz="0.006369" />
-			</inertial>
-			
-			<visual>
-				<origin xyz="0 0 0" rpy="0 0 0" />
-				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm1.dae" />
-				</geometry>
-			</visual>
-			
-			<collision>
-				<origin xyz="0 0 0" rpy="0 0 0" />
-				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm1_convex.dae" />
-				</geometry>
-			</collision>		
-		</link>
+        <link name="${name}_link_1">
+            <inertial>
+                <mass value="${link_1_mass}"/>
+                <xacro:link_1_inertia_tensor />
+            </inertial>
+            
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm1.dae" />
+                </geometry>
+            </visual>
+            
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm1_convex.dae" />
+                </geometry>
+            </collision>        
+        </link>
 
-		<!-- joint between arm_1_link and arm_2_link -->	
-		<joint name="${name}_joint_2" type="revolute">
-			<origin xyz="0.033 0 0.019" rpy="0 ${-65 * M_PI / 180} 0"/>
-			<parent link="${name}_link_1"/>
-			<child link="${name}_link_2"/>
-			<axis xyz="0 1 0"/>
-			<dynamics damping="1" friction="1" />
-			<limit effort="${9.5}" velocity="${M_PI / 2.0}" lower="0" upper="${joint_2_limit}"/>
+        <!-- joint between arm_1_link and arm_2_link -->    
+        <joint name="${name}_joint_2" type="revolute">
+            <origin xyz="0.033 0 0.019" rpy="0 ${-65 * M_PI / 180} 0"/>
+            <parent link="${name}_link_1"/>
+            <child link="${name}_link_2"/>
+            <axis xyz="0 1 0"/>
+            <dynamics damping="1" friction="1" />
+            <limit effort="${9.5}" velocity="${M_PI / 2.0}" lower="0" upper="${joint_2_limit}"/>
                         <safety_controller k_position="20" k_velocity="${2*9.5/M_PI}" soft_lower_limit="${threshold}" soft_upper_limit="${joint_2_limit_soft}" />
-		</joint>
+        </joint>
 
-		<link name="${name}_link_2">
-			<inertial>
-                <!--See if this cause arm-jittering -->
-				<!--<mass value="${link_2_mass}"/>-->
-				<mass value="1.155"/>
-				<!--<xacro:link_2_inertia_tensor />-->
-                <inertia ixx="0.000823" ixy="0.000000" ixz="-0.000000" iyy="0.004447" iyz ="0.000000" izz="0.004439" />
-			</inertial>
-			
-			<visual>
-			<origin xyz="0 -0.032 0.078" rpy="0 0 0" />
-				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm2.dae" />
-				</geometry>
-				<material name="Orange" />
-			</visual>
-			
-			<collision>
-				<origin xyz="0 -0.032 0.078" rpy="0 0 0" />
-				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm2_convex.dae" />
-				</geometry>
-			</collision>
-		</link>
+        <link name="${name}_link_2">
+            <inertial>
+                <mass value="${link_2_mass}"/>
+                <xacro:link_2_inertia_tensor />
+            </inertial>
+            
+            <visual>
+            <origin xyz="0 -0.032 0.078" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm2.dae" />
+                </geometry>
+                <material name="Orange" />
+            </visual>
+            
+            <collision>
+                <origin xyz="0 -0.032 0.078" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm2_convex.dae" />
+                </geometry>
+            </collision>
+        </link>
 
-		<!-- joint between arm_2_link and arm_3_link -->
-		<joint name="${name}_joint_3" type="revolute">
-			<origin xyz="0.000 0.000 0.155" rpy="0 ${146 * M_PI / 180} 0"/>
-			<parent link="${name}_link_2"/>
-			<child link="${name}_link_3"/>
-			<axis xyz="0 1 0"/>
-			<dynamics damping="1" friction="1" />
-			<limit effort="${6}" velocity="${M_PI / 2.0}" lower="-${joint_3_limit}" upper="0"/>
+        <!-- joint between arm_2_link and arm_3_link -->
+        <joint name="${name}_joint_3" type="revolute">
+            <origin xyz="0.000 0.000 0.155" rpy="0 ${146 * M_PI / 180} 0"/>
+            <parent link="${name}_link_2"/>
+            <child link="${name}_link_3"/>
+            <axis xyz="0 1 0"/>
+            <dynamics damping="1" friction="1" />
+            <limit effort="${6}" velocity="${M_PI / 2.0}" lower="-${joint_3_limit}" upper="0"/>
                         <safety_controller k_position="20" k_velocity="50" soft_lower_limit="-${joint_3_limit_soft}" soft_upper_limit="-${threshold}" />
-		</joint>
+        </joint>
 
-		<link name="${name}_link_3">
-			<inertial>
-                <!--See if this cause arm-jittering -->
-				<!--<mass value="${link_3_mass}"/>-->
-				<mass value="0.934"/>
-				<!--<xacro:link_3_inertia_tensor />-->
-				<inertia ixx="0.002459" ixy="0.000000" ixz="0.000000" iyy="0.002571" iyz="-0.000000" izz="0.000535" />
-			</inertial>
-			
-			<visual>
-				<origin xyz="0.000 0.028 0.079" rpy="0 0 0" />
-				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm3.dae" />
-				</geometry>
-				<material name="Orange" />
-			</visual>
-			
-			<collision>
-				<origin xyz="0.000 0.028 0.079" rpy="0 0 0" />
-				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm3_convex.dae" />
-				</geometry>
-			</collision>
-		</link>	
+        <link name="${name}_link_3">
+            <inertial>
+                <mass value="${link_3_mass}"/>
+               <xacro:link_3_inertia_tensor />
+            </inertial>
+            
+            <visual>
+                <origin xyz="0.000 0.028 0.079" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm3.dae" />
+                </geometry>
+                <material name="Orange" />
+            </visual>
+            
+            <collision>
+                <origin xyz="0.000 0.028 0.079" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm3_convex.dae" />
+                </geometry>
+            </collision>
+        </link>    
 
-		<!-- joint between arm_3_link and arm_4_link -->
-		<joint name="${name}_joint_4" type="revolute">
-			<origin xyz="0.000 0.000 0.135" rpy="0 ${-102.5 * M_PI / 180} 0" />
-			<parent link="${name}_link_3"/>
-			<child link="${name}_link_4"/>
-			<axis xyz="0 1 0" />
-			<dynamics damping="1" friction="1" />
-			<limit effort="${2}" velocity="${M_PI / 2.0}" lower="0" upper="${joint_4_limit}"/>
-			<safety_controller k_position="20" k_velocity="100" soft_lower_limit="0" soft_upper_limit="${joint_4_limit_soft}" />
-		</joint>
+        <!-- joint between arm_3_link and arm_4_link -->
+        <joint name="${name}_joint_4" type="revolute">
+            <origin xyz="0.000 0.000 0.135" rpy="0 ${-102.5 * M_PI / 180} 0" />
+            <parent link="${name}_link_3"/>
+            <child link="${name}_link_4"/>
+            <axis xyz="0 1 0" />
+            <dynamics damping="1" friction="1" />
+            <limit effort="${2}" velocity="${M_PI / 2.0}" lower="0" upper="${joint_4_limit}"/>
+            <safety_controller k_position="20" k_velocity="100" soft_lower_limit="0" soft_upper_limit="${joint_4_limit_soft}" />
+        </joint>
 
-		<link name="${name}_link_4">
-			<inertial>
-                <!--See if this cause arm-jittering -->
-				<!--<mass value="${link_4_mass}"/>-->
-				<mass value="0.877"/>
-				<!--<xacro:link_4_inertia_tensor />-->
-				<inertia ixx="0.000869" ixy="0.000000" ixz="-0.000000" iyy="0.001173" iyz="-0.000231" izz="0.001091" />
-			</inertial>
-		
-			<visual>
-				<origin xyz="0 -0.010 0.029" rpy="0 0 0"/>
-				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm4.dae" />
-				</geometry>
-				<material name="Orange" />
-			</visual>
-			
-			<collision>
-				<origin xyz="0 -0.010 0.029" rpy="0 0 0"/>
-				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm4_convex.dae" />
-				</geometry>
-			</collision>
-		</link>
+        <link name="${name}_link_4">
+            <inertial>
+                <mass value="${link_4_mass}"/>
+                <xacro:link_4_inertia_tensor />
+            </inertial>
+        
+            <visual>
+                <origin xyz="0 -0.010 0.029" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm4.dae" />
+                </geometry>
+                <material name="Orange" />
+            </visual>
+            
+            <collision>
+                <origin xyz="0 -0.010 0.029" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm4_convex.dae" />
+                </geometry>
+            </collision>
+        </link>
 
-		<!-- joint between arm_4_link and arm_5_link -->
-		<joint name="${name}_joint_5" type="revolute">
-			<origin xyz="-0.002 0 0.130" rpy="0 0 ${167.5 * M_PI / 180}" />
-			<parent link="${name}_link_4"/>
-			<child link="${name}_link_5"/>
-			<axis xyz="0 0 -1" />
-			<dynamics damping="1" friction="1" />
-			<limit effort="1" velocity="${M_PI / 2.0}" lower="0" upper="${joint_5_limit}" />
+        <!-- joint between arm_4_link and arm_5_link -->
+        <joint name="${name}_joint_5" type="revolute">
+            <origin xyz="-0.002 0 0.130" rpy="0 0 ${167.5 * M_PI / 180}" />
+            <parent link="${name}_link_4"/>
+            <child link="${name}_link_5"/>
+            <axis xyz="0 0 -1" />
+            <dynamics damping="1" friction="1" />
+            <limit effort="1" velocity="${M_PI / 2.0}" lower="0" upper="${joint_5_limit}" />
                         <safety_controller k_position="20" k_velocity="100" soft_lower_limit="0" soft_upper_limit="${joint_5_limit_soft}" />
-		</joint>
+        </joint>
 
-		<link name="${name}_link_5">
-			<inertial>
-                <!--See if this cause arm-jittering -->
-				<!--<mass value="${link_5_mass}"/>-->
-				<mass value="0.251"/>
-				<!--<xacro:link_5_inertia_tensor />-->
-				<inertia ixx="0.000280" ixy="0.000000" ixz="0.000000" iyy="0.000339" iyz="0.000000" izz="0.000119" />
-			</inertial>
-			
-				<visual>
-				<origin xyz="0.003 0 -0.034" rpy="0 0 0" />
-				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm5_new.dae" />
-				</geometry>
-			</visual>
-			
-			<collision>
-				<origin xyz="0.003 0 -0.034" rpy="0 0 0" />
-				<geometry>
-					<mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm5_new_convex.dae" />
-				</geometry>
-			</collision>
-		</link>
+        <link name="${name}_link_5">
+            <inertial>
+                <mass value="${link_5_mass}"/>
+                <xacro:link_5_inertia_tensor />
+            </inertial>
+            
+                <visual>
+                <origin xyz="0.003 0 -0.034" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm5_new.dae" />
+                </geometry>
+            </visual>
+            
+            <collision>
+                <origin xyz="0.003 0 -0.034" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://luh_youbot_description/meshes/youbot_arm/arm5_new_convex.dae" />
+                </geometry>
+            </collision>
+        </link>
                 
                 <xacro:youbot_arm_controller namespace="gazebo"/>
 
-	</xacro:macro>
+    </xacro:macro>
 </robot>
