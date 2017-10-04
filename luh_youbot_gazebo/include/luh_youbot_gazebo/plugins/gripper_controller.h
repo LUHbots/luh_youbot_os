@@ -96,6 +96,7 @@ namespace gazebo {
       void setCmd(double cmd);
       void gripObjectCallback();
       void setGripperCallback();
+      bool command_recived_;
   };
 
 }

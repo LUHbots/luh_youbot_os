@@ -42,6 +42,8 @@
 #include <tf/transform_broadcaster.h>
 #include <tf/transform_listener.h>
 
+#include <cmath> 
+
 namespace gazebo {
 
   class YoubotBaseController : public ModelPlugin {

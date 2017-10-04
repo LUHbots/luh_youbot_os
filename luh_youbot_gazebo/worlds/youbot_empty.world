@@ -7,10 +7,10 @@
     <include>
       <uri>model://sun</uri>
     </include>
-    <include>
+    <!--include>
       <uri>model://gas_station</uri>
       <name>gas_station</name>
       <pose>-2.0 7.0 0 0 0 0</pose>
-    </include>
+    </include-->
   </world>
 </sdf>

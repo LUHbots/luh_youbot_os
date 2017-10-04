@@ -85,6 +85,7 @@ namespace gazebo {
       luh_youbot_msgs::JointVector cmd_;
       std::vector<physics::JointPtr> arm_joints_;
       bool alive_;
+      bool command_recived_;
   };
 
 }

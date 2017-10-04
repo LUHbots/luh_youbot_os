@@ -92,28 +92,36 @@ void YoubotGripperController::Load(physics::ModelPtr parent,
 
 //    spinner_.reset(new ros::AsyncSpinner(1, &queue_));
 //    spinner_->start();
+    command_recived_ = false;
 }
 
 // Update the controller
 void YoubotGripperController::UpdateChild()
 {
     boost::mutex::scoped_lock scoped_lock(lock);
-
+    if(command_recived_)
+    {
     if(!left_pos_reached_)
     {
         double left_pos = left_joint_->GetAngle(0).Radian();
         if(left_is_opening_ && left_pos < 0.5 * pos_cmd_)
         {
+            //ROS_INFO("Setting left opening");
             left_joint_->SetForce(0, force_);
         }
         else if(!left_is_opening_ && left_pos > 0.5 * pos_cmd_)
         {
+            //ROS_INFO("Setting left closing Pos: %.3f pos_cmd: %.3f",left_pos,pos_cmd_);
             left_joint_->SetForce(0, -force_);
         }
         else
         {
+            if(command_recived_)
+            {
             //left_joint_->SetAngle(0, math::Angle(0.5 * pos_cmd_));
             left_joint_->SetPosition(0, 0.5 * pos_cmd_);
+            command_recived_ = false;
+            }
         }
     }
 
@@ -122,10 +130,12 @@ void YoubotGripperController::UpdateChild()
         double right_pos = right_joint_->GetAngle(0).Radian();
         if(right_is_opening_ && right_pos < 0.5 * pos_cmd_)
         {
+            //ROS_INFO("Setting right opening");
             right_joint_->SetForce(0, force_);
         }
         else if(!right_is_opening_ && right_pos > 0.5 * pos_cmd_)
         {
+            //ROS_INFO("Setting right closing Pos: %.3f pos_cmd: %.3f",right_pos,pos_cmd_);
             right_joint_->SetForce(0, -force_);
         }
         else
@@ -134,7 +144,7 @@ void YoubotGripperController::UpdateChild()
             right_joint_->SetPosition(0, 0.5);
         }
     }
-
+    }
     // TODO: check if gripper is closed
     if(set_gripper_server_->isActive())
         set_gripper_server_->setSucceeded();
@@ -215,7 +225,7 @@ void YoubotGripperController::setGripperCallback()
 void YoubotGripperController::setCmd(double cmd)
 {
     pos_cmd_ = cmd;
-
+    command_recived_ = true;
     double right_pos = right_joint_->GetAngle(0).Radian();
     right_is_opening_ = right_pos < 0.5 * pos_cmd_;
 

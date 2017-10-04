@@ -104,8 +104,10 @@ namespace gazebo
     arm_joints_.push_back(parent_->GetJoint("arm_joint_5"));
 
     for(uint i=0; i<arm_joints_.size(); i++)
-        arm_joints_[i]->SetEffortLimit(0, 100);
-
+    {
+        arm_joints_[i]->SetEffortLimit(0, 1000.0);
+        ROS_INFO("Parent of %s: %s",arm_joints_[i]->GetName().c_str(),arm_joints_[i]->GetParent()->GetName().c_str());
+    }
     // initialise command (start with zero velocity)
     cmd_.q1 = arm_joints_[0]->GetAngle(0).Radian();
     cmd_.q2 = arm_joints_[1]->GetAngle(0).Radian();
@@ -113,42 +115,51 @@ namespace gazebo
     cmd_.q4 = arm_joints_[3]->GetAngle(0).Radian();
     cmd_.q5 = arm_joints_[4]->GetAngle(0).Radian();
     cmd_mode_ = CMD_POSITION;
+    command_recived_ = false;
   }
 
   // Update the controller
   void YoubotArmController::UpdateChild()
   {
-    boost::mutex::scoped_lock scoped_lock(lock);
-
-    if(cmd_mode_ == CMD_POSITION)
-    {
-//        arm_joints_[0]->SetAngle(0, math::Angle(cmd_.q1));
-//        arm_joints_[1]->SetAngle(0, math::Angle(cmd_.q2));
-//        arm_joints_[2]->SetAngle(0, math::Angle(cmd_.q3));
-//        arm_joints_[3]->SetAngle(0, math::Angle(cmd_.q4));
-//        arm_joints_[4]->SetAngle(0, math::Angle(cmd_.q5));
-        arm_joints_[0]->SetPosition(0, cmd_.q1);
-        arm_joints_[1]->SetPosition(0, cmd_.q2);
-        arm_joints_[2]->SetPosition(0, cmd_.q3);
-        arm_joints_[3]->SetPosition(0, cmd_.q4);
-        arm_joints_[4]->SetPosition(0, cmd_.q5);
-    }
-    else if(cmd_mode_ == CMD_VELOCITY)
-    {
-        arm_joints_[0]->SetVelocity(0, cmd_.q1);
-        arm_joints_[1]->SetVelocity(0, cmd_.q2);
-        arm_joints_[2]->SetVelocity(0, cmd_.q3);
-        arm_joints_[3]->SetVelocity(0, cmd_.q4);
-        arm_joints_[4]->SetVelocity(0, cmd_.q5);
-    }
-    else if(cmd_mode_ == CMD_TORQUE)
-    {
-        arm_joints_[0]->SetForce(0, cmd_.q1);
-        arm_joints_[1]->SetForce(0, cmd_.q2);
-        arm_joints_[2]->SetForce(0, cmd_.q3);
-        arm_joints_[3]->SetForce(0, cmd_.q4);
-        arm_joints_[4]->SetForce(0, cmd_.q5);
-    }
+        boost::mutex::scoped_lock scoped_lock(lock);
+        
+        if(cmd_mode_ == CMD_POSITION)
+        {
+            if (command_recived_)
+            {
+            //ROS_INFO("Im in CMD_POSITION");
+//           arm_joints_[0]->SetAngle(0, math::Angle(cmd_.q1));
+//           arm_joints_[1]->SetAngle(0, math::Angle(cmd_.q2));
+//           arm_joints_[2]->SetAngle(0, math::Angle(cmd_.q3));
+//           arm_joints_[3]->SetAngle(0, math::Angle(cmd_.q4));
+//           arm_joints_[4]->SetAngle(0, math::Angle(cmd_.q5));
+            arm_joints_[0]->SetPosition(0, cmd_.q1);
+            arm_joints_[1]->SetPosition(0, cmd_.q2);
+            arm_joints_[2]->SetPosition(0, cmd_.q3);
+            arm_joints_[3]->SetPosition(0, cmd_.q4);
+            arm_joints_[4]->SetPosition(0, cmd_.q5);
+            
+            command_recived_ = false;
+            }
+        }
+        else if(cmd_mode_ == CMD_VELOCITY)
+        {
+            //ROS_INFO("Im in CMD_VELOCITY");
+            arm_joints_[0]->SetVelocity(0.0, cmd_.q1);
+            arm_joints_[1]->SetVelocity(0.0, cmd_.q2);
+            arm_joints_[2]->SetVelocity(0.0, cmd_.q3);
+            arm_joints_[3]->SetVelocity(0.0, cmd_.q4);
+            arm_joints_[4]->SetVelocity(0.0, cmd_.q5);
+        }
+        else if(cmd_mode_ == CMD_TORQUE)
+        {
+            //ROS_INFO("Im in CMD_TORQUE");
+            arm_joints_[0]->SetForce(0.0, cmd_.q1);
+            arm_joints_[1]->SetForce(0.0, cmd_.q2);
+            arm_joints_[2]->SetForce(0.0, cmd_.q3);
+            arm_joints_[3]->SetForce(0.0, cmd_.q4);
+            arm_joints_[4]->SetForce(0.0, cmd_.q5);
+        }
   }
 
   // Finalize the controller
@@ -172,6 +183,7 @@ namespace gazebo
   void YoubotArmController::posCmdCallback(const luh_youbot_msgs::JointVector::ConstPtr &pos)
   {
       cmd_mode_ = CMD_POSITION;
+      command_recived_ = true;
       cmd_ = *pos;
   }
 
