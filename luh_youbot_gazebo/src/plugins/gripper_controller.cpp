@@ -103,7 +103,7 @@ void YoubotGripperController::UpdateChild()
     {
     if(!left_pos_reached_)
     {
-        double left_pos = left_joint_->GetAngle(0).Radian();
+        double left_pos = left_joint_->Position(0);//.Radian();
         if(left_is_opening_ && left_pos < 0.5 * pos_cmd_)
         {
             //ROS_INFO("Setting left opening");
@@ -127,7 +127,7 @@ void YoubotGripperController::UpdateChild()
 
     if(!right_pos_reached_)
     {
-        double right_pos = right_joint_->GetAngle(0).Radian();
+        double right_pos = right_joint_->Position(0);//.Radian();
         if(right_is_opening_ && right_pos < 0.5 * pos_cmd_)
         {
             //ROS_INFO("Setting right opening");
@@ -212,8 +212,8 @@ void YoubotGripperController::setGripperCallback()
 
     if(goal->is_relative)
     {
-        double right_pos = right_joint_->GetAngle(0).Radian();
-        double left_pos = left_joint_->GetAngle(0).Radian();
+        double right_pos = right_joint_->Position(0);//.Radian();
+        double left_pos = left_joint_->Position(0);//.Radian();
         setCmd(goal->gripper_width + left_pos + right_pos);
     }
     else
@@ -226,10 +226,10 @@ void YoubotGripperController::setCmd(double cmd)
 {
     pos_cmd_ = cmd;
     command_recived_ = true;
-    double right_pos = right_joint_->GetAngle(0).Radian();
+    double right_pos = right_joint_->Position(0);//.Radian();
     right_is_opening_ = right_pos < 0.5 * pos_cmd_;
 
-    double left_pos = left_joint_->GetAngle(0).Radian();
+    double left_pos = left_joint_->Position(0);//.Radian();
     left_is_opening_ = left_pos < 0.5 * pos_cmd_;
 
     left_pos_reached_ = false;

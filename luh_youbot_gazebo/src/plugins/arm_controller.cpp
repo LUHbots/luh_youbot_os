@@ -109,11 +109,11 @@ namespace gazebo
         ROS_INFO("Parent of %s: %s",arm_joints_[i]->GetName().c_str(),arm_joints_[i]->GetParent()->GetName().c_str());
     }
     // initialise command (start with zero velocity)
-    cmd_.q1 = arm_joints_[0]->GetAngle(0).Radian();
-    cmd_.q2 = arm_joints_[1]->GetAngle(0).Radian();
-    cmd_.q3 = arm_joints_[2]->GetAngle(0).Radian();
-    cmd_.q4 = arm_joints_[3]->GetAngle(0).Radian();
-    cmd_.q5 = arm_joints_[4]->GetAngle(0).Radian();
+    cmd_.q1 = arm_joints_[0]->Position(0);//.Radian();
+    cmd_.q2 = arm_joints_[1]->Position(0);//.Radian();
+    cmd_.q3 = arm_joints_[2]->Position(0);//.Radian();
+    cmd_.q4 = arm_joints_[3]->Position(0);//.Radian();
+    cmd_.q5 = arm_joints_[4]->Position(0);//.Radian();
     cmd_mode_ = CMD_POSITION;
     command_recived_ = false;
   }

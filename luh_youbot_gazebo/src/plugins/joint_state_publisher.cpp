@@ -84,7 +84,7 @@ void YoubotJointStatePublisher::Load ( physics::ModelPtr _parent, sdf::ElementPt
     } else {
         this->update_period_ = 0.0;
     }
-    last_update_time_ = this->world_->GetSimTime();
+    last_update_time_ = this->world_->SimTime();
 
     for ( unsigned int i = 0; i< joint_names_.size(); i++ ) {
         joints_.push_back ( this->parent_->GetJoint ( joint_names_[i] ) );
@@ -96,7 +96,7 @@ void YoubotJointStatePublisher::Load ( physics::ModelPtr _parent, sdf::ElementPt
     tf_prefix_ = tf::getPrefixParam ( *rosnode_ );
     joint_state_publisher_ = rosnode_->advertise<sensor_msgs::JointState> ( "joint_states",1000 );
 
-    last_update_time_ = this->world_->GetSimTime();
+    last_update_time_ = this->world_->SimTime();
     // Listen to the update event. This event is broadcast every
     // simulation iteration.
     this->updateConnection = event::Events::ConnectWorldUpdateBegin (
@@ -105,7 +105,7 @@ void YoubotJointStatePublisher::Load ( physics::ModelPtr _parent, sdf::ElementPt
 
 void YoubotJointStatePublisher::OnUpdate ( const common::UpdateInfo & _info ) {
     // Apply a small linear velocity to the model.
-    common::Time current_time = this->world_->GetSimTime();
+    common::Time current_time = this->world_->SimTime();
     double seconds_since_last_update = ( current_time - last_update_time_ ).Double();
     if ( seconds_since_last_update > update_period_ ) {
 
@@ -128,9 +128,9 @@ void YoubotJointStatePublisher::publishJointStates() {
 
     for ( int i = 0; i < joints_.size(); i++ ) {
         physics::JointPtr joint = joints_[i];
-        math::Angle angle = joint->GetAngle ( 0 );
+        double angle = joint->Position ( 0 );
         joint_state_.name[i] = joint->GetName();
-        joint_state_.position[i] = angle.Radian () ;
+        joint_state_.position[i] = angle;//.Radian () ;
         joint_state_.velocity[i] = joint->GetVelocity( 0 );
         joint_state_.effort[i] = joint->GetForce( 0 );
     }

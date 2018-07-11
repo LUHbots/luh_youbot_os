@@ -475,9 +475,9 @@ private:
 //    static const double AMAX4 = 2.0;
 //    static const double AMAX5 = 2.0;
 
-    static const double BASE_VMAX_X = 0.5;
-    static const double BASE_VMAX_Y = 0.5;
-    static const double BASE_VMAX_PHI = 0.5;
+    static constexpr double BASE_VMAX_X = 0.5;
+    static constexpr double BASE_VMAX_Y = 0.5;
+    static constexpr double BASE_VMAX_PHI = 0.5;
 
 //    static const double LOOPRATE = 0.002;
 

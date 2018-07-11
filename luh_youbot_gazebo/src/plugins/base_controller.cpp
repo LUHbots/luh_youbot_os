@@ -113,8 +113,8 @@ namespace gazebo
       odometry_rate_ = sdf->GetElement("odometryRate")->Get<double>();
     } 
  
-    last_odom_publish_time_ = parent_->GetWorld()->GetSimTime();
-    last_odom_pose_ = parent_->GetWorldPose();
+    last_odom_publish_time_ = parent_->GetWorld()->SimTime();
+    last_odom_pose_ = parent_->WorldPose();
     x_ = 0;
     y_ = 0;
     rot_ = 0;
@@ -193,10 +193,10 @@ namespace gazebo
     boost::mutex::scoped_lock scoped_lock(lock);
 
     // set cartesian velocity
-    math::Pose pose = base_link_->GetWorldPose();
-    float roll = pose.rot.GetRoll();
-    float pitch = pose.rot.GetPitch();
-    float yaw = pose.rot.GetYaw();
+    ignition::math::Pose3d pose = base_link_->WorldPose();
+    float roll = pose.Rot().Roll();
+    float pitch = pose.Rot().Pitch();
+    float yaw = pose.Rot().Yaw();
     
     //test
     //ROS_INFO("%.2f %.2f %.2f %.2f %.2f %.2f",pose.pos.x,pose.pos.y,pose.pos.z,roll,pitch,yaw);
@@ -208,8 +208,8 @@ namespace gazebo
     double yt = y_ * cosf(yaw) + x_ * sinf(yaw);
     double vel_factor = 1.0;
 
-    base_link_->SetAngularVel(math::Vector3(0.0, 0.0, rot_));
-    base_link_->SetLinearVel(math::Vector3(xt, yt, -0.0));
+    base_link_->SetAngularVel(ignition::math::Vector3d(0.0, 0.0, rot_));
+    base_link_->SetLinearVel(ignition::math::Vector3d(xt, yt, -0.0));
 
     // set wheel velocity
     /*
@@ -220,7 +220,7 @@ namespace gazebo
 
     // publish odometry
     if (odometry_rate_ > 0.0) {
-      common::Time current_time = parent_->GetWorld()->GetSimTime();
+      common::Time current_time = parent_->GetWorld()->SimTime();
       double seconds_since_last_update = 
         (current_time - last_odom_publish_time_).Double();
       if (seconds_since_last_update > (1.0 / odometry_rate_)) {
@@ -266,10 +266,10 @@ namespace gazebo
       tf::resolve(tf_prefix_, robot_base_frame_);
 
     // getting data for base_footprint to odom transform
-    math::Pose pose = this->parent_->GetWorldPose();
+    ignition::math::Pose3d pose = this->parent_->WorldPose();
 
-    tf::Quaternion qt(pose.rot.x, pose.rot.y, pose.rot.z, pose.rot.w);
-    tf::Vector3 vt(pose.pos.x, pose.pos.y, pose.pos.z);
+    tf::Quaternion qt(pose.Rot().X(), pose.Rot().Y(), pose.Rot().Z(), pose.Rot().W());
+    tf::Vector3 vt(pose.Pos().X(), pose.Pos().Y(), pose.Pos().Z());
 
     tf::Transform base_footprint_to_odom(qt, vt);
     transform_broadcaster_->sendTransform(
@@ -277,13 +277,13 @@ namespace gazebo
             base_footprint_frame));
 
     // publish odom topic
-    odom_.pose.pose.position.x = pose.pos.x;
-    odom_.pose.pose.position.y = pose.pos.y;
+    odom_.pose.pose.position.x = pose.Pos().X();
+    odom_.pose.pose.position.y = pose.Pos().Y();
 
-    odom_.pose.pose.orientation.x = pose.rot.x;
-    odom_.pose.pose.orientation.y = pose.rot.y;
-    odom_.pose.pose.orientation.z = pose.rot.z;
-    odom_.pose.pose.orientation.w = pose.rot.w;
+    odom_.pose.pose.orientation.x = pose.Rot().X();
+    odom_.pose.pose.orientation.y = pose.Rot().Y();
+    odom_.pose.pose.orientation.z = pose.Rot().Z();
+    odom_.pose.pose.orientation.w = pose.Rot().W();
     odom_.pose.covariance[0] = 0.00001;
     odom_.pose.covariance[7] = 0.00001;
     odom_.pose.covariance[14] = 1000000000000.0;
@@ -292,9 +292,9 @@ namespace gazebo
     odom_.pose.covariance[35] = 0.001;
 
     // get velocity in /odom frame
-    math::Vector3 linear;
-    linear.x = (pose.pos.x - last_odom_pose_.pos.x) / step_time;
-    linear.y = (pose.pos.y - last_odom_pose_.pos.y) / step_time;
+    ignition::math::Vector3d linear;
+    linear.X() = (pose.Pos().X() - last_odom_pose_.Pos().X()) / step_time;
+    linear.Y() = (pose.Pos().Y() - last_odom_pose_.Pos().Y()) / step_time;
     if (rot_ > M_PI / step_time) 
     { 
       // we cannot calculate the angular velocity correctly
@@ -302,8 +302,8 @@ namespace gazebo
     } 
     else 
     {
-      float last_yaw = last_odom_pose_.rot.GetYaw();
-      float current_yaw = pose.rot.GetYaw();
+      float last_yaw = last_odom_pose_.Rot().Yaw();
+      float current_yaw = pose.Rot().Yaw();
       while (current_yaw < last_yaw - M_PI) current_yaw += 2 * M_PI;
       while (current_yaw > last_yaw + M_PI) current_yaw -= 2 * M_PI;
       float angular_diff = current_yaw - last_yaw;
@@ -312,9 +312,9 @@ namespace gazebo
     last_odom_pose_ = pose;
 
     // convert velocity to child_frame_id (aka base_footprint)
-    float yaw = pose.rot.GetYaw();
-    odom_.twist.twist.linear.x = cosf(yaw) * linear.x + sinf(yaw) * linear.y;
-    odom_.twist.twist.linear.y = cosf(yaw) * linear.y - sinf(yaw) * linear.x;
+    float yaw = pose.Rot().Yaw();
+    odom_.twist.twist.linear.x = cosf(yaw) * linear.X() + sinf(yaw) * linear.Y();
+    odom_.twist.twist.linear.y = cosf(yaw) * linear.Y() - sinf(yaw) * linear.X();
 
     odom_.header.stamp = current_time;
     odom_.header.frame_id = odom_frame;
