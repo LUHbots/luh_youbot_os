@@ -20,14 +20,20 @@ find_package(catkin REQUIRED COMPONENTS
 )
 find_package(orocos_kdl REQUIRED)
 
-catkin_package()
+catkin_package(
+	INCLUDE_DIRS include
+	DEPENDS tf
+	        tf_conversions
+)
 
 ###########
 ## Build ##
 ###########
 
-include_directories(include)
+# link_directories(${GAZEBO_LIBRARY_DIRS}) # ????
+
 include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -89,30 +95,31 @@ add_executable(controller_node src/node/main.cpp src/node/controller_node.cpp in
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_generate_messages_cpp)
 
-add_dependencies(controller_node luh_youbot_kinematics)
+add_dependencies(controller_node luh_youbot_kinematics ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(torque_controller luh_youbot_kinematics)
 
 target_link_libraries(torque_controller orocos-kdl)
 target_link_libraries(modules torque_controller ${catkin_LIBRARIES} yaml-cpp)
-target_link_libraries(controller_node modules)
+target_link_libraries(controller_node modules ${catkin_LIBRARIES})
 
 ## GIVE SUDO RIGHTS TO NODE TO ACCESS ETHERNET INTERFACE
 set(EXECUTABLE_PATH "${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_BIN_DESTINATION}")
 
+set(SIMULATION_BUILD True)
 
 message("=========================================================")
-message("Jenkins: ${JENKINS}")
+message("Simulation Build: ${SIMULATION_BUILD}")
 
-if (${JENKINS})
-    message("JENKINS BUILD - Skipping  sudo setcap cap_net_raw+ep controller_node")
+if (${SIMULATION_BUILD})
+    message(WARNING "SIMULATION BUILD - #######################################################")
+    message("SIMULATION BUILD - do not use setcap cap_net_raw=ep controller_node it is broken!!!")
+    #message("SIMULATION BUILD - to use controller_node on the real youbot do:")
+    #message("SIMULATION BUILD - cd </workspace/path>/devel/lib/luh_youbot_controller")
+    #message("SIMULATION BUILD - sudo setcap cap_net_raw+ep controller_node")
 
+    message(WARNING "SIMULATION BUILD - #######################################################")
 else()
-    add_custom_command(TARGET controller_node POST_BUILD
-        #COMMAND sudo setcap cap_net_raw+ep controller_node
-        COMMAND gksudo setcap cap_net_raw+ep controller_node
-        WORKING_DIRECTORY ${EXECUTABLE_PATH}
-    )
-    message("PRODUCTION BUILD - EXECUTING  sudo setcap cap_net_raw+ep controller_node")
+    message("PRODUCTION BUILD - do not use setcap cap_net_raw=ep controller_node it is broken!!!")
 endif()
 
 
