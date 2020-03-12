@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(luh_youbot_controller)
-
+#set(CMAKE_CXX_FLAGS "-Wall -Wno-dev -Wl,-rpath=/home/wentz/catkin_ws/devel/lib:/opt/ros/melodic/lib")
+#set(LDFLAGS = "-rpath=/home/wentz/catkin_ws/devel/lib:/opt/ros/melodic/lib")
 find_package(catkin REQUIRED COMPONENTS
   control_toolbox
   kdl_parser

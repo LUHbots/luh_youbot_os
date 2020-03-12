@@ -21,8 +21,13 @@
 
 #include "luh_youbot_controller/node/controller_node.h"
 
-int main(int argc, char** argv)
+int main(int argc, char** argv, char **envp)
 {
+    /*for(char **env = envp; env != 0; env++){
+        char *thisenv = *env;
+        printf("%s\n",thisenv);
+    }
+    */
     ros::init(argc, argv, "controller_node");
 
     ros::NodeHandle node_handle;
